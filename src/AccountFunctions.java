@@ -10,7 +10,7 @@ public class AccountFunctions
         try {
             boolean working = false;
             connection = OpenDatabase();
-            //CreateAccountsTable(connection);
+            CreateAccountsTable(connection);
             //AddRecord(connection, 2,"test@gmail.com","test");
             working = checkLogin(connection,"test@gmail.com","test");
             System.out.println(working);
@@ -40,13 +40,14 @@ public class AccountFunctions
         Statement stmt = null;
         try {
             stmt = c.createStatement();
-            String sql = "CREATE TABLE ACCOUNTS " +
+            /*String sql = "CREATE TABLE ACCOUNTS " +
                     "(ID INT PRIMARY KEY     NOT NULL," +
                     " EMAIL           TEXT    NOT NULL, " +
-                    " PASSWORD        TEXT     NOT NULL)";
+                    " PASSWORD        TEXT     NOT NULL)";*/
+            String sql = "ALTER TABLE ACCOUNTS ADD COLUMN ROLE TEXT NOT NULL";
             stmt.executeUpdate(sql);
             stmt.close();
-            c.close();
+            //c.close();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
