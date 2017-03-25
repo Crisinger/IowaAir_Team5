@@ -14,6 +14,8 @@ public class Login extends HttpServlet {
         String userEmail = request.getParameter("userEmail");
         String userPassword = request.getParameter("userPassword");
 
+        // I get an error locating com.mysql.jdc.Driver
+
         // Checks if account is in system then redirects if it is a valid account
         if(AccountFunctions.checkLogin(AccountFunctions.OpenDatabase(),userEmail,userPassword) == true){
             response.sendRedirect("homeloggedin.jsp");
