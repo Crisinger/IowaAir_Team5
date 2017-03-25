@@ -10,7 +10,7 @@ public class AccountFunctions
         try {
             boolean working = false;
             connection = OpenDatabase();
-            CreateAccountsTable(connection);
+            //CreateAccountsTable(connection);
             //AddRecord(connection, 2,"test@gmail.com","test");
             working = checkLogin(connection,"test@gmail.com","test");
             System.out.println(working);
