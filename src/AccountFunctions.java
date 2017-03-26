@@ -147,4 +147,28 @@ public class AccountFunctions
             System.exit(0);
         }
     }
+
+    public static Character checkRole(Connection c, String email){
+        Statement stmt = null;
+        String role = null;
+        Character result = null;
+        try {
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT ROLE FROM ACCOUNTS WHERE EMAIL = " + email + ");");
+            role = rs.getString("role");
+        } catch (Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        if (role == "CUSTOMER"){
+            result = 'C';
+        }
+        else if (role == "MANAGER"){
+            result = 'M';
+        }
+        else if (role == "ADMIN"){
+            result = 'A';
+        }
+        return result;
+    }
 }
