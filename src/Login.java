@@ -18,10 +18,10 @@ public class Login extends HttpServlet {
         String userPassword = request.getParameter("userPassword");
 
         // I get an error locating com.mysql.jdc.Driver
-        AccountFunctions AF = new AccountFunctions();
-        Connection c = AF.OpenDatabase();
+        //AccountFunctions AF = new AccountFunctions();
+        Connection c = AccountFunctions.OpenDatabase();
         // Checks if account is in system then redirects if it is a valid account
-        if(AF.checkLogin(c,userEmail,userPassword)){
+        if(AccountFunctions.checkLogin(c,userEmail,userPassword)){
             response.sendRedirect("homeloggedin.jsp");
         }
         // Redirects back to login screen if invalid account inputs

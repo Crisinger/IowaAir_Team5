@@ -24,7 +24,7 @@ public class AccountFunctions
     public AccountFunctions(){}
 
 
-    public Connection OpenDatabase()
+    public static Connection OpenDatabase()
     {
 
         Connection c = null;
@@ -40,7 +40,7 @@ public class AccountFunctions
     }
 
 
-    public void CreateAccountsTable(Connection con)
+    public static void CreateAccountsTable(Connection con)
     {
         Connection c = con;
         Statement stmt = null;
@@ -62,7 +62,7 @@ public class AccountFunctions
     }
 
 
-    public void AddRecord(Connection con,int id, String email, String password)
+    public static void AddRecord(Connection con,int id, String email, String password)
     {
         Connection c = con;
         Statement stmt = null;
@@ -86,7 +86,7 @@ public class AccountFunctions
         System.out.println("Records created successfully");
     }
 
-    public  boolean checkLogin(Connection con, String user, String pass)
+    public static boolean checkLogin(Connection con, String user, String pass)
     {
         Connection c = con;
         Statement stmt = null;
@@ -107,7 +107,7 @@ public class AccountFunctions
             }
             rs.close();
             stmt.close();
-            c.close();
+            //c.close();
 
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );

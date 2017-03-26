@@ -21,7 +21,8 @@ public class CreateAccount extends HttpServlet {
         String userPassword = request.getParameter("userPassword");
 
 
-        if (userEmail.contains("@") && userEmail.length() > 12 && userPassword.length() < 10 && userPassword.length() > 8) {
+        if (userEmail.contains("@") && userEmail.length() > 12 && userPassword.length() < 15 && userPassword.length() > 8) {
+            AccountFunctions.AddRecord(AccountFunctions.OpenDatabase(),2,userEmail,userPassword);
             response.sendRedirect("homeloggedin.jsp");
         }
         // Redirects back to login screen if invalid account inputs
