@@ -83,8 +83,8 @@
 
     <section id="main">
         <form action="Login">
-            User email: <input type="email" name="userEmail" maxlength="40" align="middle" placeholder="Email" required>
-            User password: <input type="password" name="userPassword" maxlength="10" align="middle" placeholder="Password" required>
+            User email: <input type="email" name="userEmail" maxlength="40" align="middle" placeholder="Email" required><br>
+            User password: <input type="password" name="userPassword" maxlength="10" align="middle" placeholder="Password" required><br>
             <input type="submit" value="Login">
         </form>
         <script src="js/accountlogin.js"></script>

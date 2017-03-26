@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Created by ReedS on 3/25/2017.
  */
-@WebServlet(name = "CreateAccount")
+@WebServlet("/CreateAccount")
 public class CreateAccount extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

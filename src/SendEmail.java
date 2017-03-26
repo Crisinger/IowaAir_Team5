@@ -1,4 +1,4 @@
-// File Name SendEmail.java
+/*// File Name SendEmail.java
 import java.io.*;
 import java.util.*;
 import javax.servlet.*;
@@ -67,4 +67,4 @@ public class SendEmail extends HttpServlet{
             mex.printStackTrace();
         }
     }
-} 
+} */
