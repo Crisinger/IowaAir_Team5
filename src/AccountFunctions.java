@@ -160,13 +160,13 @@ public class AccountFunctions
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
-        if (role == "CUSTOMER"){
+        if (role.equals("CUSTOMER")){
             result = 'C';
         }
-        else if (role == "MANAGER"){
+        else if (role.equals("MANAGER")){
             result = 'M';
         }
-        else if (role == "ADMIN"){
+        else if (role.equals("ADMIN")){
             result = 'A';
         }
         return result;
