@@ -6,13 +6,13 @@ import java.sql.*;
 import com.mysql.jdbc.Driver;
 public class AccountFunctions
 {
-    /*
+
     public static void main( String[]  args){
         Connection connection = null;
         try {
             boolean working = false;
             connection = OpenDatabase();
-            //CreateAccountsTable(connection);
+            CreateAccountsTable(connection);
             //AddRecord(connection, 2,"test@gmail.com","test");
             working = checkLogin(connection,"test@gmail.com","test");
             System.out.println(working);
@@ -20,7 +20,8 @@ public class AccountFunctions
             e.printStackTrace();
         }
     }
-    */
+
+
     public AccountFunctions(){}
 
 
@@ -39,7 +40,7 @@ public class AccountFunctions
         return c;
     }
 
-
+    //probably wont be needed again
     public static void CreateAccountsTable(Connection con)
     {
         Connection c = con;
@@ -50,8 +51,11 @@ public class AccountFunctions
                     "(ID INT PRIMARY KEY     NOT NULL," +
                     " EMAIL           TEXT    NOT NULL, " +
                     " PASSWORD        TEXT     NOT NULL)";*/
-            String sql = "ALTER TABLE ACCOUNTS ADD COLUMN ROLE TEXT NOT NULL";
+            String sql = "ALTER TABLE ACCOUNTS ALTER COLUMN ID int(3) unsigned zerofill not null auto_increment primary KEY ";
             stmt.executeUpdate(sql);
+            sql = "ALTER TABLE ACCOUNTS ALTER COLUMN EMAIL TEXT UNIQUE NOT NULL";
+            stmt.executeUpdate(sql);
+
             stmt.close();
             //c.close();
         } catch ( Exception e ) {
@@ -62,7 +66,7 @@ public class AccountFunctions
     }
 
 
-    public static void AddRecord(Connection con,int id, String email, String password)
+    public static void AddRecord(Connection con, String email, String password)
     {
         Connection c = con;
         Statement stmt = null;
@@ -73,7 +77,7 @@ public class AccountFunctions
 
             stmt = c.createStatement();
             String sql = "INSERT INTO ACCOUNTS (ID,EMAIL,PASSWORD) " +
-                    "VALUES ( '" + id + "' , '" + email + "' , '" + password + "' );";
+                    "VALUES ( '" + email + "' , '" + password + "' );";
             stmt.executeUpdate(sql);
 
             stmt.close();
@@ -118,5 +122,13 @@ public class AccountFunctions
     }
 
 
-
+    public static void closeConnection(Connection c){
+        try {
+            c.close();
+            System.out.println("Database connection closed");
+        }catch(Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
 }
