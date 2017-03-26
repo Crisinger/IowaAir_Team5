@@ -83,27 +83,12 @@
 
     <section id="main">
         <form action="CreateAccount">
-            <br>
-            <br>
-            <br>
-            <br>
-            User email:
-            <br>
-            <input type="text" name="userEmail" maxlength="40" align="middle" placeholder="Email" required>
-            <br>
-            User password:
-            <br>
-            <input type="password" name="userPassword" maxlength="10" align="middle" placeholder="Password" required>
-            <br>
-            Confirm user password:
-            <br>
-            <input type="password" name="userPassword" maxlength="10" align="middle">
-            <br>
-            <br>
-            <input type="button" value="Create Account">
+            Email: <input type="text" name="userEmail" maxlength="40" align="middle" placeholder="Email" required><br>
+            Password: <input type="password" name="userPassword" maxlength="10" align="middle" placeholder="Password" required><br>
+            Confirm Password: <input type="password" name="userPassword" maxlength="10" align="middle">
+            <input type="submit" value="Create Account">
         </form>
     </section>
-
 
 </div>
 

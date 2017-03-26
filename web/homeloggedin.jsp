@@ -48,10 +48,9 @@ background-image: URL("airplane.png");
 background-repeat: no-repeat;
 
 <ul>
-    <li><a href="home.jsp">Home</a></li>
-    <li><a href="#news">News</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li style="float:right"><a class="active" href="home.jsp">Logout</a></li>
+    <li><a href="index.jsp">Home</a></li>
+    <li><a href="contact.jsp">Contact</a></li>
+    <li style="float:right"><a class="active" href="index.jsp">Logout</a></li>
 </ul>
 
 <div style="padding:20px;margin-top:30px;height:1500px;">

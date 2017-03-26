@@ -82,15 +82,14 @@
     </section>
 
     <section id="main">
-        <form id="loginForm">
-            Username : <input type="text" id="loginUsername" name="Username"/><br><br>
-            Password : <input type="text" id="loginPassword" name="Password"/><br><br>
-            <input type="button" value="Submit" id="loginButton"/>
+        <form action="Login">
+            User email: <input type="email" name="userEmail" maxlength="40" align="middle" placeholder="Email" required>
+            User password: <input type="password" name="userPassword" maxlength="10" align="middle" placeholder="Password" required>
+            <input type="submit" value="Login">
         </form>
         <script src="js/accountlogin.js"></script>
        <a href="createAccount.jsp">Create Account</a>
     </section>
-
 
 </div>
 
