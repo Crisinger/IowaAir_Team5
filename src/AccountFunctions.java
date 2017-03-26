@@ -151,10 +151,11 @@ public class AccountFunctions
     public static Character checkRole(Connection c, String email){
         Statement stmt = null;
         String role = null;
-        Character result = null;
+        Character result = 'C';
         try {
             stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT ROLE FROM ACCOUNTS WHERE EMAIL = " + email + ");");
+            ResultSet rs = stmt.executeQuery("SELECT ROLE FROM ACCOUNTS WHERE EMAIL = '" + email + "';");
+            rs.next();
             role = rs.getString("role");
         } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
