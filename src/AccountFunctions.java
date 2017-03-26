@@ -3,8 +3,10 @@
  */
 
 import java.sql.*;
+import com.mysql.jdbc.Driver;
 public class AccountFunctions
 {
+    /*
     public static void main( String[]  args){
         Connection connection = null;
         try {
@@ -18,9 +20,13 @@ public class AccountFunctions
             e.printStackTrace();
         }
     }
+    */
+    public AccountFunctions(){}
 
-    public static Connection OpenDatabase()
+
+    public Connection OpenDatabase()
     {
+
         Connection c = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -34,7 +40,7 @@ public class AccountFunctions
     }
 
 
-    public static void CreateAccountsTable(Connection con)
+    public void CreateAccountsTable(Connection con)
     {
         Connection c = con;
         Statement stmt = null;
@@ -56,7 +62,7 @@ public class AccountFunctions
     }
 
 
-    public static void AddRecord(Connection con,int id, String email, String password)
+    public void AddRecord(Connection con,int id, String email, String password)
     {
         Connection c = con;
         Statement stmt = null;
@@ -80,7 +86,7 @@ public class AccountFunctions
         System.out.println("Records created successfully");
     }
 
-    public static boolean checkLogin(Connection con, String user, String pass)
+    public  boolean checkLogin(Connection con, String user, String pass)
     {
         Connection c = con;
         Statement stmt = null;
