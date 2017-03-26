@@ -26,6 +26,6 @@ public class CreateAccount extends HttpServlet {
             response.sendRedirect("homeloggedin.jsp");
         }
         // Redirects back to login screen if invalid account inputs
-        else response.sendRedirect("create_account.jsp");
+        else response.sendRedirect("createAccount.jsp");
     }
 }

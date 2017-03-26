@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: ReedS
   Date: 3/25/2017
-  Time: 8:34 AM
+  Time: 8:37 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -82,13 +82,26 @@
     </section>
 
     <section id="main">
-        <form id="loginForm">
-            Username : <input type="text" id="loginUsername" name="Username"/><br><br>
-            Password : <input type="text" id="loginPassword" name="Password"/><br><br>
-            <input type="button" value="Submit" id="loginButton"/>
+        <form action="CreateAccount">
+            <br>
+            <br>
+            <br>
+            <br>
+            User email:
+            <br>
+            <input type="text" name="userEmail" maxlength="40" align="middle" placeholder="Email" required>
+            <br>
+            User password:
+            <br>
+            <input type="password" name="userPassword" maxlength="10" align="middle" placeholder="Password" required>
+            <br>
+            Confirm user password:
+            <br>
+            <input type="password" name="userPassword" maxlength="10" align="middle">
+            <br>
+            <br>
+            <input type="button" value="Create Account">
         </form>
-        <script src="js/accountlogin.js"></script>
-       <a href="createAccount.jsp">Create Account</a>
     </section>
 
 
@@ -101,15 +114,7 @@
 </body>
 
 </html>
-<!--
-
-
-
-<input type="button" value="Create  Account" id="createAccountButton"/>
-
-
-
-
+<!---
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -119,7 +124,7 @@
 <style>
     body {
         margin:0;
-        background: url("airplane.jpg");
+        background: url("img/airplane.jpg");
         background-size: 100% 170%;
         background-repeat: no-repeat;
     }
@@ -169,30 +174,29 @@ width:0%;">
 
 <body style = "text-align:center;">
 
-<form action="Login">
+<form action="CreateAccount">
     <br>
     <br>
     <br>
     <br>
     User email:
     <br>
-    <input type="email" name="userEmail" maxlength="40" align="middle" placeholder="Email" required>
+    <input type="text" name="userEmail" maxlength="40" align="middle" placeholder="Email" required>
     <br>
     User password:
     <br>
     <input type="password" name="userPassword" maxlength="10" align="middle" placeholder="Password" required>
     <br>
+    Confirm user password:
     <br>
-    <input type="submit" value="Login">
+    <input type="password" name="userPassword" maxlength="10" align="middle">
     <br>
     <br>
-    <input type="button" value="Create Account" onchange="createAccount.jsp">
+    <input type="button" value="Create Account">
 </form>
 
 </body>
 
-
-
 </body>
 </html>
---->
+-->

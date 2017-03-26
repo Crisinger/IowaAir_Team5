@@ -1,0 +1,105 @@
+/*************************************************************
+Mobile
+*************************************************************/
+
+
+
+/*************************************************************
+Tablet
+*************************************************************/
+@media screen and (min-width: 520px) {
+    body {
+        background: #828282;
+    }
+
+    #logo {
+        float: left;
+        margin-left: 5%;
+        text-align: left;
+        width: 150px;
+    }
+
+    #sidebar {
+        display: initial;
+
+        float: left;
+        width: 100px;
+        background: yellow;
+        padding: 0 20px;
+        margin: 0 20px 0 20px;
+    }
+
+    #main {
+        display: flex;
+        flex-direction: row;
+        background: yellow;
+        padding: 0 20px;
+        margin: 0 20px 0 20px;
+    }
+
+    /**********************************
+    HEADER
+    ***********************************/
+
+    nav {
+        background: none;
+        float: right;
+        font-size: 1.125em;
+        margin-right: 5%;
+        text-align: right;
+        width: 60%;
+    }
+
+    nav {
+
+    }
+
+    h1 {
+        font-size: 2.0em;
+    }
+
+    h2 {
+        font-size: 0.75em;
+        margin-bottom: 20px;
+    }
+
+    header {
+        border-bottom: 5px solid #000000;
+        margin-bottom: 20px;
+    }
+}
+
+/*************************************************************
+Desktop
+*************************************************************/
+
+@media screen and (min-width: 660px) {
+
+    body {
+        background: #969696;
+    }
+
+    /**********************************
+    HEADER
+    ***********************************/
+
+    nav {
+        background: none;
+        float: right;
+        font-size: 1.125em;
+        margin-right: 5%;
+        text-align: right;
+        width: 65%;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+
+    h2 {
+        font-size: 0.825em;
+        margin-bottom: 20px;
+    }
+
+
+}
