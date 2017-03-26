@@ -12,8 +12,8 @@ public class AccountFunctions
         try {
             boolean working = false;
             connection = OpenDatabase();
-            CreateAccountsTable(connection);
-            //AddRecord(connection, 2,"test@gmail.com","test");
+            SqlUpdates(connection);
+            //AddCustomer(connection, 2,"test@gmail.com","test");
             working = checkLogin(connection,"test@gmail.com","test");
             System.out.println(working);
         } catch(Exception e) {
@@ -41,7 +41,7 @@ public class AccountFunctions
     }
 
     //probably wont be needed again
-    public static void CreateAccountsTable(Connection con)
+    public static void SqlUpdates(Connection con)
     {
         Connection c = con;
         Statement stmt = null;
@@ -51,10 +51,11 @@ public class AccountFunctions
                     "(ID INT PRIMARY KEY     NOT NULL," +
                     " EMAIL           TEXT    NOT NULL, " +
                     " PASSWORD        TEXT     NOT NULL)";*/
-            String sql = "ALTER TABLE ACCOUNTS ALTER COLUMN ID int(3) unsigned zerofill not null auto_increment primary KEY ";
+            String sql = "ALTER TABLE ACCOUNTS MODIFY COLUMN ID INT NOT NULL AUTO_INCREMENT ";
             stmt.executeUpdate(sql);
-            sql = "ALTER TABLE ACCOUNTS ALTER COLUMN EMAIL TEXT UNIQUE NOT NULL";
-            stmt.executeUpdate(sql);
+            System.out.println("ID MODIFIED");
+            //sql = "ALTER TABLE ACCOUNTS MODIFY COLUMN EMAIL TEXT NOT NULL UNIQUE";
+           // stmt.executeUpdate(sql);
 
             stmt.close();
             //c.close();
@@ -66,7 +67,7 @@ public class AccountFunctions
     }
 
 
-    public static void AddRecord(Connection con, String email, String password)
+    public static void AddCustomer(Connection con, String email, String password)
     {
         Connection c = con;
         Statement stmt = null;
@@ -76,8 +77,8 @@ public class AccountFunctions
 
 
             stmt = c.createStatement();
-            String sql = "INSERT INTO ACCOUNTS (ID,EMAIL,PASSWORD) " +
-                    "VALUES ( '" + email + "' , '" + password + "' );";
+            String sql = "INSERT INTO ACCOUNTS (EMAIL,PASSWORD,ROLE) " +
+                    "VALUES ( '" + email + "' , '" + password + "' , 'CUSTOMER');";
             stmt.executeUpdate(sql);
 
             stmt.close();
@@ -127,6 +128,21 @@ public class AccountFunctions
             c.close();
             System.out.println("Database connection closed");
         }catch(Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
+    public static void addManager(Connection c, String email, String password){
+        Statement stmt = null;
+        try {
+            stmt = c.createStatement();
+            String sql = "INSERT INTO ACCOUNTS (ID,EMAIL,PASSWORD,ROLE) " +
+                    "VALUES ( '" + email + "' , '" + password + "' , 'MANAGER' );";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.commit();
+        } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }

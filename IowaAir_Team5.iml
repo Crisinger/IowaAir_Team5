@@ -23,9 +23,9 @@
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.12" level="application_server_libraries" />
     <orderEntry type="library" scope="PROVIDED" name="mysql-connector-java-5.1.40-bin" level="project" />
     <orderEntry type="module-library">
-      <library name="mysql">
+      <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/web/lib/mysql-connector-java-5.1.40-bin.jar!/" />
+          <root url="jar://C:/Program Files (x86)/MySQL/Connector.J 5.1/mysql-connector-java-5.1.40-bin.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
