@@ -2,20 +2,40 @@
   Created by IntelliJ IDEA.
   User: johnn
   Date: 3/26/2017
-  Time: 3:15 PM
+  Time: 3:16 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String logPage, logSet, accountText, paymentPage, activePage, historyPage;
+
+    if (session.getAttribute("userEmail") != null) {
+        accountText = session.getAttribute("userEmail").toString();
+        logPage = "logout.jsp";
+        logSet = "Log Out";
+        paymentPage = "payment.jsp";
+        activePage = "activeFlights.jsp";
+        historyPage = "flightHistory.jsp";
+    } else {
+        accountText = "My Account";
+        logPage = "login.jsp";
+        logSet = "Log In";
+        paymentPage = "login.jsp";
+        activePage = "login.jsp";
+        historyPage = "login.jsp";
+    }
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Iowa Air</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
@@ -40,7 +60,7 @@
             <li>
                 <div class="account-dropdown">
                     <a href="contact.jsp">
-                        <button class="account-dropbutton">Contact Us</button>
+                        <button class="account-dropbutton selected">Contact Us</button>
                     </a>
                 </div>
             </li>
@@ -48,13 +68,15 @@
             <li>
                 <div class="account-dropdown">
                     <a href="myAccount.jsp">
-                        <button class="account-dropbutton selected">My Account</button>
+                        <button class="account-dropbutton"><%=accountText%>
+                        </button>
                     </a>
                     <div class="account-dropdown-content">
-                        <a href="login.jsp">Log In</a>
-                        <a href="activeFlights.jsp" class="selected">Active Flights</a>
-                        <a href="flightHistory.jsp">Flight History</a>
-                        <a href="payment.jsp">Payment Info</a>
+                        <a href="<%=logPage%>"><%=logSet%>
+                        </a>
+                        <a href="<%=activePage%>">Active Flights</a>
+                        <a href="<%=historyPage%>">Flight History</a>
+                        <a href="<%=paymentPage%>">Payment Info</a>
                     </div>
                 </div>
             </li>
@@ -65,11 +87,10 @@
 
 <div id="viewwrapper">
 
-    <section id="sidebar">
+    <section id="sidebar" class="contact">
         <p>
-            Active
+            Contact
         </p>
-
 
 
     </section>
@@ -77,7 +98,7 @@
 
     <section id="main">
         <p>
-            Flights
+            Us
         </p>
     </section>
 

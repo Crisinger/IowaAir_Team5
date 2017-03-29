@@ -1,7 +1,16 @@
 /**
  * Created by johnn on 3/8/2017.
  */
+/**
+ * Button for logging into the website
+ * @type {Element}
+ */
 var button = document.getElementById("loginButton");
+
+/**
+ * Button used for creating a new account
+ * @type {Element}
+ */
 var create = document.getElementById("createAccountButton");
 
 /*

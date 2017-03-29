@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import javax.servlet.*;
+import javax.servlet.http.HttpSession;
 
-        
+
 /**
  * Created by ReedS on 3/25/2017.
  */
@@ -22,13 +22,26 @@ public class CreateAccount extends HttpServlet {
         String userEmail = request.getParameter("userEmail");
         String userPassword = request.getParameter("userPassword");
 
-        // Johnny fix this regular expression. make it super s
-        if (userEmail.contains("@") && userEmail.length() > 12 && userPassword.length() < 15 && userPassword.length() > 8) {
+        // Regular expression to check password matches criteria
+        // ^                    start of string
+        // (?=.*[0-9]           contains at least 1 number
+        // (?=.*[a-z])          contains at least 1 lowercase
+        // (?=.*[A-Z])          contains at least 1 uppercase
+        // (?=\S+$)             does not contain space or tab
+        // .{8,}                at least 8 characters long
+        // $                    end of string
+
+        // If the user's password does not match the given criteria reloads page to try again. Need to fix email.
+        if (!userPassword.matches("\\A(?=\\S*?[0-9])(?=\\S*?[a-z])(?=\\S*?[A-Z])\\S{8,16}\\z") || !userEmail.contains("@")) {
+            response.sendRedirect("createAccount.jsp");
+        } else {
             AccountFunctions.AddCustomer(AccountFunctions.OpenDatabase(),userEmail,userPassword);
-            response.sendRedirect("homeloggedin.jsp");
-            System.out.println("Made it hereeee");
+
+            HttpSession mySession = request.getSession();
+            mySession.setAttribute("userEmail",userEmail);
+
+            response.sendRedirect("index.jsp");
         }
-        // Redirects back to login screen if invalid account inputs
-        else response.sendRedirect("createAccount.jsp");
+
     }
 }
