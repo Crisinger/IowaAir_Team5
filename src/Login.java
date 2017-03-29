@@ -7,6 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.mysql.jdbc.Driver;
 
 // Servlet class Login
@@ -23,6 +25,10 @@ public class Login extends HttpServlet {
 
         // Checks if account is in system then redirects if it is a valid account
         if(AccountFunctions.checkLogin(c,userEmail,userPassword)){
+
+            HttpSession mySession = request.getSession();
+            mySession.setAttribute("userEmail",userEmail);
+
             // Checks the role of the user
             switch(AccountFunctions.checkRole(c, userEmail)){
                 // Checks if role is admin
@@ -37,7 +43,7 @@ public class Login extends HttpServlet {
                     break;
                 // Customers
                 default:
-                    response.sendRedirect("homeloggedin.jsp");
+                    response.sendRedirect("index.jsp");
             }
         }
         // Redirects back to login screen if invalid account inputs

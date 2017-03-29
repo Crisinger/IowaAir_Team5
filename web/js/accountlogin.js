@@ -31,6 +31,7 @@ create.onclick = function(){
 	}
 	
 }
+
 /*
     Checks if the username and password combination are in the database.
     First checks username. If it is in the system, then checks the entered password.

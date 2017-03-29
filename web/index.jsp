@@ -21,6 +21,21 @@
 
 <body>
 
+<%
+    String logPage, logSet, text;
+
+    if(session.getAttribute("userEmail") != null){
+        text = session.getAttribute("userEmail").toString();
+        logPage = "logout.jsp";
+        logSet = "Log Out";
+    }else{
+        text = "My Account";
+        logPage = "login.jsp";
+        logSet = "Log In";
+    }
+
+%>
+
 <header>
   <a href="index.jsp" id="logo">
     <h1>Iowa Air</h1>
@@ -47,13 +62,13 @@
       <li>
         <div class="account-dropdown">
           <a href="myAccount.jsp">
-            <button class="account-dropbutton">My Account</button>
+            <button class="account-dropbutton"><%=text%></button>
           </a>
           <div class="account-dropdown-content">
-            <a href="login.jsp">Log In</a>
-            <a href="activeFlights.jsp">Active Flights</a>
-            <a href="flightHistory.jsp">Flight History</a>
-            <a href="payment.jsp">Payment Info</a>
+              <a href="<%=logPage%>"><%=logSet%></a>
+              <a href="activeFlights.jsp">Active Flights</a>
+              <a href="flightHistory.jsp">Flight History</a>
+              <a href="payment.jsp">Payment Info</a>
           </div>
         </div>
       </li>
