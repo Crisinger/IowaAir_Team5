@@ -21,6 +21,7 @@ public class CreateAccount extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userEmail = request.getParameter("userEmail");
         String userPassword = request.getParameter("userPassword");
+        String confirmUserPassword = request.getParameter("confirmUserPassword");
 
         // Regular expression to check password matches criteria
         // ^                    start of string
@@ -32,7 +33,7 @@ public class CreateAccount extends HttpServlet {
         // $                    end of string
 
         // If the user's password does not match the given criteria reloads page to try again. Need to fix email.
-        if (!userPassword.matches("\\A(?=\\S*?[0-9])(?=\\S*?[a-z])(?=\\S*?[A-Z])\\S{8,16}\\z") || !userEmail.contains("@")) {
+        if (!userPassword.matches("\\A(?=\\S*?[0-9])(?=\\S*?[a-z])(?=\\S*?[A-Z])\\S{8,16}\\z") || !userEmail.contains("@") || !userPassword.equals(confirmUserPassword)) {
             response.sendRedirect("createAccount.jsp");
         } else {
             AccountFunctions.AddCustomer(AccountFunctions.OpenDatabase(),userEmail,userPassword);

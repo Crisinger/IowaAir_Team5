@@ -34,10 +34,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Iowa Air</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
@@ -77,8 +77,8 @@
                         <a href="<%=logPage%>"><%=logSet%>
                         </a>
                         <a href="<%=activePage%>">Active Flights</a>
-                        <a href="<%=historyPage%>">Flight History</a>
-                        <a href="<%=paymentPage%>" class="selected">Payment Info</a>
+                        <a href="<%=historyPage%>" class="selected">Flight History</a>
+                        <a href="<%=paymentPage%>">Payment Info</a>
                     </div>
                 </div>
             </li>
@@ -91,7 +91,7 @@
 
     <section id="sidebar">
         <p>
-            Payment
+            Flight
         </p>
 
 
@@ -100,7 +100,7 @@
 
     <section id="main">
         <p>
-            Info
+            History
         </p>
     </section>
 

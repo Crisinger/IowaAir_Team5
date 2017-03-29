@@ -2,11 +2,10 @@
   Created by IntelliJ IDEA.
   User: johnn
   Date: 3/26/2017
-  Time: 3:13 PM
+  Time: 3:16 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%
     String logPage, logSet, accountText, paymentPage, activePage, historyPage;
 
@@ -27,17 +26,16 @@
     }
 
 %>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Iowa Air</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
@@ -62,7 +60,7 @@
             <li>
                 <div class="account-dropdown">
                     <a href="contact.jsp">
-                        <button class="account-dropbutton">Contact Us</button>
+                        <button class="account-dropbutton selected">Contact Us</button>
                     </a>
                 </div>
             </li>
@@ -70,7 +68,7 @@
             <li>
                 <div class="account-dropdown">
                     <a href="myAccount.jsp">
-                        <button class="account-dropbutton selected"><%=accountText%>
+                        <button class="account-dropbutton"><%=accountText%>
                         </button>
                     </a>
                     <div class="account-dropdown-content">
@@ -89,24 +87,18 @@
 
 <div id="viewwrapper">
 
-    <section id="sidebar" class="account">
+    <section id="sidebar" class="contact">
         <p>
-            My Account
+            Contact
         </p>
-        <p>
-            Active Flights
-        </p>
-        <p>
-            Flight History
-        </p>
-        <p>
-            Payment Info
-        </p>
+
+
     </section>
+
 
     <section id="main">
         <p>
-            Account
+            Us
         </p>
     </section>
 

@@ -32,10 +32,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Iowa Air</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
@@ -105,9 +105,9 @@
     <section id="main">
         <form action="CreateAccount">
             Email: <input type="text" name="userEmail" maxlength="40" align="middle" placeholder="Email" required><br>
-            Password: <input type="password" name="userPassword" maxlength="10" align="middle" placeholder="Password"
+            Password: <input type="password" name="userPassword" maxlength="16" align="middle" placeholder="Password"
                              required><br>
-            Confirm Password: <input type="password" name="userPassword" maxlength="10" align="middle">
+            Confirm Password: <input type="password" name="confirmUserPassword" maxlength="16" align="middle">
             <input type="submit" value="Create Account">
         </form>
     </section>

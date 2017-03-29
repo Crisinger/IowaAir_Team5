@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: johnn
   Date: 3/26/2017
-  Time: 3:16 PM
+  Time: 3:13 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -34,10 +34,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Iowa Air</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
@@ -70,14 +70,14 @@
             <li>
                 <div class="account-dropdown">
                     <a href="myAccount.jsp">
-                        <button class="account-dropbutton"><%=accountText%>
+                        <button class="account-dropbutton selected"><%=accountText%>
                         </button>
                     </a>
                     <div class="account-dropdown-content">
                         <a href="<%=logPage%>"><%=logSet%>
                         </a>
                         <a href="<%=activePage%>">Active Flights</a>
-                        <a href="<%=historyPage%>" class="selected">Flight History</a>
+                        <a href="<%=historyPage%>">Flight History</a>
                         <a href="<%=paymentPage%>">Payment Info</a>
                     </div>
                 </div>
@@ -89,18 +89,24 @@
 
 <div id="viewwrapper">
 
-    <section id="sidebar">
+    <section id="sidebar" class="account">
         <p>
-            Flight
+            My Account
         </p>
-
-
+        <p>
+            Active Flights
+        </p>
+        <p>
+            Flight History
+        </p>
+        <p>
+            Payment Info
+        </p>
     </section>
-
 
     <section id="main">
         <p>
-            History
+            Account
         </p>
     </section>
 

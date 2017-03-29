@@ -1,12 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
-  User: crisi_000
-  Date: 3/23/2017
-  Time: 1:49 PM
+  User: johnn
+  Date: 3/26/2017
+  Time: 3:15 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%
     String logPage, logSet, accountText, paymentPage, activePage, historyPage;
 
@@ -27,21 +26,22 @@
     }
 
 %>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Iowa Air</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
+
 <header>
     <a href="index.jsp" id="logo">
         <h1>Iowa Air</h1>
@@ -52,7 +52,7 @@
             <li>
                 <div class="account-dropdown">
                     <a href="index.jsp">
-                        <button class="account-dropbutton selected">Search</button>
+                        <button class="account-dropbutton">Search</button>
                     </a>
                 </div>
             </li>
@@ -74,7 +74,7 @@
                     <div class="account-dropdown-content">
                         <a href="<%=logPage%>"><%=logSet%>
                         </a>
-                        <a href="<%=activePage%>">Active Flights</a>
+                        <a href="<%=activePage%>" class="selected">Active Flights</a>
                         <a href="<%=historyPage%>">Flight History</a>
                         <a href="<%=paymentPage%>">Payment Info</a>
                     </div>
@@ -89,15 +89,16 @@
 
     <section id="sidebar">
         <p>
-            Home Page
+            Active
         </p>
+
 
     </section>
 
 
     <section id="main">
         <p>
-            Iowa Air Loves You
+            Flights
         </p>
     </section>
 

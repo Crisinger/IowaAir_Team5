@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%
     String logPage, logSet, accountText, paymentPage, activePage, historyPage;
 
@@ -26,16 +27,17 @@
     }
 
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Iowa Air</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
@@ -60,7 +62,7 @@
             <li>
                 <div class="account-dropdown">
                     <a href="contact.jsp">
-                        <button class="account-dropbutton selected">Contact Us</button>
+                        <button class="account-dropbutton">Contact Us</button>
                     </a>
                 </div>
             </li>
@@ -76,7 +78,7 @@
                         </a>
                         <a href="<%=activePage%>">Active Flights</a>
                         <a href="<%=historyPage%>">Flight History</a>
-                        <a href="<%=paymentPage%>">Payment Info</a>
+                        <a href="<%=paymentPage%>" class="selected">Payment Info</a>
                     </div>
                 </div>
             </li>
@@ -87,9 +89,9 @@
 
 <div id="viewwrapper">
 
-    <section id="sidebar" class="contact">
+    <section id="sidebar">
         <p>
-            Contact
+            Payment
         </p>
 
 
@@ -98,7 +100,7 @@
 
     <section id="main">
         <p>
-            Us
+            Info
         </p>
     </section>
 
