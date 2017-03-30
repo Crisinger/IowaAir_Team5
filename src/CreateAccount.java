@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
 import javax.servlet.http.HttpSession;
 
 
@@ -36,8 +37,9 @@ public class CreateAccount extends HttpServlet {
         if (!userPassword.matches("\\A(?=\\S*?[0-9])(?=\\S*?[a-z])(?=\\S*?[A-Z])\\S{8,16}\\z") || !userEmail.contains("@") || !userPassword.equals(confirmUserPassword)) {
             response.sendRedirect("createAccount.jsp");
         } else {
-            AccountFunctions.AddCustomer(AccountFunctions.OpenDatabase(),userEmail,userPassword);
-
+            Connection con = AccountFunctions.OpenDatabase(); // open the database
+            AccountFunctions.AddCustomer(con,userEmail,userPassword); // add customer to database
+            AccountFunctions.closeConnection(con); // close connection
             HttpSession mySession = request.getSession();
             mySession.setAttribute("userEmail",userEmail);
 

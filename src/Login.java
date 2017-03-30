@@ -21,8 +21,8 @@ public class Login extends HttpServlet {
 
         // I get an error locating com.mysql.jdc.Driver
         //AccountFunctions AF = new AccountFunctions();
-        Connection c = AccountFunctions.OpenDatabase();
 
+        Connection c = AccountFunctions.OpenDatabase();
         // Checks if account is in system then redirects if it is a valid account
         if(AccountFunctions.checkLogin(c,userEmail,userPassword)){
 
@@ -34,20 +34,27 @@ public class Login extends HttpServlet {
                 // Checks if role is admin
                 case 'A':
                 case 'a':
+                    AccountFunctions.closeConnection(c);
                     response.sendRedirect("admin.jsp");
                     break;
                 // Checks if role is manager
                 case 'M':
                 case 'm':
+                    AccountFunctions.closeConnection(c);
                     response.sendRedirect("manager.jsp");
                     break;
                 // Customers
                 default:
+                    AccountFunctions.closeConnection(c);
                     response.sendRedirect("index.jsp");
             }
+
         }
         // Redirects back to login screen if invalid account inputs
-        else response.sendRedirect("login.jsp");
+        else {
+            AccountFunctions.closeConnection(c);
+            response.sendRedirect("login.jsp");
+        }
     }
 }
 

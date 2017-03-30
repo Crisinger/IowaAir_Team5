@@ -12,7 +12,7 @@ public class AccountFunctions
         try {
             boolean working = false;
             connection = OpenDatabase();
-            //SqlUpdates(connection);
+            //CreateAccountsTable(connection);
             //AddCustomer(connection, 2,"test@gmail.com","test");
             working = checkLogin(connection,"test@gmail.com","test");
             System.out.println(working);
@@ -41,7 +41,7 @@ public class AccountFunctions
     }
 
     //probably wont be needed again
-    public static void SqlUpdates(Connection con)
+    public static void CreateAccountsTable(Connection con)
     {
         Connection c = con;
         Statement stmt = null;
