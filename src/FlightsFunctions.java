@@ -14,7 +14,7 @@ public class FlightsFunctions {
             connection = AccountFunctions.OpenDatabase();
             CreateFlightsTable(connection);
             java.util.Date date = new java.util.Date(02,14,2017);
-            AddFlight(connection, 1,);
+            //AddFlight(connection, 1,);
             //working = checkLogin(connection,"test@gmail.com","test");
             //System.out.println(working);
         } catch(Exception e) {
