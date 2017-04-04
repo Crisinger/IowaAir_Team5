@@ -51,7 +51,7 @@ public class AccountFunctions
                     "(ID INT PRIMARY KEY     NOT NULL," +
                     " EMAIL           TEXT    NOT NULL, " +
                     " PASSWORD        TEXT     NOT NULL)";*/
-            String sql = "ALTER TABLE ACCOUNTS MODIFY COLUMN ID INT NOT NULL AUTO_INCREMENT ";
+            String sql = "ALTER TABLE ACCOUNTS ADD COLUMN ROLE TEXT NOT NULL";
             stmt.executeUpdate(sql);
             System.out.println("ID MODIFIED");
             //sql = "ALTER TABLE ACCOUNTS MODIFY COLUMN EMAIL TEXT NOT NULL UNIQUE";
