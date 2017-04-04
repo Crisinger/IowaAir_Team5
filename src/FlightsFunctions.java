@@ -13,8 +13,8 @@ public class FlightsFunctions {
             boolean working = false;
             connection = AccountFunctions.OpenDatabase();
             CreateFlightsTable(connection);
-            java.util.Date date = new java.util.Date(02,14,2017);
-            //AddFlight(connection, 1,);
+            AddFlight(connection, 1,new Date(04,04,2017), new Time(8),"Chicago",
+                    new Date(04,04,2017), new Time(12), "Atlanta");
             //working = checkLogin(connection,"test@gmail.com","test");
             //System.out.println(working);
         } catch(Exception e) {
@@ -31,16 +31,22 @@ public class FlightsFunctions {
         Statement stmt = null;
         try {
             stmt = c.createStatement();
-            String sql = "CREATE TABLE FLIGHTS " +
-                    "(ID INT PRIMARY KEY     NOT NULL AUTO_INCREMENT," +
-                    " PLANE_ID      INT     NOT NULL" +
-                    " FOREIGN KEY (PLANE_ID) REFERENCES PLANES(ID) ON DELETE CASCADE" +
-                    " DEPARTURE_DATE           DATE    NOT NULL, " +
-                    " DEPARTURE_TIME        TIME     NOT NULL," +
-                    " DEPARTURE_LOCATION         TEXT    NOT NULL," +
-                    " ARRIVAL_DATE          DATE        NOT NULL," +
-                    " ARRIVAL_TIME          TIME        NOT NULL)" +
-                    " ARRIVAL_LOCATION        TEXT    NOT NULL,";
+            String sql = "CREATE TABLE `accounts`.`flights` (\n" +
+                    "  `Flight_ID` INT NOT NULL AUTO_INCREMENT,\n" +
+                    "  `Plane_ID` INT NOT NULL,\n" +
+                    "  `DEPARTURE_DATE` DATE NOT NULL,\n" +
+                    "  `DEPARTURE_TIME` TIME NOT NULL,\n" +
+                    "  `DEPARTURE_LOCATION` TEXT NOT NULL,\n" +
+                    "  `ARRIVAL_DATE` DATE NOT NULL,\n" +
+                    "  `ARRIVAL_TIME` TIME NOT NULL,\n" +
+                    "  `ARRIVAL_LOCATION` TEXT NOT NULL,\n" +
+                    "  PRIMARY KEY (`Flight_ID`),\n" +
+                    "  INDEX `PLANE_idx` (`Plane_ID` ASC),\n" +
+                    "  CONSTRAINT `PLANE`\n" +
+                    "    FOREIGN KEY (`Plane_ID`)\n" +
+                    "    REFERENCES `accounts`.`planes` (`ID`)\n" +
+                    "    ON DELETE NO ACTION\n" +
+                    "    ON UPDATE NO ACTION);";
             stmt.executeUpdate(sql);
             stmt.close();
         } catch ( Exception e ) {
