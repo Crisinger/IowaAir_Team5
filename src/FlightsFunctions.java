@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.Statement;
-import java.sql.Time;
+import java.sql.*;
 
 /**
  * Created by crisi_000 on 3/30/2017.
@@ -12,9 +9,11 @@ public class FlightsFunctions {
         try {
             boolean working = false;
             connection = AccountFunctions.OpenDatabase();
-            CreateFlightsTable(connection);
+            //CreateFlightsTable(connection);
             AddFlight(connection, 1,new Date(04,04,2017), new Time(8),"Chicago",
                     new Date(04,04,2017), new Time(12), "Atlanta");
+
+            deleteFlight(connection, 1);
             //working = checkLogin(connection,"test@gmail.com","test");
             //System.out.println(working);
         } catch(Exception e) {
@@ -81,6 +80,29 @@ public class FlightsFunctions {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
-        System.out.println("Records created successfully");
+        System.out.println("Flight created ");
     }
+
+    public static void deleteFlight(Connection con, int flightID){
+        boolean found = false;
+        try{
+            Statement stmt = con.createStatement();
+            String sql = "";
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM FLIGHTS WHERE Flight_ID = "+  flightID + ";");
+            if(rs.next()) {
+                stmt.execute("DELETE FROM FLIGHTS WHERE Flight_ID = " + flightID + ";");
+            }
+            rs.close();
+            stmt.close();
+
+
+        } catch(Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Flight deleted");
+
+    }
+
+
 }
