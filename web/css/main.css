@@ -13,6 +13,7 @@ body {
 }
 
 #sidebar {
+    display: block;
     max-width: 90%;
     padding: 0 5%;
     text-align: left;
@@ -34,6 +35,14 @@ body {
     background: yellow;
     margin-top: 0;
 }
+
+
+#loginSection form input{
+    align-content: center;
+}
+
+
+
 
 a {
     text-decoration: none;
@@ -259,3 +268,194 @@ nav a.selected, nav a:hover {
     background-color: yellow;
     color: black;
 }
+
+#loginSection, #loginSection form {
+    color: blue;
+}
+
+#flightQuery{
+    display: block;
+    width: 90%;
+    margin: 10px 5%;
+    border-bottom: solid medium deeppink;
+
+}
+
+.trip_places {
+    font-size: 1.2em;
+    color: blue;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
+.trip_places leave {
+    color: green;
+}
+.trip_places sep {
+    font-size: 0.8em;
+    color: black;
+}
+
+.trip_date {
+    font-size: 0.8em;
+    text-align: left;
+}
+
+.trip_time {
+    font-size: 1.1em;
+}
+
+#adminManagers{
+    width: 90%;
+    margin: 0 5%;
+}
+
+#adminManagers form{
+    width: 90%;
+    margin: 0 5%;
+}
+
+#adminManagers form input{
+    margin: 0 5% 0 0;
+}
+
+.admin_man_table{
+    border-top: solid medium black;
+    width: 90%;
+    margin: 20px 5%;
+}
+
+.admin_man_table th {
+    font-size: 1.3em;
+    text-align: left;
+    padding: 20px 0 0 0;
+    width: 30%;
+}
+.admin_man_table td, .admin_man_table tr{
+    padding: 10px 0 0 0;
+    text-align: left;
+}
+
+.admin_man_table td {
+    width: 30%;
+}
+
+
+
+
+#adminFlights{
+    width: 90%;
+    margin: 0 5%;
+    padding: 0 0 10px 0;
+}
+
+#adminFlights form{
+    width: 90%;
+    margin: 0 5%;
+    background: #969696;
+}
+
+.admin_flight_type {
+    width: 90%;
+    margin: 0 5%;
+    background: #969696;
+}
+
+.admin_flight_info {
+    width: 80%;
+    margin: 0 10%;
+    padding: 0 0 10px 0;
+    background: #969696;
+}
+
+.admin_flight_info input{
+    margin: 0 5% 0 0;
+}
+
+.admin_flight_info_button {
+    float: right;
+    margin: 0 5% 10px 0;
+
+}
+
+.admin_flight_table {
+    border-top: solid medium black;
+    width: 90%;
+    margin: 20px 5%;
+}
+
+.admin_flight_table th {
+    font-size: 1.3em;
+    text-align: left;
+    padding: 20px 0 0 0;
+    width: 12.5%;
+}
+.admin_flight_table td, .admin_flight_table tr{
+    padding: 10px 0 0 0;
+    text-align: left;
+}
+
+.admin_flight_table td {
+    width: 12.5%;
+}
+
+
+
+#adminPlanes{
+    width: 90%;
+    margin: 0 5%;
+}
+
+#adminPlanes form{
+    width: 90%;
+    margin: 0 5%;
+}
+
+#adminPlanes form input{
+    margin: 0 5% 0 0;
+}
+
+.admin_planes_table {
+    border-top: solid medium black;
+    width: 90%;
+    margin: 20px 5%;
+}
+
+.admin_planes_table th {
+    font-size: 1.3em;
+    text-align: left;
+    padding: 20px 0 0 0;
+    width: 30%;
+}
+.admin_planes_table td, .admin_planes_table tr{
+    padding: 10px 0 0 0;
+    text-align: left;
+}
+
+.admin_planes_table td {
+    width: 30%;
+}
+
+
+/*
+#adminFlights form p1 {
+    width: 90%;
+    display: block;
+    font-size: 1.2em;
+    margin: 0 0 10px 0;
+}
+
+#adminFlights form p2 {
+    display: block;
+    width: 90%;
+    font-size: 1em;
+    margin: 0 0 10px 0;
+}
+
+#adminFlights form input {
+    width: 20%;
+    margin: 0 0 10px 0;
+}
+
+*/

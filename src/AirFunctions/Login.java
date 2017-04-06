@@ -1,7 +1,6 @@
-// Imported packages
+package AirFunctions;// Imported packages
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,10 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.jdbc.Driver;
-
-// Servlet class Login
-@WebServlet("/Login")
+// Servlet class AirFunctions.Login
+@WebServlet("/AirFunctions.Login")
 public class Login extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,7 +17,10 @@ public class Login extends HttpServlet {
         String userPassword = request.getParameter("userPassword");
 
         // I get an error locating com.mysql.jdc.Driver
-        //AccountFunctions AF = new AccountFunctions();
+        //AirFunctions.AccountFunctions AF = new AirFunctions.AccountFunctions();
+
+        System.out.println(userEmail);
+        System.out.println(userPassword);
 
         Connection c = AccountFunctions.OpenDatabase();
         // Checks if account is in system then redirects if it is a valid account
@@ -35,17 +35,22 @@ public class Login extends HttpServlet {
                 case 'A':
                 case 'a':
                     AccountFunctions.closeConnection(c);
+                    System.out.println("HERE AT ADMIN");
+                    mySession.setAttribute("role","admin");
                     response.sendRedirect("admin.jsp");
+
                     break;
                 // Checks if role is manager
                 case 'M':
                 case 'm':
                     AccountFunctions.closeConnection(c);
+                    mySession.setAttribute("role","manager");
                     response.sendRedirect("manager.jsp");
                     break;
                 // Customers
                 default:
                     AccountFunctions.closeConnection(c);
+                    mySession.setAttribute("role","customer");
                     response.sendRedirect("index.jsp");
             }
 
@@ -53,6 +58,7 @@ public class Login extends HttpServlet {
         // Redirects back to login screen if invalid account inputs
         else {
             AccountFunctions.closeConnection(c);
+            System.out.println("HERE AT ELSE");
             response.sendRedirect("login.jsp");
         }
     }

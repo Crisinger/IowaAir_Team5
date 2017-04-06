@@ -1,3 +1,5 @@
+package AirFunctions;
+
 import java.sql.*;
 
 /**
@@ -10,10 +12,9 @@ public class FlightsFunctions {
             boolean working = false;
             connection = AccountFunctions.OpenDatabase();
             //CreateFlightsTable(connection);
-            AddFlight(connection, 1,new Date(04,04,2017), new Time(8),"Chicago",
-                    new Date(04,04,2017), new Time(12), "Atlanta");
+            AddFlight(connection, 1,new Date(2005,04,15), new Time(5),"Boston", new Date(04,04,2017), new Time(12), "Orlando");
 
-            deleteFlight(connection, 1);
+            //deleteFlight(connection, 1);
             //working = checkLogin(connection,"test@gmail.com","test");
             //System.out.println(working);
         } catch(Exception e) {

@@ -1,4 +1,4 @@
-/**
+package AirFunctions; /**
  * Created by crisi_000 on 3/21/2017.
  */
 
@@ -12,9 +12,10 @@ public class AccountFunctions
         try {
             boolean working = false;
             connection = OpenDatabase();
+            //addAdmin(connection,"test.iowa.air@gmail.com","testtesttest123");
             //CreateAccountsTable(connection);
             //AddCustomer(connection, 2,"test@gmail.com","test");
-            working = checkLogin(connection,"test@gmail.com","test");
+            //working = checkLogin(connection,"test@gmail.com","test");
             System.out.println(working);
         } catch(Exception e) {
             e.printStackTrace();
@@ -23,7 +24,6 @@ public class AccountFunctions
 
 
     public AccountFunctions(){}
-
 
     public static Connection OpenDatabase()
     {
@@ -47,11 +47,13 @@ public class AccountFunctions
         Statement stmt = null;
         try {
             stmt = c.createStatement();
-            /*String sql = "CREATE TABLE ACCOUNTS " +
+            String sql = "CREATE TABLE ACCOUNTS " +
                     "(ID INT PRIMARY KEY     NOT NULL," +
                     " EMAIL           TEXT    NOT NULL, " +
-                    " PASSWORD        TEXT     NOT NULL)";*/
-            String sql = "ALTER TABLE ACCOUNTS ADD COLUMN ROLE TEXT NOT NULL";
+                    " PASSWORD        TEXT     NOT NULL)";
+            stmt.executeUpdate(sql);
+
+            sql = "ALTER TABLE ACCOUNTS ADD COLUMN ROLE TEXT NOT NULL";
             stmt.executeUpdate(sql);
             System.out.println("ID MODIFIED");
             //sql = "ALTER TABLE ACCOUNTS MODIFY COLUMN EMAIL TEXT NOT NULL UNIQUE";
@@ -133,12 +135,14 @@ public class AccountFunctions
         }
     }
 
-    public static void addManager(Connection c, String email, String password){
+    public static void addAdmin(Connection c, String email, String password){
         Statement stmt = null;
         try {
+            c.setAutoCommit(false);
+
             stmt = c.createStatement();
-            String sql = "INSERT INTO ACCOUNTS (ID,EMAIL,PASSWORD,ROLE) " +
-                    "VALUES ( '" + email + "' , '" + password + "' , 'MANAGER' );";
+            String sql = "INSERT INTO ACCOUNTS (EMAIL,PASSWORD,ROLE) " +
+                    "VALUES ('" + email + "' , '" + password + "' , 'ADMIN' );";
             stmt.executeUpdate(sql);
             stmt.close();
             c.commit();
@@ -147,6 +151,40 @@ public class AccountFunctions
             System.exit(0);
         }
     }
+
+    public static void addManager(Connection c, String email, String password){
+        Statement stmt = null;
+        try {
+            c.setAutoCommit(false);
+
+            stmt = c.createStatement();
+            String sql = "INSERT INTO ACCOUNTS (EMAIL,PASSWORD,ROLE) " +
+                    "VALUES ('" + email + "' , '" + password + "' , 'MANAGER' );";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.commit();
+        } catch (Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
+    public static void deleteManager(Connection c, Integer managerID){
+        Statement stmt = null;
+        try {
+            c.setAutoCommit(false);
+
+            stmt = c.createStatement();
+            String sql = "DELETE FROM accounts WHERE ID = "+managerID+";";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.commit();
+        } catch (Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
 
     public static Character checkRole(Connection c, String email){
         Statement stmt = null;

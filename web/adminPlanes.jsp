@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page import="AirFunctions.AdminFunctions" %>
 <%
     String accountText = "";
     if(session.getAttribute("role").toString().equals("admin")){
@@ -41,7 +41,7 @@
             <li>
                 <div class="account-dropdown">
                     <a href="adminPlanes.jsp">
-                        <button class="account-dropbutton">Planes</button>
+                        <button class="account-dropbutton selected">Planes</button>
                     </a>
                 </div>
             </li>
@@ -65,7 +65,7 @@
             <li>
                 <div class="account-dropdown">
                     <a href="admin.jsp">
-                        <button class="account-dropbutton selected"><%=accountText%>
+                        <button class="account-dropbutton"><%=accountText%>
                         </button>
                     </a>
                     <div class="account-dropdown-content">
@@ -76,6 +76,17 @@
         </ul>
     </nav>
 </header>
+
+<div id="adminPlanes">
+    <h1>Planes</h1>
+    <form action="AirFunctions.AdminFunctions">
+        Plane Type <input type="text" name="planeType" placeholder="Type" required>
+        Plane Capacity <input type="email" name="planeCapacity" placeholder="Capacity" required>
+        Number of Classes <input type="email" name="planeClasses" placeholder="Classes" required>
+        <button type="submit" name="addPlaneButton">Add Flight</button>
+    </form>
+    <%=AdminFunctions.getPlanes()%>
+</div>
 
 <footer>
 

@@ -103,7 +103,7 @@
     </section>
 
     <section id="main">
-        <form action="CreateAccount">
+        <form action="AirFunctions.CreateAccount">
             Email: <input type="text" name="userEmail" maxlength="40" align="middle" placeholder="Email" required><br>
             Password: <input type="password" name="userPassword" maxlength="16" align="middle" placeholder="Password"
                              required><br>
@@ -126,7 +126,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>AirFunctions.Login</title>
 </head>
 <style>
 body {
@@ -181,7 +181,7 @@ width:0%;">
 
 <body style = "text-align:center;">
 
-<form action="CreateAccount">
+<form action="AirFunctions.CreateAccount">
 <br>
 <br>
 <br>

@@ -104,12 +104,13 @@
         </p>
     </section>
 
-    <section id="main">
-        <form action="Login">
+    <section id="loginSection">
+        hello
+        <form action="AirFunctions.Login">
             User email: <input type="email" name="userEmail" maxlength="40" align="middle" placeholder="Email" required><br>
-            User password: <input type="password" name="userPassword" maxlength="10" align="middle"
+            User password: <input type="password" name="userPassword" maxlength="16" align="middle"
                                   placeholder="Password" required><br>
-            <input type="submit" value="Login">
+            <input type="submit" value="AirFunctions.Login">
         </form>
         <a href="createAccount.jsp">Create Account</a>
     </section>
@@ -133,7 +134,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>AirFunctions.Login</title>
 </head>
 <style>
 body {
@@ -188,7 +189,7 @@ width:0%;">
 
 <body style = "text-align:center;">
 
-<form action="Login">
+<form action="AirFunctions.Login">
 <br>
 <br>
 <br>
@@ -202,7 +203,7 @@ User password:
 <input type="password" name="userPassword" maxlength="10" align="middle" placeholder="Password" required>
 <br>
 <br>
-<input type="submit" value="Login">
+<input type="submit" value="AirFunctions.Login">
 <br>
 <br>
 <input type="button" value="Create Account" onchange="createAccount.jsp">

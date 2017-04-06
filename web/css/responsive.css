@@ -20,9 +20,6 @@ Tablet
     }
 
     #sidebar {
-        display: initial;
-
-        float: left;
         width: 100px;
         background: yellow;
         padding: 0 20px;
@@ -93,7 +90,8 @@ Desktop
     }
 
     h1 {
-        font-size: 2.5em;
+        margin-top: 0;
+        font-size: 2em;
     }
 
     h2 {
@@ -103,3 +101,4 @@ Desktop
 
 
 }
+/**/

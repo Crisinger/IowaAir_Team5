@@ -4,11 +4,12 @@
   Date: 3/23/2017
   Time: 1:49 PM
   To change this template use File | Settings | File Templates.
+
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page import="AirFunctions.FlightQuery"%>
 <%
-    String logPage, logSet, accountText, paymentPage, activePage, historyPage;
+    String logPage, logSet, accountText, paymentPage, activePage, historyPage, flightQuery;
 
     if (session.getAttribute("userEmail") != null) {
         accountText = session.getAttribute("userEmail").toString();
@@ -24,6 +25,12 @@
         paymentPage = "login.jsp";
         activePage = "login.jsp";
         historyPage = "login.jsp";
+    }
+
+    if(session.getAttribute("flightQuery") != null){
+        flightQuery = session.getAttribute("flightQuery").toString();
+    } else {
+        flightQuery = "nothing to show here";
     }
 
 %>
@@ -88,17 +95,24 @@
 <div id="viewwrapper">
 
     <section id="sidebar">
-        <p>
-            Home Page
-        </p>
-
+        <form action="AirFunctions.FlightQuery">
+            Departure Location:
+            <select name="startLocation" required>
+                <option selected="selected" value=""/>
+                <%=FlightQuery.getLocations("Departure_Location")%>
+            </select><br>
+            Arrival Location:
+            <select name="endLocation" required>
+                <option selected="selected" value=""/>
+                <%=FlightQuery.getLocations("Arrival_Location")%>
+            </select><br>
+            <input type="submit" value="Search"><br>
+        </form>
     </section>
 
-
-    <section id="main">
-        <p>
-            Iowa Air Loves You
-        </p>
+    <section>
+        <%=flightQuery%>
+        <%session.setAttribute("flightQuery",""); %>
     </section>
 
 </div>

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="AirFunctions.AdminFunctions" %>
 
 <%
     String accountText = "";
@@ -57,7 +58,7 @@
             <li>
                 <div class="account-dropdown">
                     <a href="adminManagers.jsp">
-                        <button class="account-dropbutton">Managers</button>
+                        <button class="account-dropbutton selected">Managers</button>
                     </a>
                 </div>
             </li>
@@ -65,7 +66,7 @@
             <li>
                 <div class="account-dropdown">
                     <a href="admin.jsp">
-                        <button class="account-dropbutton selected"><%=accountText%>
+                        <button class="account-dropbutton"><%=accountText%>
                         </button>
                     </a>
                     <div class="account-dropdown-content">
@@ -76,6 +77,17 @@
         </ul>
     </nav>
 </header>
+
+<div id="adminManagers">
+    <h1>Managers</h1>
+    <form action="AirFunctions.AdminFunctions">
+        Full Name: <input type="text" name="managerName" placeholder="Full Name" required>
+        Email: <input type="email" name="managerEmail" placeholder="Email" required>
+        Confirm Email: <input type="email" name="managerEmail" placeholder="Email" required>
+        <button type="submit" name="addManagerButton">Add Manager</button>
+    </form>
+    <%=AdminFunctions.getManagers()%>
+</div>
 
 <footer>
 
