@@ -12,7 +12,7 @@ public class AccountFunctions
         try {
             boolean working = false;
             connection = OpenDatabase();
-            //addAdmin(connection,"test.iowa.air@gmail.com","testtesttest123");
+            addAdmin(connection,"admin@gmail.com","testing123");
             //CreateAccountsTable(connection);
             //AddCustomer(connection, 2,"test@gmail.com","test");
             //working = checkLogin(connection,"test@gmail.com","test");

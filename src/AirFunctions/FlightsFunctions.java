@@ -11,8 +11,9 @@ public class FlightsFunctions {
         try {
             boolean working = false;
             connection = AccountFunctions.OpenDatabase();
-            //CreateFlightsTable(connection);
-            AddFlight(connection, 1,new Date(2005,04,15), new Time(5),"Boston", new Date(04,04,2017), new Time(12), "Orlando");
+            CreateFlightsTable(connection);
+            // add flight will not work until the city references (1 and 2) are defined in the city table
+            //AddFlight(connection, 1,new Date(2005,04,15), new Time(5),1, new Date(04,04,2017), new Time(12), 2, 250);
 
             //deleteFlight(connection, 1);
             //working = checkLogin(connection,"test@gmail.com","test");
@@ -31,20 +32,35 @@ public class FlightsFunctions {
         Statement stmt = null;
         try {
             stmt = c.createStatement();
-            String sql = "CREATE TABLE `accounts`.`flights` (\n" +
+            String sql = "DROP TABLE flights;";
+            stmt.executeUpdate(sql);
+            sql = "CREATE TABLE `accounts`.`flights` (\n" +
                     "  `Flight_ID` INT NOT NULL AUTO_INCREMENT,\n" +
                     "  `Plane_ID` INT NOT NULL,\n" +
                     "  `DEPARTURE_DATE` DATE NOT NULL,\n" +
                     "  `DEPARTURE_TIME` TIME NOT NULL,\n" +
-                    "  `DEPARTURE_LOCATION` TEXT NOT NULL,\n" +
+                    "  `DEPARTURE_LOCATION` INT NOT NULL,\n" +
                     "  `ARRIVAL_DATE` DATE NOT NULL,\n" +
                     "  `ARRIVAL_TIME` TIME NOT NULL,\n" +
-                    "  `ARRIVAL_LOCATION` TEXT NOT NULL,\n" +
+                    "  `ARRIVAL_LOCATION` INT NOT NULL,\n" +
+                    "  `PRICE` INT NOT NULL,\n" +
                     "  PRIMARY KEY (`Flight_ID`),\n" +
                     "  INDEX `PLANE_idx` (`Plane_ID` ASC),\n" +
+                    "  INDEX `DEPARTURE_idx` (`DEPARTURE_LOCATION` ASC),\n" +
+                    "  INDEX `ARRIVAL_idx` (`ARRIVAL_LOCATION` ASC),\n" +
                     "  CONSTRAINT `PLANE`\n" +
                     "    FOREIGN KEY (`Plane_ID`)\n" +
                     "    REFERENCES `accounts`.`planes` (`ID`)\n" +
+                    "    ON DELETE NO ACTION\n" +
+                    "    ON UPDATE NO ACTION,\n" +
+                    "  CONSTRAINT `DEPARTURE`\n" +
+                    "    FOREIGN KEY (`DEPARTURE_LOCATION`)\n" +
+                    "    REFERENCES `accounts`.`cities` (`ID`)\n" +
+                    "    ON DELETE NO ACTION\n" +
+                    "    ON UPDATE NO ACTION,\n" +
+                    "  CONSTRAINT `ARRIVAL`\n" +
+                    "    FOREIGN KEY (`ARRIVAL_LOCATION`)\n" +
+                    "    REFERENCES `accounts`.`cities` (`ID`)\n" +
                     "    ON DELETE NO ACTION\n" +
                     "    ON UPDATE NO ACTION);";
             stmt.executeUpdate(sql);
@@ -59,8 +75,8 @@ public class FlightsFunctions {
 
 
 
-    public static void AddFlight(Connection con, int planeID, Date deptDate, Time deptTime, String deptLocation,
-                                 Date arrivalDate, Time arrivalTime, String arrivalLocation)
+    public static void AddFlight(Connection con, int planeID, Date deptDate, Time deptTime, int deptLocation,
+                                 Date arrivalDate, Time arrivalTime, int arrivalLocation, int price)
     //i assume that if a plane has first class, it also has business and coach. If it has business it also has coach
     {
         Connection c = con;
@@ -69,9 +85,9 @@ public class FlightsFunctions {
 
             c.setAutoCommit(false);
             stmt = c.createStatement();
-            String sql = "INSERT INTO FLIGHTS (PLANE_ID,DEPARTURE_DATE,DEPARTURE_TIME,DEPARTURE_LOCATION,ARRIVAL_DATE,ARRIVAL_TIME,ARRIVAL_LOCATION) " +
+            String sql = "INSERT INTO FLIGHTS (PLANE_ID,DEPARTURE_DATE,DEPARTURE_TIME,DEPARTURE_LOCATION,ARRIVAL_DATE,ARRIVAL_TIME,ARRIVAL_LOCATION,PRICE) " +
                     "VALUES ( '" + planeID + "' , '" + deptDate + "' , '"+ deptTime +"' , '"+ deptLocation +"' , '"+ arrivalDate + "','" +
-                    arrivalTime + "','" + arrivalLocation +"');";
+                    arrivalTime + "','" + arrivalLocation +"','" + price + "');";
             stmt.executeUpdate(sql);
 
             stmt.close();
