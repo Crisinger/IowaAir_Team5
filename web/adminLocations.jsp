@@ -29,10 +29,6 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%=FlightQuery.getDates()%>
-    <%=FlightQuery.addPickers("flightDeparture")%>
-    <%=FlightQuery.addPickers("flightArrival")%>
-
 </head>
 
 <body>
@@ -46,7 +42,7 @@
             <li>
                 <div class="account-dropdown">
                     <a href="adminLocations.jsp">
-                        <button class="account-dropbutton">Locations</button>
+                        <button class="account-dropbutton selected">Locations</button>
                     </a>
                 </div>
             </li>
@@ -62,7 +58,7 @@
             <li>
                 <div class="account-dropdown">
                     <a href="adminFlights.jsp">
-                        <button class="account-dropbutton selected">Flights</button>
+                        <button class="account-dropbutton">Flights</button>
                     </a>
                 </div>
             </li>
@@ -90,37 +86,17 @@
     </nav>
 </header>
 
-<div id="adminFlights">
-    <h1>Flights</h1>
+<div id="adminLocations">
+    <h1>Locations</h1>
     <form action="AirFunctions.AdminFunctions">
-        <p class="admin_flight_type"><b>Departure</b></p>
-        <p class="admin_flight_info">
-            Date: <input type="text" name="flightDepartureDate" placeholder="Select Date" id="flightDeparturedatepicker" required>
-            Time: <input type="text" name="flightDepartureTime" placeholder="Select Time" id="flightDeparturetimepicker" required>
-            Location: <input type="text" name="flightDepartureLocation" placeholder="City of Airport" required>
-        </p>
-        <p class="admin_flight_type"><b>Arrival</b></p>
-        <p class="admin_flight_info">
-            Date: <input type="text" name="flightArrivalDate" placeholder="Select Date" id="flightArrivaldatepicker" required>
-            Time: <input type="text" name="flightArrivalTime" placeholder="Select Time" id="flightArrivaltimepicker" required>
-            Location: <input type="text" name="flightArrivalLocation" placeholder="City of Airport" required>
-        </p>
-        <p class="admin_flight_plane"><b>Plane</b></p>
-        <p class = "admin_flight_plane_info">
-            Type:
-            <select id="admin_plane_type" required>
-                <option selected="selected" value=""/>
-                <%=AdminFunctions.getPlaneInfo("Plane_Type")%>
-            </select>
-            Available:
-            <select id="admin_plane_available" required>
-                <option selected="selected" value=""/>
-            </select>
-        </p>
-        <button type="submit" name="addFlightButton" class="admin_flight_info_button">Add Flight</button>
+        State: <input type="text" name="stateName" placeholder="State" required>
+        City: <input type="text" name="cityName" placeholder="City" required>
+        Airport: <input type="text" name="airportName" placeholder="Airport" required>
+        <button type="submit" name="addLocationButton">Add Location</button>
     </form>
-    <%=AdminFunctions.getFlights()%>
+    <%=AdminFunctions.getAirports()%>
 </div>
+
 
 <footer>
 

@@ -306,6 +306,9 @@ nav a.selected, nav a:hover {
     font-size: 1.1em;
 }
 
+
+
+
 #adminManagers{
     width: 90%;
     margin: 0 5%;
@@ -438,6 +441,8 @@ nav a.selected, nav a:hover {
 }
 
 
+
+
 /*
 #adminFlights form p1 {
     width: 90%;
@@ -459,3 +464,4 @@ nav a.selected, nav a:hover {
 }
 
 */
+

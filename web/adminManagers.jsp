@@ -29,6 +29,49 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="js/managerModal.js" ></script>
+
+    <style>
+
+        /* The Modal (background) */
+        .managerModal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        /* Modal Content */
+        .managerModalContent {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+        }
+
+        /* The Close Button */
+        .managerModalClose {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .managerModalClose:hover,
+        .managerModalClose:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,6 +82,14 @@
     </a>
     <nav>
         <ul>
+            <li>
+                <div class="account-dropdown">
+                    <a href="adminLocations.jsp">
+                        <button class="account-dropbutton">Locations</button>
+                    </a>
+                </div>
+            </li>
+
             <li>
                 <div class="account-dropdown">
                     <a href="adminPlanes.jsp">

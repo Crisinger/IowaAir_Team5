@@ -24,20 +24,52 @@ public class AdminFunctions extends HttpServlet {
             removeManager(request.getParameter("managerID"));
             response.sendRedirect("adminManagers.jsp");
 
-        } else if (request.getParameter("addFlightButton") != null){
+        } else if(request.getParameter("updateManagerButton") != null){
 
+            //removeManager(request.getParameter("managerID"));
+            response.sendRedirect("adminManagers.jsp");
+
+        }else if(request.getParameter("addFlightButton") != null){
 
 
         } else if(request.getParameter("editFlightButton") != null){
 
 
+
+        } else if(request.getParameter("addLocationButton") != null){
+
+            addLocation(request.getParameter("cityName"),
+                    request.getParameter("stateName"),
+                    request.getParameter("airportName"));
+            response.sendRedirect("adminLocations.jsp");
+
+
+        } else if(request.getParameter("editLocationButton") != null){
+
+            response.sendRedirect("adminLocations.jsp");
+
         }
+    }
+
+    public static void addLocation(String cityName, String stateName, String airportName){
+
+        try {
+            Connection con = AccountFunctions.OpenDatabase();
+            if(!CityFunctions.checkForCity(con, cityName, stateName, airportName)){
+                CityFunctions.addCity(con,cityName, stateName, airportName);
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static String getManagers(){
         Connection con = AccountFunctions.OpenDatabase();
         Statement stmt = null;
         String htmlCode = "";
+        String modalCode = "";
 
         try{
             con.setAutoCommit(false);
@@ -51,17 +83,36 @@ public class AdminFunctions extends HttpServlet {
             htmlCode += "</tr>";
 
             while(rs.next()){
-                htmlCode += "<form action=\"AirFunctions.AdminFunctions\">";
-                htmlCode += "<input type=\"hidden\" name=\"managerID\" value=\""+rs.getString("ID") + "\" >";
+                String id = rs.getString("id");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+
+
                 htmlCode += "<tr>";
-                htmlCode += "<td>" + rs.getString("email") + "</td>";
-                htmlCode += "<td>" + rs.getString("password") + "</td>";
-                htmlCode += "<td> <button type=\"submit\" name=\"removeManagerButton\">Remove</button></td>";
+                htmlCode += "<td>" + email + "</td>";
+                htmlCode += "<td>" + password + "</td>";
+                htmlCode += "<td> <button name=\"editManagerButton\" onclick=\"viewModal("+rs.getString("ID")+")\"> Edit </button></td>";
                 htmlCode += "</tr>";
-                htmlCode += "</form>";
+
+                modalCode += "<div id=\"managerModal"+id+"\" class=\"managerModal\">";
+                modalCode += "<div class=\"managerModalContent\">";
+                modalCode += "<span class=\"managerModalClose\" onclick=\"closeEditManager(&quot;"+id+"&quot;)\">&times;</span>";
+                modalCode += "<form action=\"AirFunctions.AdminFunctions\">";
+                modalCode += "<input type=\"hidden\" name=\"managerID\" value=\""+ id + "\" >";
+                modalCode += "<b>Email</b>";
+                modalCode += "<input type=\"text\" name=\"managerEmail\" value=\""+ email +"\" required>";
+                modalCode += "<b>Password</b>";
+                modalCode += "<input type=\"text\" name=\"managerPassword\" value=\""+ password +"\" required>";
+                modalCode += "<button type=\"submit\" name=\"updateManagerButton\">Update</button>";
+                modalCode += "<button type=\"submit\" name=\"removeManagerButton\">Remove</button>";
+                modalCode += "</form>";
+                modalCode += "</div>\n</div>";
             }
 
+            //
+
             htmlCode += "</table>";
+            htmlCode += modalCode;
 
             con.close();
 
@@ -192,9 +243,6 @@ public class AdminFunctions extends HttpServlet {
     }
 
     //protected static String getPlaneList(String type, String capacity, String )
-
-
-
     protected static void addManager(String managerEmail){
 
         try {
@@ -206,8 +254,30 @@ public class AdminFunctions extends HttpServlet {
         }
     }
 
+    public static String getManager(String id, String specific){
+        Connection con = AccountFunctions.OpenDatabase();
+        Statement stmt = null;
+        String htmlCode = "";
+
+        try{
+            con.setAutoCommit(false);
+
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE ID='"+id+"';");
+            htmlCode = rs.getString(specific);
+            con.close();
+        } catch (Exception e){
+            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+
+        }
+
+        return htmlCode;
+    }
+
+
+
     protected static void removeManager( String managerID){
-        System.out.println(managerID);
         try {
             Connection con = AccountFunctions.OpenDatabase();
             AccountFunctions.deleteManager(con,Integer.parseInt(managerID));
@@ -238,7 +308,16 @@ public class AdminFunctions extends HttpServlet {
         return password;
     }
 
-
-
+    public static String getAirports(){
+        String htmlCode = "";
+        try {
+            Connection con = AccountFunctions.OpenDatabase();
+            htmlCode = CityFunctions.getAirportLocation(con);
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return htmlCode;
+    }
 }
 

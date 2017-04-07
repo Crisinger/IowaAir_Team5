@@ -40,6 +40,14 @@
         <ul>
             <li>
                 <div class="account-dropdown">
+                    <a href="adminLocations.jsp">
+                        <button class="account-dropbutton">Locations</button>
+                    </a>
+                </div>
+            </li>
+
+            <li>
+                <div class="account-dropdown">
                     <a href="adminPlanes.jsp">
                         <button class="account-dropbutton selected">Planes</button>
                     </a>
