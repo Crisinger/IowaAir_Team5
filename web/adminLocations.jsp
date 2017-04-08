@@ -6,8 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="AirFunctions.AdminFunctions" %>
-<%@ page import="AirFunctions.FlightQuery" %>
+<%@ page import="AirFunctions.Admin.AdminLocations" %>
+<%@ page import="AirFunctions.CityFunctions" %>
 <%
     String accountText = "";
     if(session.getAttribute("role").toString().equals("admin")){
@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/adminLocation.js" ></script>
 </head>
 
 <body>
@@ -88,13 +89,12 @@
 
 <div id="adminLocations">
     <h1>Locations</h1>
-    <form action="AirFunctions.AdminFunctions">
-        State: <input type="text" name="stateName" placeholder="State" required>
-        City: <input type="text" name="cityName" placeholder="City" required>
-        Airport: <input type="text" name="airportName" placeholder="Airport" required>
+    <form action="AirFunctions.Admin.AdminLocations">
+        <%=CityFunctions.getStates()%>
+        <%=CityFunctions.getCities()%>
         <button type="submit" name="addLocationButton">Add Location</button>
     </form>
-    <%=AdminFunctions.getAirports()%>
+    <%=AdminLocations.getAirports()%>
 </div>
 
 

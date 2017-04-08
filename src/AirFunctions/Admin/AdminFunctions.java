@@ -1,4 +1,6 @@
-package AirFunctions;// Imported packages
+package AirFunctions.Admin;// Imported packages
+import AirFunctions.AccountFunctions;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -10,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
 import java.util.Random;
 
-@WebServlet("/AirFunctions.AdminFunctions")
+@WebServlet("/AirFunctions.Admin.AdminFunctions")
 public class AdminFunctions extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,35 +36,7 @@ public class AdminFunctions extends HttpServlet {
 
         } else if(request.getParameter("editFlightButton") != null){
 
-
-
-        } else if(request.getParameter("addLocationButton") != null){
-
-            addLocation(request.getParameter("cityName"),
-                    request.getParameter("stateName"),
-                    request.getParameter("airportName"));
-            response.sendRedirect("adminLocations.jsp");
-
-
-        } else if(request.getParameter("editLocationButton") != null){
-
-            response.sendRedirect("adminLocations.jsp");
-
         }
-    }
-
-    public static void addLocation(String cityName, String stateName, String airportName){
-
-        try {
-            Connection con = AccountFunctions.OpenDatabase();
-            if(!CityFunctions.checkForCity(con, cityName, stateName, airportName)){
-                CityFunctions.addCity(con,cityName, stateName, airportName);
-            }
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public static String getManagers(){
@@ -97,7 +71,7 @@ public class AdminFunctions extends HttpServlet {
                 modalCode += "<div id=\"managerModal"+id+"\" class=\"managerModal\">";
                 modalCode += "<div class=\"managerModalContent\">";
                 modalCode += "<span class=\"managerModalClose\" onclick=\"closeEditManager(&quot;"+id+"&quot;)\">&times;</span>";
-                modalCode += "<form action=\"AirFunctions.AdminFunctions\">";
+                modalCode += "<form action=\"AirFunctions.Admin.AdminFunctions\">";
                 modalCode += "<input type=\"hidden\" name=\"managerID\" value=\""+ id + "\" >";
                 modalCode += "<b>Email</b>";
                 modalCode += "<input type=\"text\" name=\"managerEmail\" value=\""+ email +"\" required>";
@@ -108,8 +82,6 @@ public class AdminFunctions extends HttpServlet {
                 modalCode += "</form>";
                 modalCode += "</div>\n</div>";
             }
-
-            //
 
             htmlCode += "</table>";
             htmlCode += modalCode;
@@ -124,6 +96,78 @@ public class AdminFunctions extends HttpServlet {
 
         return htmlCode;
     }
+    public static void updateManager(String id, String email, String password){
+
+        try {
+            Connection con = AccountFunctions.OpenDatabase();
+            AccountFunctions.updateAccount( con, id, email, password, "MANAGER");
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public static String getManager(String id, String specific){
+        Connection con = AccountFunctions.OpenDatabase();
+        Statement stmt = null;
+        String htmlCode = "";
+
+        try{
+            con.setAutoCommit(false);
+
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE ID='"+id+"';");
+            htmlCode = rs.getString(specific);
+            con.close();
+        } catch (Exception e){
+            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+
+        }
+
+        return htmlCode;
+    }
+    protected static void addManager(String managerEmail){
+
+        try {
+            Connection con = AccountFunctions.OpenDatabase();
+            AccountFunctions.addAccount(con,managerEmail,randomPassword(),"MANAGER");
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    protected static void removeManager( String managerID){
+        try {
+            Connection con = AccountFunctions.OpenDatabase();
+            AccountFunctions.deleteAccount(con,managerID);
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private static String randomPassword(){
+        String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String beta = "abcdefghijklmnopqrstuvwxyz";
+        String numeric = "0123456789";
+
+        Random rand = new Random(System.nanoTime());
+
+        String password = "";
+
+        for(int i=0; i<4; i++){
+
+            password += alpha.charAt(rand.nextInt(alpha.length()));
+            password += beta.charAt(rand.nextInt(beta.length()));
+            password += beta.charAt(rand.nextInt(beta.length()));
+            password += numeric.charAt(rand.nextInt(numeric.length()));
+
+        }
+
+        return password;
+    }
+
+
 
     public static String getFlights(){
         Connection con = AccountFunctions.OpenDatabase();
@@ -146,7 +190,7 @@ public class AdminFunctions extends HttpServlet {
             htmlCode += "</tr>";
 
             while(rs.next()){
-                htmlCode += "<form action=\"AirFunctions.AdminFunctions\">";
+                htmlCode += "<form action=\"AirFunctions.Admin.AdminFunctions\">";
                 htmlCode += "<input type=\"hidden\" name=\"flightID\" value=\""+rs.getString("Flight_ID") + "\" >";
                 htmlCode += "<tr>";
                 htmlCode += "<td>" + rs.getString("Departure_Date") + "</td>";
@@ -191,7 +235,7 @@ public class AdminFunctions extends HttpServlet {
             htmlCode += "</tr>";
 
             while(rs.next()){
-                htmlCode += "<form action=\"AirFunctions.AdminFunctions\">";
+                htmlCode += "<form action=\"AirFunctions.Admin.AdminFunctions\">";
                 htmlCode += "<input type=\"hidden\" name=\"planeID\" value=\""+rs.getString("id") + "\" >";
                 htmlCode += "<tr>";
                 htmlCode += "<td>" + rs.getString("Plane_Type") + "</td>";
@@ -242,96 +286,5 @@ public class AdminFunctions extends HttpServlet {
         return htmlCode;
     }
 
-    //protected static String getPlaneList(String type, String capacity, String )
-    protected static void addManager(String managerEmail){
-
-        try {
-            Connection con = AccountFunctions.OpenDatabase();
-            AccountFunctions.addManager(con,managerEmail,randomPassword());
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static String getManager(String id, String specific){
-        Connection con = AccountFunctions.OpenDatabase();
-        Statement stmt = null;
-        String htmlCode = "";
-
-        try{
-            con.setAutoCommit(false);
-
-            stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE ID='"+id+"';");
-            htmlCode = rs.getString(specific);
-            con.close();
-        } catch (Exception e){
-            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-
-        }
-
-        return htmlCode;
-    }
-
-
-
-    protected static void removeManager( String managerID){
-        try {
-            Connection con = AccountFunctions.OpenDatabase();
-            AccountFunctions.deleteManager(con,Integer.parseInt(managerID));
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static String randomPassword(){
-        String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String beta = "abcdefghijklmnopqrstuvwxyz";
-        String numeric = "0123456789";
-
-        Random rand = new Random(System.nanoTime());
-
-        String password = "";
-
-        for(int i=0; i<4; i++){
-
-            password += alpha.charAt(rand.nextInt(alpha.length()));
-            password += beta.charAt(rand.nextInt(beta.length()));
-            password += beta.charAt(rand.nextInt(beta.length()));
-            password += numeric.charAt(rand.nextInt(numeric.length()));
-
-        }
-
-        return password;
-    }
-
-    public static String getAirports(){
-        String htmlCode = "";
-        try {
-            Connection con = AccountFunctions.OpenDatabase();
-            htmlCode = CityFunctions.getAirportLocation(con);
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return htmlCode;
-    }
-
-    public static void updateManager(String id, String email, String password){
-
-        try {
-            Connection con = AccountFunctions.OpenDatabase();
-            AccountFunctions.updateAccount( con, id, email, password, "MANAGER");
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-
-    }
 }
 

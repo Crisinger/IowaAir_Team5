@@ -124,7 +124,6 @@ public class AccountFunctions
         return found;
     }
 
-
     public static void closeConnection(Connection c){
         try {
             c.close();
@@ -152,14 +151,37 @@ public class AccountFunctions
         }
     }
 
-    public static void addManager(Connection c, String email, String password){
+    public static boolean addAccount(Connection c, String email, String password, String role){
+        Statement stmt = null;
+        boolean accountAdded = false;
+        try {
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE email='"+email+"';");
+
+            if(!rs.next()){
+                String sql = "INSERT INTO ACCOUNTS (EMAIL,PASSWORD,ROLE) " +
+                        "VALUES ('" + email + "' , '" + password + "' , '"+role+"' );";
+                stmt.executeUpdate(sql);
+                stmt.close();
+                accountAdded = true;
+            }
+            c.commit();
+        } catch (Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+        return accountAdded;
+    }
+
+    public static void deleteAccount(Connection c, String accountID){
         Statement stmt = null;
         try {
             c.setAutoCommit(false);
 
             stmt = c.createStatement();
-            String sql = "INSERT INTO ACCOUNTS (EMAIL,PASSWORD,ROLE) " +
-                    "VALUES ('" + email + "' , '" + password + "' , 'MANAGER' );";
+            String sql = "DELETE FROM accounts WHERE ID = "+accountID+";";
             stmt.executeUpdate(sql);
             stmt.close();
             c.commit();
@@ -168,23 +190,6 @@ public class AccountFunctions
             System.exit(0);
         }
     }
-
-    public static void deleteManager(Connection c, Integer managerID){
-        Statement stmt = null;
-        try {
-            c.setAutoCommit(false);
-
-            stmt = c.createStatement();
-            String sql = "DELETE FROM accounts WHERE ID = "+managerID+";";
-            stmt.executeUpdate(sql);
-            stmt.close();
-            c.commit();
-        } catch (Exception e){
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-        }
-    }
-
 
     public static Character checkRole(Connection c, String email){
         Statement stmt = null;
@@ -214,13 +219,9 @@ public class AccountFunctions
     public static void updateAccount(Connection con, String id, String email, String password, String role){
         Statement stmt = null;
         try {
-            con.setAutoCommit(false);
-            stmt = con.createStatement();
-            String value = "('"+id+"','"+email+"','"+password+"','"+role+"')";
-            String update = "id='"+id+"', email='"+email+"', password='"+password+"', role='"+role+"'";
-            String sql = "INSERT INTO accounts (id, email, password, role) VALUES "+value+" ON DUPLICATE KEY UPDATE "+update+";";
-            stmt.executeUpdate(sql);
-            stmt.close();
+            if(addAccount(con, email, password, role)){
+                deleteAccount(con, id);
+            }
             con.commit();
         } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
