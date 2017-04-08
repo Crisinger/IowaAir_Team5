@@ -210,4 +210,21 @@ public class AccountFunctions
         }
         return result;
     }
+
+    public static void updateAccount(Connection con, String id, String email, String password, String role){
+        Statement stmt = null;
+        try {
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            String value = "('"+id+"','"+email+"','"+password+"','"+role+"')";
+            String update = "id='"+id+"', email='"+email+"', password='"+password+"', role='"+role+"'";
+            String sql = "INSERT INTO accounts (id, email, password, role) VALUES "+value+" ON DUPLICATE KEY UPDATE "+update+";";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            con.commit();
+        } catch (Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
 }

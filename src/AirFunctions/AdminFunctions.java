@@ -26,7 +26,7 @@ public class AdminFunctions extends HttpServlet {
 
         } else if(request.getParameter("updateManagerButton") != null){
 
-            //removeManager(request.getParameter("managerID"));
+            updateManager(request.getParameter("managerID"),request.getParameter("managerEmail"), request.getParameter("managerPassword"));
             response.sendRedirect("adminManagers.jsp");
 
         }else if(request.getParameter("addFlightButton") != null){
@@ -318,6 +318,20 @@ public class AdminFunctions extends HttpServlet {
             e.printStackTrace();
         }
         return htmlCode;
+    }
+
+    public static void updateManager(String id, String email, String password){
+
+        try {
+            Connection con = AccountFunctions.OpenDatabase();
+            AccountFunctions.updateAccount( con, id, email, password, "MANAGER");
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 }
 
