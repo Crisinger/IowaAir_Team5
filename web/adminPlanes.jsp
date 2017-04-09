@@ -6,7 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="AirFunctions.Admin.AdminFunctions" %>
+<%@ page import="AirFunctions.Admin.AdminPlaneModels" %>
+<%@ page import="AirFunctions.Admin.AdminPlanes" %>
+
 <%
     String accountText = "";
     if(session.getAttribute("role").toString().equals("admin")){
@@ -28,6 +30,49 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="js/planeModelModal.js" ></script>
+
+    <style>
+
+        /* The Modal (background) */
+        .planeModelModal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        /* Modal Content */
+        .planeModelModalContent {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+        }
+
+        /* The Close Button */
+        .planeModelModalClose {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .planeModelModalClose:hover,
+        .planeModelModalClose:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -86,14 +131,45 @@
 </header>
 
 <div id="adminPlanes">
-    <h1>Planes</h1>
-    <form action="AirFunctions.AdminFunctions">
-        Plane Type <input type="text" name="planeType" placeholder="Type" required>
-        Plane Capacity <input type="text" name="planeCapacity" placeholder="Capacity" required>
-        Number of Classes <input type="text" name="planeClasses" placeholder="Classes" required>
-        <button type="submit" name="addPlaneButton">Add Flight</button>
+    <h1>New Plane Model</h1>
+    <form action="AirFunctions.Admin.AdminPlaneModels">
+        <ul class="modelForm">
+            <li><b>Plane Model: </b> <input type="text" name="planeModel" placeholder="Type" maxlength="40" required></li>
+            <li><b>Carrying Capacity (persons): </b><input type="number" name="modelCapacity" placeholder="Capacity" min="1" max="999" maxlength = "3" required></li>
+            <li><b>Fuel Capacity (tonnes): </b><input type="number" name="modelFuel" placeholder="tonnes" min="1" max="300" maxlength = "6" required></li>
+            <li><b>Fuel Burn Rate (kg/km): </b><input type="number" name="modelBurn" placeholder="kg/km" min="1" max="10" maxlength = "4" required></li>
+            <li><b>Average Velocity (km/hr): </b><input type="number" name="modelVelocity" placeholder="km/hr" min="1" max="2000" maxlength = "4" required></li>
+            <li>
+                <div class="classesCheckboxLabel">
+                    <b>Available Classes</b>
+                    <ul class="classesCheckbox" >
+                        <li><input type="checkbox" name="hasEconomyClass" value="true" title="Economy">Economy</li>
+                        <li><input type="checkbox" name="hasBusinessClass" value="true" title="Business">Business</li>
+                        <li><input type="checkbox" name="hasFirstClass" value="true" title="First">First</li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <button type="submit" name="addPlaneModelButton">Add Model</button>
     </form>
-    <%=AdminFunctions.getPlanes()%>
+    <h1>New Plane</h1>
+    <form action="AirFunctions.Admin.AdminPlanes">
+        <ul class="planeForm">
+            <li><b>Plane Type: </b></li>
+            <li><b>Capacity: </b></li>
+            <li><b>Economy Seats: </b></li>
+            <li><b>Business Seats: </b></li>
+            <li><b>First Seats: </b></li>
+            <li><b>Base Price: </b></li>
+            <li><b>Economy Price Multiplier: </b></li>
+            <li><b>Business Price Multiplier: </b></li>
+            <li><b>First Price Multiplier: </b></li>
+        </ul>
+        <button type="submit" name="addPlaneButton">Add Plane</button>
+    </form>
+
+    <%=AdminPlaneModels.getPlaneModels()%>
+
 </div>
 
 <footer>
