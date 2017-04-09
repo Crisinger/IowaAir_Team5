@@ -189,7 +189,7 @@ public class CityFunctions {
 
                     if(rs.next()) {
                         if (rs.getString("Count(*)").equals("0")) {
-                            sql = "INSERT INTO cities (CITYNAME, STATE, ACTIVE) VALUES ('" + currentCity + "', '" + currentState + "', false, 0.0, 0.0);";
+                            sql = "INSERT INTO cities (CITYNAME, STATE, STATE_CODE, ACTIVE, latitude, longitude) VALUES ('" + currentCity + "', '" + currentState + "', 'AA', false, 0.0, 0.0);";
                             stmt = con.createStatement();
                             stmt.executeUpdate(sql);
                         }
@@ -207,6 +207,7 @@ public class CityFunctions {
         }
         System.out.println("Table created successfully");
         addLatAndLon(con);
+        addStateCodes(con);
 
     }
 
@@ -552,6 +553,7 @@ public class CityFunctions {
                 ResultSet rs = stmt.executeQuery(sql);
 
                 if(rs.next()){
+                    stmt = con.createStatement();
                     stmt.executeUpdate("UPDATE cities SET latitude="+lat+", longitude="+lon+" WHERE id="+rs.getString("id")+";");
                 }
 
@@ -566,4 +568,81 @@ public class CityFunctions {
         }
         System.out.println("Table created successfully");
     }
+
+    private static void addStateCodes(Connection con){
+
+        String[][] stateCodes = {{"Alabama ","AL"},
+                {"Alaska","AK"},
+                {"Arizona","AZ"},
+                {"Arkansas","AR"},
+                {"California","CA"},
+                {"Colorado","CO"},
+                {"Connecticut","CT"},
+                {"Delaware","DE"},
+                {"Florida","FL"},
+                {"Georgia","GA"},
+                {"Hawaii","HI"},
+                {"Idaho","ID"},
+                {"Illinois","IL"},
+                {"Indiana","IND"},
+                {"Iowa","IA"},
+                {"Kansas","KS"},
+                {"Kentucky","KY"},
+                {"Louisiana","LA"},
+                {"Maine","ME"},
+                {"Maryland","MD"},
+                {"Massachusetts","MA"},
+                {"Michigan","MI"},
+                {"Minnesota","MN"},
+                {"Mississippi","MS"},
+                {"Missouri","MO"},
+                {"Montana","MT"},
+                {"Nebraska","NE"},
+                {"Nevada","NV"},
+                {"New Hampshire","NH"},
+                {"New Jersey","NJ"},
+                {"New Mexico","NM"},
+                {"New York","NY"},
+                {"North Carolina","NC"},
+                {"North Dakota","ND"},
+                {"Ohio","OH"},
+                {"Oklahoma","OK"},
+                {"Oregon","ORE"},
+                {"Pennsylvania","PA"},
+                {"Rhode Island","RI"},
+                {"South Carolina","SC"},
+                {"South Dakota","SD"},
+                {"Tennessee","TN"},
+                {"Texas","TX"},
+                {"Utah","UT"},
+                {"Vermont","VT"},
+                {"Virginia","VA"},
+                {"Washington","WA"},
+                {"West Virginia","WV"},
+                {"Wisconsin","WI"},
+                {"Wyoming","WY"}};
+        try {
+
+            con.setAutoCommit(false);
+            Statement stmt = null;
+            stmt = con.createStatement();
+
+            for(int i=0; i<stateCodes.length; i++){
+                String sql = "UPDATE cities SET STATE_CODE ='"+stateCodes[i][1]+"' WHERE STATE ='"+stateCodes[i][0]+"';";
+                stmt.executeUpdate(sql);
+            }
+
+            stmt.close();
+            con.commit();
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("UPDATED STATE CODES successfully");
+
+
+    }
+
+
 }
