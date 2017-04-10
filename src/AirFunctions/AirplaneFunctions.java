@@ -125,16 +125,27 @@ public class AirplaneFunctions {
 
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM planemodels ORDER BY PLANE_MODEL;");
-            htmlCode += "<table class=\"admin_man_table\"><tr>";
-            htmlCode += "<th><b>Model</b></th>";
-            htmlCode += "<th><b>Capacity</b></th>";
-            htmlCode += "<th><b>Economy</b></th>";
-            htmlCode += "<th><b>Business</b></th>";
-            htmlCode += "<th><b>First</b></th>";
-            htmlCode += "<th><b>Fuel Capacity</b></th>";
-            htmlCode += "<th><b>Fuel Burn Rate</b></th>";
-            htmlCode += "<th><b>Average Velocity</b></th>";
-            htmlCode += "</tr>";
+            htmlCode += "<table class=\"admin_man_table admin_planes_table\">"+"" +
+                        "<tr>"+
+                            "<th><b>Model</b></th>" +
+                            "<th><b>Capacity</b></th>" +
+                            "<th><b>Economy</b></th>" +
+                            "<th><b>Business</b></th>" +
+                            "<th><b>First</b></th>" +
+                            "<th><b>Fuel</b></th>" +
+                            "<th><b>Burn Rate</b></th>" +
+                            "<th><b>Velocity</b></th>" +
+                        "</tr>" +
+                        "<tr>"+
+                            "<th></th>" +
+                            "<th>(persons)</th>" +
+                            "<th></th>" +
+                            "<th></th>" +
+                            "<th></th>" +
+                            "<th>(tonnes)</th>" +
+                            "<th>(kg/km)</th>" +
+                            "<th>(km/hr)</th>" +
+                        "</tr>";
 
             while(rs.next()){
                 String id = rs.getString("id");

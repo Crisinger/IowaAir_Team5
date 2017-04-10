@@ -139,21 +139,22 @@
             <li><div class="planeFormInputTitle"><b>Plane Model: </b></div><input type="text" name="planeModel" placeholder="Type" maxlength="40" required></li>
             <li><div class="planeFormInputTitle"><b>Carrying Capacity (persons): </b></div><input type="number" name="modelCapacity" placeholder="Capacity" min="1" max="999" maxlength = "3" step="1" required></li>
             <li><div class="planeFormInputTitle"><b>Fuel Capacity (tonnes): </b></div><input type="number" name="modelFuel" placeholder="tonnes" min="1" max="300" maxlength = "6" step="1" required></li>
-            <li><div class="planeFormInputTitle"><b>Fuel Burn Rate (kg/km): </b></div><input type="number" name="modelBurn" placeholder="kg/km" min="1" max="10" maxlength = "4" step="0.1" required></li>
+            <li><div class="planeFormInputTitle"><b>Fuel Burn Rate (kg/km): </b></div><input type="number" name="modelBurn" placeholder="kg/km" min="1" max="10" maxlength = "4" step="0.0100" required></li>
             <li><div class="planeFormInputTitle"><b>Average Velocity (km/hr): </b></div><input type="number" name="modelVelocity" placeholder="km/hr" min="1" max="2000" maxlength = "4" step="1" required></li>
             <li>
                 <div class="classesCheckboxLabel">
-                    <div class="planeFormInputTitle"><b>Available Classes</b></div>
+                    <div class="planeFormInputTitle"><b>Available Classes: </b></div>
                     <ul class="classesCheckbox" >
-                        <li><input type="checkbox" name="hasEconomyClass" value="true" title="Economy">Economy</li>
-                        <li><input type="checkbox" name="hasBusinessClass" value="true" title="Business">Business</li>
-                        <li><input type="checkbox" name="hasFirstClass" value="true" title="First">First</li>
+                        <li><div class="planeFormInputTitle"></div><input type="checkbox" name="hasEconomyClass" value="true" title="Economy"><b>Economy</b></li>
+                        <li><div class="planeFormInputTitle"></div><input type="checkbox" name="hasBusinessClass" value="true" title="Business"><b>Business</b></li>
+                        <li><div class="planeFormInputTitle"></div><input type="checkbox" name="hasFirstClass" value="true" title="First"><b>First</b></li>
                     </ul>
                 </div>
             </li>
         </ul>
         <button type="submit" name="addPlaneModelButton">Add Model</button>
     </form>
+    <br>
     <h1>New Plane</h1>
     <form action="AirFunctions.Admin.AdminPlanes">
         <ul class="planeForm">

@@ -429,15 +429,15 @@ nav a.selected, nav a:hover {
     font-size: 1.3em;
     text-align: left;
     padding: 20px 0 0 0;
-    width: 30%;
+    width: 10%;
 }
 .admin_planes_table td, .admin_planes_table tr{
     padding: 10px 0 0 0;
     text-align: left;
 }
 
-.admin_planes_table td {
-    width: 12.5%;
+.admin_planes_table tr td {
+    width: 10%;
 }
 
 
@@ -471,4 +471,12 @@ nav a.selected, nav a:hover {
 
 .planeFormInputTitle, .planeFormInputTitle input {
     display: inline-flex;
+}
+
+#adminPlanes form ul li {
+    padding: 5px 0 0 0;
+}
+
+#adminPlanes form button {
+    margin: 5px 0 0 0;
 }
