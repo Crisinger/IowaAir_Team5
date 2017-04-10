@@ -158,16 +158,16 @@
     <form action="AirFunctions.Admin.AdminPlanes">
         <ul class="planeForm">
             <li><b>Plane Type: </b><%=AdminPlaneModels.getPlaneModelList()%></li>
-            <li><b>Capacity: </b><input type="number" id="planeCapacity" placeholder="123" min="1" max="999" maxlength="3" step="1" required></li>
-            <li><b>Economy Seats: </b><input type="number" id="planeEconomySeats" placeholder="123" min="0" max="999" maxlength="3" step="1" required></li>
-            <li><b>Business Seats: </b><input type="number" id="planeBusinessSeats" placeholder="123" min="0" max="999" maxlength="3" step="1" required></li>
-            <li><b>First Seats: </b><input type="number" id="planeFirstSeats" placeholder="123" min="0" max="999" maxlength="3" step="1" required></li>
-            <li><b>Base Price: </b><input type="number" id="planeBasePrice" placeholder="123" min="0" max="9999" maxlength="5" step="1.00"required></li>
+            <li><b>Capacity: </b><input type="number" id="planeCapacity" placeholder="123" min="1" max="999" maxlength="3" step="1" onchange="checkCapacity()" required></li>
+            <li><b>Economy Seats: </b><input type="number" id="planeEconomySeats" placeholder="123" min="0" max="999" maxlength="3" step="1" onchange="checkCapacity()" required></li>
+            <li><b>Business Seats: </b><input type="number" id="planeBusinessSeats" placeholder="123" min="0" max="999" maxlength="3" step="1" onchange="checkCapacity()" required></li>
+            <li><b>First Seats: </b><input type="number" id="planeFirstSeats" placeholder="123" min="0" max="999" maxlength="3" step="1" onchange="checkCapacity()" required></li>
+            <li><b>Base Price: </b><input type="number" id="planeBasePrice" placeholder="123" min="0" max="9999" maxlength="5" step="1.00" required></li>
             <li><b>Economy Price Multiplier: </b><input type="number" id="planeEconomyMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="0.1" required></li>
             <li><b>Business Price Multiplier: </b><input type="number" id="planeBusinessMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="0.1" required></li>
             <li><b>First Price Multiplier: </b><input type="number" id="planeFirstMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="0.1" required></li>
         </ul>
-        <button type="submit" name="addPlaneButton">Add Plane</button>
+        <button type="submit" id="addPlaneButton">Add Plane</button>
     </form>
 
     <%=AdminPlaneModels.getPlaneModels()%>

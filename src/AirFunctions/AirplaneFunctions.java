@@ -124,7 +124,7 @@ public class AirplaneFunctions {
             con.setAutoCommit(false);
 
             stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM planemodels;");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM planemodels ORDER BY PLANE_MODEL;");
             htmlCode += "<table class=\"admin_man_table\"><tr>";
             htmlCode += "<th><b>Model</b></th>";
             htmlCode += "<th><b>Capacity</b></th>";

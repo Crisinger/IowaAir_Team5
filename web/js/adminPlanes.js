@@ -1,6 +1,22 @@
 /**
  * Created by johnn on 4/10/2017.
  */
+
+function checkCapacity(){
+    //var modelPlaneSelection = document.getElementById("planeModelSelect");
+    //var modelPlaneID = modelPlaneSelection.options[modelPlaneSelection.selectedIndex].value;
+    var capacity = document.getElementById("planeCapacity").value;
+    var seatsEcon = document.getElementById("planeEconomySeats").value;
+    var seatsBus = document.getElementById("planeBusinessSeats").value;
+    var seatsFirst = document.getElementById("planeFirstSeats").value;
+    var planeButton = document.getElementById("addPlaneButton");
+
+    planeButton.disabled = (capacity <= seatsEcon + seatsBus + seatsFirst);
+
+}
+
+
+
 function alterForm(){
     var modelPlaneSelection = document.getElementById("planeModelSelect");
     var modelPlaneID = modelPlaneSelection.options[modelPlaneSelection.selectedIndex].value;
