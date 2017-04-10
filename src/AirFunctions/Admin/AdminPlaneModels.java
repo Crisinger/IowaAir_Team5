@@ -87,7 +87,7 @@ public class AdminPlaneModels extends HttpServlet {
         String htmlCode = "";
         try {
             Connection con = AccountFunctions.OpenDatabase();
-            htmlCode = AirplaneFunctions.showPlaneModels(con);
+            htmlCode = AirplaneFunctions.planeModelsList(con);
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,6 +1,5 @@
 package AirFunctions.Admin;
 import AirFunctions.AccountFunctions;
-import AirFunctions.CityFunctions;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -19,5 +18,39 @@ import javax.servlet.annotation.WebServlet;
  * Created by johnn on 4/8/2017.
  */
 @WebServlet("/AirFunctions.Admin.AdminPlanes")
-public class AdminPlanes {
+public class AdminPlanes extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        try {
+
+            if(request.getParameter("addPlaneButton") != null){
+
+                Connection con = AccountFunctions.OpenDatabase();
+
+                con.close();
+
+            } else if(request.getParameter("removePlaneButton") != null){
+
+                Connection con = AccountFunctions.OpenDatabase();
+
+                con.close();
+
+            } else if(request.getParameter("updatePlaneButton") != null){
+
+                Connection con = AccountFunctions.OpenDatabase();
+
+                con.close();
+            }
+
+            response.sendRedirect("adminPlanes.jsp");
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 }

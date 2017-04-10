@@ -286,6 +286,7 @@ public class AirplaneFunctions {
 
     public static String planeModelsList(Connection con){
         String htmlCode="";
+        String detailCode="";
         Statement stmt = null;
         try {
 
@@ -293,16 +294,29 @@ public class AirplaneFunctions {
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT DISTINCT * FROM planemodels;");
 
+            htmlCode += "<select id=\"planeModelSelect\" onchange=\"alterForm()\">";
             while(rs.next()){
+                String id = rs.getString("id");
                 String model = rs.getString("plane_model");
                 String capacity = rs.getString("capacity");
+                String hasEcon = rs.getString("hasEconomy");
+                String hasBus = rs.getString("hasBusiness");
+                String hasFirst = rs.getString("hasFirst");
 
+                System.out.println(hasEcon);
 
-
-
-
+                htmlCode +=
+                        "<option id=\"planeModel"+id+"\" value=\""+id+"\">"+model+"</option>";
+                detailCode +=
+                        "<span id=\"planeModelModel"+id+"\" style=\"display: none;\" >"+model+"</span>\n" +
+                        "<span id=\"planeModelCapacity"+id+"\" style=\"display: none;\">"+capacity+"</span>\n" +
+                        "<span id=\"planeModelEconomy"+id+"\"  style=\"display: none;\">"+hasEcon+"</span>\n" +
+                        "<span id=\"planeModelBusiness"+id+"\" style=\"display: none;\">"+hasBus+"</span>\n" +
+                        "<span id=\"planeModelFirst"+id+"\" style=\"display: none;\">"+hasFirst+"</span>\n";
             }
 
+            htmlCode += "</select>";
+            htmlCode += detailCode;
 
             con.commit();
         } catch ( Exception e ) {

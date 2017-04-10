@@ -32,6 +32,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="js/planeModelModal.js" ></script>
+    <script src="js/adminPlanes.js" ></script>
+
 
     <style>
 
@@ -155,15 +157,15 @@
     <h1>New Plane</h1>
     <form action="AirFunctions.Admin.AdminPlanes">
         <ul class="planeForm">
-            <li><b>Plane Type: </b></li>
-            <li><b>Capacity: </b></li>
-            <li><b>Economy Seats: </b></li>
-            <li><b>Business Seats: </b></li>
-            <li><b>First Seats: </b></li>
-            <li><b>Base Price: </b></li>
-            <li><b>Economy Price Multiplier: </b></li>
-            <li><b>Business Price Multiplier: </b></li>
-            <li><b>First Price Multiplier: </b></li>
+            <li><b>Plane Type: </b><%=AdminPlaneModels.getPlaneModelList()%></li>
+            <li><b>Capacity: </b><input type="number" id="planeCapacity" placeholder="123" min="1" max="999" maxlength="3" step="1" required></li>
+            <li><b>Economy Seats: </b><input type="number" id="planeEconomySeats" placeholder="123" min="0" max="999" maxlength="3" step="1" required></li>
+            <li><b>Business Seats: </b><input type="number" id="planeBusinessSeats" placeholder="123" min="0" max="999" maxlength="3" step="1" required></li>
+            <li><b>First Seats: </b><input type="number" id="planeFirstSeats" placeholder="123" min="0" max="999" maxlength="3" step="1" required></li>
+            <li><b>Base Price: </b><input type="number" id="planeBasePrice" placeholder="123" min="0" max="9999" maxlength="5" step="1.00"required></li>
+            <li><b>Economy Price Multiplier: </b><input type="number" id="planeEconomyMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="0.1" required></li>
+            <li><b>Business Price Multiplier: </b><input type="number" id="planeBusinessMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="0.1" required></li>
+            <li><b>First Price Multiplier: </b><input type="number" id="planeFirstMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="0.1" required></li>
         </ul>
         <button type="submit" name="addPlaneButton">Add Plane</button>
     </form>

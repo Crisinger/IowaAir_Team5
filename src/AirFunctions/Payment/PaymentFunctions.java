@@ -24,6 +24,7 @@ public class PaymentFunctions {
             e.printStackTrace();
         }
     }
+
     public static void addPayment(Connection con, String name, String cardNumber, Date expDate, int securityCode, String billingAddress,
                                   String city, String state, String country, int zipcode, String phoneNumber) {
         Connection c = con;
