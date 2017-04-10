@@ -1,5 +1,6 @@
 package AirFunctions.Admin;
 import AirFunctions.AccountFunctions;
+import AirFunctions.AirplaneFunctions;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -52,5 +53,16 @@ public class AdminPlanes extends HttpServlet {
     }
 
 
+    public static String getPlanes(){
+        String htmlCode = "";
+        try {
+            Connection con = AccountFunctions.OpenDatabase();
+            htmlCode = AirplaneFunctions.showPlanes(con);
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return htmlCode;
+    }
 
 }

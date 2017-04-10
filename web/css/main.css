@@ -344,6 +344,9 @@ nav a.selected, nav a:hover {
     width: 30%;
 }
 
+.admin_man_table td button {
+    alignment: right;
+}
 
 
 
@@ -419,25 +422,34 @@ nav a.selected, nav a:hover {
     margin: 0 5% 0 0;
 }
 
-.admin_planes_table {
+.admin_planeModel_table {
     border-top: solid medium black;
     width: 90%;
     margin: 20px 5%;
 }
 
-.admin_planes_table th {
+.admin_planeModel_table th {
     font-size: 1.3em;
     text-align: left;
     padding: 20px 0 0 0;
     width: 10%;
 }
-.admin_planes_table td, .admin_planes_table tr{
+.admin_planeModel_table td, .admin_planeModel_table tr{
     padding: 10px 0 0 0;
     text-align: left;
 }
 
-.admin_planes_table tr td {
+.admin_planeModel_table tr td {
     width: 10%;
+}
+
+
+.admin_planes_table th {
+    width: 14%;
+}
+
+.admin_planes_tables tr td {
+    width: 14%;
 }
 
 

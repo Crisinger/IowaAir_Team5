@@ -125,7 +125,7 @@ public class AirplaneFunctions {
 
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM planemodels ORDER BY PLANE_MODEL;");
-            htmlCode += "<table class=\"admin_man_table admin_planes_table\">"+"" +
+            htmlCode += "<table class=\"admin_man_table admin_planeModel_table\">"+"" +
                         "<tr>"+
                             "<th><b>Model</b></th>" +
                             "<th><b>Capacity</b></th>" +
@@ -135,6 +135,7 @@ public class AirplaneFunctions {
                             "<th><b>Fuel</b></th>" +
                             "<th><b>Burn Rate</b></th>" +
                             "<th><b>Velocity</b></th>" +
+                            "<th><b>Action</b></th>"+
                         "</tr>" +
                         "<tr>"+
                             "<th></th>" +
@@ -340,4 +341,91 @@ public class AirplaneFunctions {
 
         return htmlCode;
     }
+
+    public static String showPlanes(Connection con){
+        Statement stmt = null;
+        String htmlCode = "";
+        //String modalCode = "";
+
+        try{
+            con.setAutoCommit(false);
+
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM planes ORDER BY id;");
+            htmlCode += "<table class=\"admin_man_table admin_planeModel_table admin_planes_table \">"+"" +
+                    "<tr>"+
+                    "<th><b>ID</b></th>" +
+                    "<th><b>Model</b></th>" +
+                    "<th><b>Capacity</b></th>" +
+                    "<th><b>Economy</b></th>" +
+                    "<th><b>Business</b></th>" +
+                    "<th><b>First</b></th>" +
+                    "</tr>" +
+                    "<tr>"+
+                    "<th></th>" +
+                    "<th></th>" +
+                    "<th>(persons)</th>" +
+                    "<th>(persons)</th>" +
+                    "<th>(persons)</th>" +
+                    "<th>(persons)</th>" +
+                    "</tr>";
+
+            while(rs.next()){
+                String id = rs.getString("id");
+                String planeModel = rs.getString("plane_type");
+                String capacity = rs.getString("capacity");
+                String economy = rs.getString("maxEconomy");
+                String business = rs.getString("maxBusiness");
+                String firstclass = rs.getString("maxFirst");
+
+                htmlCode += "<tr>";
+                htmlCode += "<td>" + id + "</td>";
+                htmlCode += "<td>" + planeModel + "</td>";
+                htmlCode += "<td>" + capacity + "</td>";
+                htmlCode += "<td>" + economy + "</td>";
+                htmlCode += "<td>" + business + "</td>";
+                htmlCode += "<td>" + firstclass + "</td>";
+                htmlCode += "<td> <button name=\"editPlaneButton\" onclick=\"viewPlaneModal("+rs.getString("ID")+")\"> Edit </button></td>";
+                htmlCode += "</tr>";
+
+                /*modalCode += "<div id=\"planeModelModal"+id+"\" class=\"planeModelModal\">";
+                modalCode += "<div class=\"planeModelModalContent\">";
+                modalCode += "<span class=\"planeModelModalClose\" onclick=\"closeEditPlaneModel(&quot;"+id+"&quot;)\">&times;</span>";
+                modalCode += "<form action=\"AirFunctions.Admin.AdminPlaneModels\">\n" +
+                        "        <input type=\"hidden\" name=\"planeModelID\" value=\"" + id + "\" >"+
+                        "        <ul class=\"modelForm\">\n" +
+                        "            <li><b>Model</b> <input type=\"text\" name=\"planeModel\" placeholder=\"Type\" maxlength=\"40\" value=\""+planeModel+"\" required></li>\n" +
+                        "            <li><b>Capacity</b><input type=\"number\" name=\"modelCapacity\" placeholder=\"Capacity\" min=\"1\" max=\"999\" maxlength = \"3\" value=\""+capacity+"\" required></li>\n" +
+                        "            <li><b>Fuel Capacity (tonnes): </b><input type=\"number\" name=\"modelFuel\" placeholder=\"tonnes\" min=\"1\" max=\"300\" maxlength = \"6\" value=\"" + fuel + "\" required></li>\n" +
+                        "            <li><b>Fuel Burn Rate (kg/km): </b><input type=\"number\" name=\"modelBurn\" placeholder=\"kg/km\" min=\"1\" max=\"10\" maxlength = \"4\" step=\"0.001\" value=\"" + burn + "\" required></li>\n" +
+                        "            <li><b>Average Velocity (km/hr): </b><input type=\"number\" name=\"modelVelocity\" placeholder=\"km/hr\" min=\"1\" max=\"2000\" maxlength = \"4\" value=\"" + velocity + "\" required></li>" +
+                        "            <li>\n" +
+                        "                <div class=\"classesCheckboxLabel\">\n" +
+                        "                    <b>Available Classes</b>\n" +
+                        "                    <ul class=\"classesCheckbox\" >\n" +
+                        "                        <li><input type=\"checkbox\" name=\"hasEconomyClass\" value=\"true\" title=\"Economy\" ";
+
+
+                modalCode += ">First</li>\n" +
+                        "                    </ul>\n" +
+                        "                </div>\n" +
+                        "            </li>\n" +
+                        "        </ul>\n" +
+                        "        <button type=\"submit\" name=\"updatePlaneModelButton\"> Update </button>\n" +
+                        "        <button type=\"submit\" name=\"removePlaneModelButton\"> Remove </button>\n" +
+                        "    </form>";
+                modalCode += "</div>\n</div>";*/
+            }
+
+            htmlCode += "</table>\n\n";
+           // htmlCode += modalCode;
+
+        } catch (Exception e){
+            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+        return htmlCode;
+    }
+
 }

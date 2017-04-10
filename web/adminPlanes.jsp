@@ -155,6 +155,8 @@
         <button type="submit" name="addPlaneModelButton">Add Model</button>
     </form>
     <br>
+    <%=AdminPlaneModels.getPlaneModels()%>
+    <br>
     <h1>New Plane</h1>
     <form action="AirFunctions.Admin.AdminPlanes">
         <ul class="planeForm">
@@ -187,8 +189,9 @@
         </ul>
         <button type="submit" id="addPlaneButton">Add Plane</button>
     </form>
-
-    <%=AdminPlaneModels.getPlaneModels()%>
+    <br>
+    <%=AdminPlanes.getPlanes()%>
+    <br>than
 
 </div>
 

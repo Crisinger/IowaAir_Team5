@@ -13,4 +13,5 @@ function alterCityMenu(classID){
     for(var stateCity=0; stateCity<stateCities.length; stateCity++){
         stateCities[stateCity].style.display = "block";
     }
+
 }
