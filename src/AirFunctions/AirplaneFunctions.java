@@ -295,6 +295,7 @@ public class AirplaneFunctions {
             ResultSet rs = stmt.executeQuery("SELECT DISTINCT * FROM planemodels;");
 
             htmlCode += "<select id=\"planeModelSelect\" onchange=\"alterForm()\">";
+            htmlCode += "<option disabled selected display=\"hidden\">Select Plane Model</option>";
             while(rs.next()){
                 String id = rs.getString("id");
                 String model = rs.getString("plane_model");

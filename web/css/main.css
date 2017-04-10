@@ -437,7 +437,7 @@ nav a.selected, nav a:hover {
 }
 
 .admin_planes_table td {
-    width: 30%;
+    width: 12.5%;
 }
 
 
@@ -465,3 +465,10 @@ nav a.selected, nav a:hover {
 
 */
 
+.planeFormInputTitle {
+    width: 30ch;
+}
+
+.planeFormInputTitle, .planeFormInputTitle input {
+    display: inline-flex;
+}
