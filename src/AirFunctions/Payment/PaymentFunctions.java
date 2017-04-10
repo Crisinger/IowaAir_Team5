@@ -1,5 +1,7 @@
 package AirFunctions.Payment;
 
+import AirFunctions.AccountFunctions;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -10,8 +12,20 @@ import java.sql.Statement;
  */
 public class PaymentFunctions {
 
-    public static void addPayment(Connection con, String name, int cardNumber, Date expDate, int securityCode, String billingAddress,
-                                  String city, String state, String country, int zipcode, int phoneNumber) {
+
+    public static void main( String[]  args){
+        Connection connection = null;
+        try {
+            boolean working = false;
+            connection = AccountFunctions.OpenDatabase();
+            //addPayment(connection, "John Doe", "1234-5678-9100-2457", new Date(2,2,2020),231,"555 Main St",
+            //        "Iowa City", "IA","United States", 52245, "555-555-5555");
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void addPayment(Connection con, String name, String cardNumber, Date expDate, int securityCode, String billingAddress,
+                                  String city, String state, String country, int zipcode, String phoneNumber) {
         Connection c = con;
         Statement stmt = null;
         try {
@@ -20,7 +34,7 @@ public class PaymentFunctions {
             stmt = c.createStatement();
             String sql = "INSERT INTO PAYMENTINFO (cardName,cardnumber,expdate,securitycode,address,state,country,zipcode,phoneNumber) " +
                     "VALUES ( '" + name + "' , '" + cardNumber + "' , '"+ expDate + "' , '"+ securityCode + "' , '"+ billingAddress +
-                    "' , '"+ city + "' , '"+ state + "' , '"+ country + "' , '"+ zipcode + "' , '"+ phoneNumber +"');";
+                    "' , '"+ state + "' , '"+ country + "' , '"+ zipcode + "' , '"+ phoneNumber +"');";
             stmt.executeUpdate(sql);
 
             stmt.close();
