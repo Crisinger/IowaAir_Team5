@@ -90,9 +90,26 @@
 <div id="adminLocations">
     <h1>Locations</h1>
     <form action="AirFunctions.Admin.AdminLocations">
-        <%=CityFunctions.getStates()%>
-        <%=CityFunctions.getCities()%>
-        <button type="submit" name="addLocationButton">Add Location</button>
+        <ul>
+            <li>
+                <div class="locationFormInputTitle"><b>State: </b></div>
+                <select name="stateName" style="width: 20ch" required>
+                    <option disabled selected>Select State</option>
+                    <%=CityFunctions.getStates()%>
+                </select>
+            </li>
+            <li>
+                <div class="locationFormInputTitle"><b>City: </b></div>
+                <select name="cityName" style="width: 20ch" required>
+                    <option disabled selected>Select City</option>
+                    <%=CityFunctions.getCities()%>
+                </select>
+            </li>
+            <li>
+                <button type="submit" name="addLocationButton">Add Location</button>
+            </li>
+        </ul>
+
     </form>
     <%=AdminLocations.getAirports()%>
 </div>

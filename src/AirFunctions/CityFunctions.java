@@ -223,8 +223,6 @@ public class CityFunctions {
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT DISTINCT state FROM cities ORDER BY state;");
 
-            stateCode = "<b>State</b>\n<select name=\"stateName\" required>\n<option selected=\"selected\" value=\"\"></option>\n";
-
             while(rs.next()){
                 String currentState = rs.getString("state");
                 String classState = currentState.replace(" ","-").toLowerCase();
@@ -233,8 +231,6 @@ public class CityFunctions {
                 stateCode += currentState;
                 stateCode += "</option>\n";
             }
-
-            stateCode += "</select>";
 
             con.close();
 
@@ -257,8 +253,6 @@ public class CityFunctions {
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM cities ORDER BY state, cityname;");
 
-            cityCode = "<b>City</b>\n<select name=\"cityName\" required>\n<option selected=\"selected\" value=\"\"></option>\n";
-
             while(rs.next()){
                 String currentState = rs.getString("state");
                 String currentCity = rs.getString("cityName");
@@ -269,8 +263,6 @@ public class CityFunctions {
                 cityCode += "</option>\n";
 
             }
-
-            cityCode += "</select>";
 
             con.close();
 

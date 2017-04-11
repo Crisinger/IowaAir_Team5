@@ -309,17 +309,17 @@ nav a.selected, nav a:hover {
 
 
 
-#adminManagers{
+#adminManagers, #adminLocations{
     width: 90%;
     margin: 0 5%;
 }
 
-#adminManagers form{
+#adminManagers form, #adminLocations form{
     width: 90%;
     margin: 0 5%;
 }
 
-#adminManagers form input{
+#adminManagers form input, #adminLocations form input{
     margin: 0 5% 0 0;
 }
 
@@ -485,10 +485,18 @@ nav a.selected, nav a:hover {
     display: inline-flex;
 }
 
-#adminPlanes form ul li {
+.locationFormInputTitle {
+    width: 10ch;
+}
+
+.locationFormInputTitle, .locationFormInputTitle input {
+    display: inline-flex;
+}
+
+#adminPlanes form ul li, #adminLocations form ul li {
     padding: 5px 0 0 0;
 }
 
-#adminPlanes form button {
+#adminPlanes form button, #adminLocations form ul li button{
     margin: 5px 0 0 0;
 }

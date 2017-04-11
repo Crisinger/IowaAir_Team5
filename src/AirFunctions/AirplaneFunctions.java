@@ -15,9 +15,9 @@ public class AirplaneFunctions {
         try {
             boolean working = false;
             connection = AccountFunctions.OpenDatabase();
-            //CreatePlanesTable(connection);
-            //AddAirplane(connection, "Boeing",250,3);
-            CreatePlaneModelTable(connection);
+            //createPlanesTable(connection);
+            //addAirplane(connection, "Boeing",250,3);
+            //createPlaneModelTable(connection);
             //working = checkLogin(connection,"test@gmail.com","test");
             //System.out.println(working);
         } catch(Exception e) {
@@ -26,7 +26,7 @@ public class AirplaneFunctions {
     }
 
 
-    public static void CreatePlanesTable(Connection con)
+    public static void createPlanesTable(Connection con)
     {
         Connection c = con;
         Statement stmt = null;
@@ -68,29 +68,45 @@ public class AirplaneFunctions {
     }
 
     //i assume that if a plane has first class, it also has business and coach. If it has business it also has coach
-    public static void AddAirplane(Connection con, String planeModel, int numPassengers, int classes) {
-        Connection c = con;
+    public static boolean addAirplane(Connection con, String modelID, String capacity, String econSeats,
+                                   String busSeats, String firstSeats, String basePrice, String econMult,
+                                   String busMult, String firstMult) {
         Statement stmt = null;
+        boolean airplaneAdded = false;
         try {
 
-            c.setAutoCommit(false);
-            stmt = c.createStatement();
-            String sql = "INSERT INTO PLANES (PLANE_TYPE,CAPACITY,CLASSES) " +
-                    "VALUES ( '" + planeModel + "' , '" + numPassengers + "' , '"+ classes +"');";
-            stmt.executeUpdate(sql);
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM planemodels WHERE id="+modelID+";");
+
+            if(rs.next()) {
+                String planeType = rs.getString("plane_model");
+
+                String sql = "INSERT INTO PLANES (PLANE_TYPE, CAPACITY," +
+                        " maxFirst, maxBusiness, maxEconomy, takenFirst, takenBusiness, takenEconomy," +
+                        "Base_Price, multipleFirst," +
+                        " multipleBusiness, multipleEconomy) " +
+                        "VALUES ( '" + planeType + "' , " + capacity + " , "
+                        + firstSeats + ", " + busSeats + " , "
+                        + econSeats + ", 0, 0, 0, "+basePrice+","+firstMult+" , "+busMult+" , "+econMult+");";
+                stmt.executeUpdate(sql);
+                airplaneAdded = true;
+            }
 
             stmt.close();
-            c.commit();
-            //c.close();
+            con.commit();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
         System.out.println("Records created successfully");
+
+        return airplaneAdded;
     }
 
 
-    public static void CreatePlaneModelTable(Connection con){
+    public static void createPlaneModelTable(Connection con){
         Connection c = con;
         Statement stmt = null;
         try {
@@ -297,7 +313,9 @@ public class AirplaneFunctions {
     }
 
     public static String planeModelsList(Connection con){
-        String htmlCode="";
+        String htmlCode=
+                "<select id=\"planeModelSelect\" name=\"planeSelect\" onchange=\"alterForm()\">\n" +
+                "       <option disabled selected>Select Plane Model</option>\n";
         String detailCode="";
         Statement stmt = null;
         try {
@@ -306,8 +324,6 @@ public class AirplaneFunctions {
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT DISTINCT * FROM planemodels;");
 
-            htmlCode += "<select id=\"planeModelSelect\" onchange=\"alterForm()\">";
-            htmlCode += "<option disabled selected display=\"hidden\">Select Plane Model</option>";
             while(rs.next()){
                 String id = rs.getString("id");
                 String model = rs.getString("plane_model");
@@ -319,13 +335,13 @@ public class AirplaneFunctions {
                 System.out.println(hasEcon);
 
                 htmlCode +=
-                        "<option id=\"planeModel"+id+"\" value=\""+id+"\">"+model+"</option>";
+                        "<option id=\"planeModel"+id+"\" name=\"planeSelectionModelID\" value=\""+id+"\">"+model+"</option>";
                 detailCode +=
-                        "<span id=\"planeModelModel"+id+"\" style=\"display: none;\" >"+model+"</span>\n" +
-                        "<span id=\"planeModelCapacity"+id+"\" style=\"display: none;\">"+capacity+"</span>\n" +
-                        "<span id=\"planeModelEconomy"+id+"\"  style=\"display: none;\">"+hasEcon+"</span>\n" +
-                        "<span id=\"planeModelBusiness"+id+"\" style=\"display: none;\">"+hasBus+"</span>\n" +
-                        "<span id=\"planeModelFirst"+id+"\" style=\"display: none;\">"+hasFirst+"</span>\n";
+                        "<span id=\"planeModelModel"+id+"\" name=\"planeModelModel" + id + "\"style=\"display: none;\" >"+model+"</span>\n" +
+                        "<span id=\"planeModelCapacity"+id+"\" name=\"planeModelCapacity" + id + "\" style=\"display: none;\">"+capacity+"</span>\n" +
+                        "<span id=\"planeModelEconomy"+id+"\" name=\"planeModelEconomy" + id + "\"  style=\"display: none;\">"+hasEcon+"</span>\n" +
+                        "<span id=\"planeModelBusiness"+id+"\" name=\"planeModelBusiness" + id + "\" style=\"display: none;\">"+hasBus+"</span>\n" +
+                        "<span id=\"planeModelFirst"+id+"\" name=\"planeModelFirst" + id + "\" style=\"display: none;\">"+hasFirst+"</span>\n";
             }
 
             htmlCode += "</select>";
@@ -338,14 +354,13 @@ public class AirplaneFunctions {
         }
         System.out.println("Records updated successfully");
 
-
         return htmlCode;
     }
 
     public static String showPlanes(Connection con){
         Statement stmt = null;
         String htmlCode = "";
-        //String modalCode = "";
+        String modalCode = "";
 
         try{
             con.setAutoCommit(false);
@@ -360,6 +375,7 @@ public class AirplaneFunctions {
                     "<th><b>Economy</b></th>" +
                     "<th><b>Business</b></th>" +
                     "<th><b>First</b></th>" +
+                    "<th><b>Action</br></th>" +
                     "</tr>" +
                     "<tr>"+
                     "<th></th>" +
@@ -368,6 +384,7 @@ public class AirplaneFunctions {
                     "<th>(persons)</th>" +
                     "<th>(persons)</th>" +
                     "<th>(persons)</th>" +
+                    "<th></th>" +
                     "</tr>";
 
             while(rs.next()){
@@ -377,6 +394,10 @@ public class AirplaneFunctions {
                 String economy = rs.getString("maxEconomy");
                 String business = rs.getString("maxBusiness");
                 String firstclass = rs.getString("maxFirst");
+                String basePrice = rs.getString("base_Price");
+                String econMult = rs.getString("multipleEconomy");
+                String busMult = rs.getString("multipleBusiness");
+                String firstMult = rs.getString("multipleFirst");
 
                 htmlCode += "<tr>";
                 htmlCode += "<td>" + id + "</td>";
@@ -385,40 +406,51 @@ public class AirplaneFunctions {
                 htmlCode += "<td>" + economy + "</td>";
                 htmlCode += "<td>" + business + "</td>";
                 htmlCode += "<td>" + firstclass + "</td>";
-                htmlCode += "<td> <button name=\"editPlaneButton\" onclick=\"viewPlaneModal("+rs.getString("ID")+")\"> Edit </button></td>";
+                htmlCode += "<td> <button name=\"editPlaneButton\" onclick=\"viewPlaneModal("+rs.getString("ID")+");alterModalForm(&quot;"+id+"&quot;);\"> Edit </button></td>";
                 htmlCode += "</tr>";
 
-                /*modalCode += "<div id=\"planeModelModal"+id+"\" class=\"planeModelModal\">";
-                modalCode += "<div class=\"planeModelModalContent\">";
-                modalCode += "<span class=\"planeModelModalClose\" onclick=\"closeEditPlaneModel(&quot;"+id+"&quot;)\">&times;</span>";
-                modalCode += "<form action=\"AirFunctions.Admin.AdminPlaneModels\">\n" +
-                        "        <input type=\"hidden\" name=\"planeModelID\" value=\"" + id + "\" >"+
-                        "        <ul class=\"modelForm\">\n" +
-                        "            <li><b>Model</b> <input type=\"text\" name=\"planeModel\" placeholder=\"Type\" maxlength=\"40\" value=\""+planeModel+"\" required></li>\n" +
-                        "            <li><b>Capacity</b><input type=\"number\" name=\"modelCapacity\" placeholder=\"Capacity\" min=\"1\" max=\"999\" maxlength = \"3\" value=\""+capacity+"\" required></li>\n" +
-                        "            <li><b>Fuel Capacity (tonnes): </b><input type=\"number\" name=\"modelFuel\" placeholder=\"tonnes\" min=\"1\" max=\"300\" maxlength = \"6\" value=\"" + fuel + "\" required></li>\n" +
-                        "            <li><b>Fuel Burn Rate (kg/km): </b><input type=\"number\" name=\"modelBurn\" placeholder=\"kg/km\" min=\"1\" max=\"10\" maxlength = \"4\" step=\"0.001\" value=\"" + burn + "\" required></li>\n" +
-                        "            <li><b>Average Velocity (km/hr): </b><input type=\"number\" name=\"modelVelocity\" placeholder=\"km/hr\" min=\"1\" max=\"2000\" maxlength = \"4\" value=\"" + velocity + "\" required></li>" +
-                        "            <li>\n" +
-                        "                <div class=\"classesCheckboxLabel\">\n" +
-                        "                    <b>Available Classes</b>\n" +
-                        "                    <ul class=\"classesCheckbox\" >\n" +
-                        "                        <li><input type=\"checkbox\" name=\"hasEconomyClass\" value=\"true\" title=\"Economy\" ";
-
-
-                modalCode += ">First</li>\n" +
-                        "                    </ul>\n" +
-                        "                </div>\n" +
+                modalCode += "<div id=\"planeModal"+id+"\" class=\"planeModal\">";
+                modalCode += "<div class=\"planeModalContent\">";
+                modalCode += "<span class=\"planeModalClose\" onclick=\"closeEditPlane(&quot;"+id+"&quot;)\">&times;</span>";
+                modalCode += "<form action=\"AirFunctions.Admin.AdminPlanes\">\n" +
+                        "        <ul class=\"planeForm\">\n" +
+                        "            <li><div class=\"planeFormInputTitle\"><b>Plane Type: </b></div>\n" +
+                                        getSelectedPlaneModel(con,id, planeModel) +
+                        "            </li>\n" +
+                        "            <li><div class=\"planeFormInputTitle\"><b>Capacity: </b></div>\n" +
+                        "                <input type=\"number\" id=\"planeModalCapacity"+id+"\" name=\"planeCapacity\" value=\""+capacity+"\" min=\"1\" max=\"999\" maxlength=\"3\" step=\"1\" onchange=\"checkCapacity()\" required>\n" +
+                        "            </li>\n" +
+                        "            <li><div class=\"planeFormInputTitle\"><b>Economy Seats: </b></div>\n" +
+                        "                <input type=\"number\" id=\"planeModalEconomySeats"+id+"\" name=\"planeEconomySeats\" value=\"" + economy + "\" min=\"0\" max=\"999\" maxlength=\"3\" step=\"1\" onchange=\"checkCapacity()\" required>\n" +
+                        "            </li>\n" +
+                        "            <li><div class=\"planeFormInputTitle\"><b>Business Seats: </b></div>\n" +
+                        "                <input type=\"number\" id=\"planeModalBusinessSeats"+id+"\" name=\"planeBusinessSeats\" value=\"" + business + "\" min=\"0\" max=\"999\" maxlength=\"3\" step=\"1\" onchange=\"checkCapacity()\" required>\n" +
+                        "            </li>\n" +
+                        "            <li><div class=\"planeFormInputTitle\"><b>First Seats: </b></div>\n" +
+                        "                <input type=\"number\" id=\"planeModalFirstSeats"+id+"\" name=\"planeFirstSeats\" value=\"" + firstclass + "\" min=\"0\" max=\"999\" maxlength=\"3\" step=\"1\" onchange=\"checkCapacity()\" required>\n" +
+                        "            </li>\n" +
+                        "            <li><div class=\"planeFormInputTitle\"><b>Base Price: </b></div>\n" +
+                        "                <input type=\"number\" id=\"planeModalBasePrice"+id+"\" name=\"planeBasePrice\" value=\"" + basePrice + "\" min=\"0\" max=\"9999\" maxlength=\"5\" step=\"1.00\" required>\n" +
+                        "            </li>\n" +
+                        "            <li><div class=\"planeFormInputTitle\"><b>Economy Price Multiplier: </b></div>\n" +
+                        "                <input type=\"number\" id=\"planeModalEconomyMultiple"+id+"\" name=\"planeEconomyMultiple\" value=\"" + econMult + "\" min=\"1\" max=\"10\" maxlength=\"4\" step=\"1\" required>\n" +
+                        "            </li>\n" +
+                        "            <li><div class=\"planeFormInputTitle\"><b>Business Price Multiplier: </b></div>\n" +
+                        "                <input type=\"number\" id=\"planeModalBusinessMultiple"+id+"\" name=\"planeBusinessMultiple\" value=\"" + busMult + "\" min=\"1\" max=\"10\" maxlength=\"4\" step=\"1\" required>\n" +
+                        "            </li>\n" +
+                        "            <li><div class=\"planeFormInputTitle\"><b>First Price Multiplier: </b></div>\n" +
+                        "                <input type=\"number\" id=\"planeModalFirstMultiple"+id+"\" name=\"planeFirstMultiple\" value=\"" + firstMult + "\" min=\"1\" max=\"10\" maxlength=\"4\" step=\"1\" required>\n" +
+                        "            </li>\n" +
+                        "            <li>\n"  +
+                        "                <button type=\"submit\" name=\"updatePlaneButton\" value="+id+"> Update </button>\n" +
+                        "                <button type=\"submit\" name=\"removePlaneButton\" value="+id+"> Remove </button>\n" +
                         "            </li>\n" +
                         "        </ul>\n" +
-                        "        <button type=\"submit\" name=\"updatePlaneModelButton\"> Update </button>\n" +
-                        "        <button type=\"submit\" name=\"removePlaneModelButton\"> Remove </button>\n" +
-                        "    </form>";
-                modalCode += "</div>\n</div>";*/
+                        "    </form>\n</div>\n</div>";
             }
 
             htmlCode += "</table>\n\n";
-           // htmlCode += modalCode;
+            htmlCode += modalCode;
 
         } catch (Exception e){
             System.err.println(e.getClass().getName() + ": " + e.getMessage() );
@@ -428,4 +460,112 @@ public class AirplaneFunctions {
         return htmlCode;
     }
 
+    public static String getSelectedPlaneModel(Connection con, String planeID, String planeModel){
+        String htmlCode=
+                "<select id=\"planeModalModelSelect"+planeID+"\" name=\"planeSelect\" onchange=\"alterModalForm(&quot;"+planeID+"&quot;)\">\n" +
+                        "       <option disabled >Select Plane Model</option>\n";
+        String detailCode="";
+        Statement stmt = null;
+        try {
+
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT DISTINCT * FROM planemodels;");
+
+            while(rs.next()){
+                String id = rs.getString("id");
+                String model = rs.getString("plane_model");
+                String capacity = rs.getString("capacity");
+                String hasEcon = rs.getString("hasEconomy");
+                String hasBus = rs.getString("hasBusiness");
+                String hasFirst = rs.getString("hasFirst");
+
+
+                htmlCode +=
+                        "<option id=\"planeModalModel"+id+"\" name=\"planeModalSelectionModelID\" value=\""+id+"\"";
+
+                if(planeModel.equals(model)){
+                    htmlCode += " selected ";
+                }
+
+                htmlCode += ">"+model+"</option>\n";
+
+                /*detailCode +=
+                        "<span id=\"planeModalModelModel"+id+"\" name=\"planeModalModelModel" + id + "\"style=\"display: none;\" >"+model+"</span>\n" +
+                                "<span id=\"planeModalModelCapacity"+id+"\" name=\"planeModalModelCapacity" + id + "\" style=\"display: none;\">"+capacity+"</span>\n" +
+                                "<span id=\"planeModalModelEconomy"+id+"\" name=\"planeModalModelEconomy" + id + "\"  style=\"display: none;\">"+hasEcon+"</span>\n" +
+                                "<span id=\"planeModalModelBusiness"+id+"\" name=\"planeModalModelBusiness" + id + "\" style=\"display: none;\">"+hasBus+"</span>\n" +
+                                "<span id=\"planeModalModelFirst"+id+"\" name=\"planeModalModelFirst" + id + "\" style=\"display: none;\">"+hasFirst+"</span>\n";
+*/
+
+            }
+
+            htmlCode += "</select>";
+            //htmlCode += detailCode;
+
+            con.commit();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Records updated successfully");
+
+        return htmlCode;
+    }
+
+    public static boolean updateAirplane(Connection con, String planeID,String modelID, String capacity, String econSeats,
+                                      String busSeats, String firstSeats, String basePrice, String econMult,
+                                      String busMult, String firstMult) {
+        Statement stmt = null;
+        boolean airplaneAdded = false;
+        try {
+
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM planes WHERE id="+modelID+";");
+
+            if(rs.next()) {
+                String planeType = rs.getString("plane_model");
+
+                String sql = "UPDATE INTO PLANES (PLANE_TYPE, CAPACITY," +
+                        " maxFirst, maxBusiness, maxEconomy, takenFirst, takenBusiness, takenEconomy," +
+                        "Base_Price, multipleFirst," +
+                        " multipleBusiness, multipleEconomy) " +
+                        "VALUES ( '" + planeType + "' , " + capacity + " , "
+                        + firstSeats + ", " + busSeats + " , "
+                        + econSeats + ", 0, 0, 0, "+basePrice+","+firstMult+" , "+busMult+" , "+econMult+")"+
+                        "WHERE id="+planeID+";";
+                stmt.executeUpdate(sql);
+                airplaneAdded = true;
+            }
+
+            stmt.close();
+            con.commit();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Records created successfully");
+
+        return airplaneAdded;
+    }
+
+    public static void deleteAirplane(Connection con, String planeID){
+
+        Statement stmt = null;
+        try {
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            String sql = "DELETE FROM planes WHERE ID = "+planeID+";";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            con.commit();
+        } catch (Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Airplaine "+planeID+" deleted");
+
+    }
 }

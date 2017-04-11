@@ -27,19 +27,49 @@ public class AdminPlanes extends HttpServlet {
 
             if(request.getParameter("addPlaneButton") != null){
 
+                String[] planeInfo = getPlaneInfo(request);
+
+                for(int i=0; i<planeInfo.length; i++){
+                    if(planeInfo[i]==null){
+                        planeInfo[i]="0";
+                    }
+                }
+
                 Connection con = AccountFunctions.OpenDatabase();
 
+                AirplaneFunctions.addAirplane(con,
+                       planeInfo[0], planeInfo[1], planeInfo[2],
+                       planeInfo[3], planeInfo[4], planeInfo[5],
+                       planeInfo[6], planeInfo[7], planeInfo[8]);
                 con.close();
 
             } else if(request.getParameter("removePlaneButton") != null){
 
                 Connection con = AccountFunctions.OpenDatabase();
+                String planeID = request.getParameter("removePlaneButton");
+                AirplaneFunctions.deleteAirplane(con,planeID);
 
                 con.close();
 
             } else if(request.getParameter("updatePlaneButton") != null){
 
                 Connection con = AccountFunctions.OpenDatabase();
+
+                String planeID = request.getParameter("updatePlaneButton");
+
+                System.out.println(planeID);
+                String[] planeInfo = getPlaneInfo(request);
+
+                for(int i=0; i<planeInfo.length; i++){
+                    if(planeInfo[i]==null){
+                        planeInfo[i]="0";
+                    }
+                }
+
+                AirplaneFunctions.updateAirplane(con, planeID,
+                        planeInfo[0], planeInfo[1], planeInfo[2],
+                        planeInfo[3], planeInfo[4], planeInfo[5],
+                        planeInfo[6], planeInfo[7], planeInfo[8]);
 
                 con.close();
             }
@@ -65,4 +95,13 @@ public class AdminPlanes extends HttpServlet {
         return htmlCode;
     }
 
+    public static String[] getPlaneInfo(HttpServletRequest request){
+        return new String[]{
+                request.getParameter("planeSelect"), request.getParameter("planeCapacity"),
+                request.getParameter("planeEconomySeats"), request.getParameter("planeBusinessSeats"),
+                request.getParameter("planeFirstSeats"), request.getParameter("planeBasePrice"),
+                request.getParameter("planeEconomyMultiple"), request.getParameter("planeBusinessMultiple"),
+                request.getParameter("planeFirstMultiple")
+        };
+    }
 }

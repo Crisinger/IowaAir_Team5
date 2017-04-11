@@ -220,8 +220,9 @@ public class AccountFunctions
     public static void updateAccount(Connection con, String id, String email, String password, String role){
         Statement stmt = null;
         try {
-            deleteAccount(con, id);
-            addAccount(con, email, password, role);
+            if(addAccount(con, email, password, role)){
+                deleteAccount(con, id);
+            }
             con.commit();
         } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );

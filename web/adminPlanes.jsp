@@ -31,14 +31,14 @@
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="js/planeModelModal.js" ></script>
+    <script src="js/planeModals.js" ></script>
     <script src="js/adminPlanes.js" ></script>
 
 
     <style>
 
         /* The Modal (background) */
-        .planeModelModal {
+        .planeModelModal , .planeModal{
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
             z-index: 1; /* Sit on top */
@@ -51,8 +51,9 @@
             background-color: rgb(0,0,0); /* Fallback color */
             background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
+
         /* Modal Content */
-        .planeModelModalContent {
+        .planeModelModalContent , .planeModalContent {
             background-color: #fefefe;
             margin: auto;
             padding: 20px;
@@ -61,15 +62,15 @@
         }
 
         /* The Close Button */
-        .planeModelModalClose {
+        .planeModelModalClose , .planeModalClose {
             color: #aaaaaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
 
-        .planeModelModalClose:hover,
-        .planeModelModalClose:focus {
+        .planeModelModalClose:hover, .planeModelModalClose:focus,
+        .planeModalClose:hover, .planeModalClose:focus {
             color: #000;
             text-decoration: none;
             cursor: pointer;
@@ -161,38 +162,40 @@
     <form action="AirFunctions.Admin.AdminPlanes">
         <ul class="planeForm">
             <li><div class="planeFormInputTitle"><b>Plane Type: </b></div>
-                <%=AdminPlaneModels.getPlaneModelList()%></li>
+                <%=AdminPlaneModels.getPlaneModelList()%>
+            </li>
             <li><div class="planeFormInputTitle"><b>Capacity: </b></div>
-                <input type="number" id="planeCapacity" placeholder="123" min="1" max="999" maxlength="3" step="1" onchange="checkCapacity()" required>
+                <input type="number" id="planeCapacity" name="planeCapacity" placeholder="123" min="1" max="999" maxlength="3" step="1" onchange="checkCapacity()" required>
             </li>
             <li><div class="planeFormInputTitle"><b>Economy Seats: </b></div>
-                <input type="number" id="planeEconomySeats" placeholder="123" min="0" max="999" maxlength="3" step="1" onchange="checkCapacity()" required>
+                <input type="number" id="planeEconomySeats" name="planeEconomySeats" placeholder="123" min="0" max="999" maxlength="3" step="1" onchange="checkCapacity()" required>
             </li>
             <li><div class="planeFormInputTitle"><b>Business Seats: </b></div>
-                <input type="number" id="planeBusinessSeats" placeholder="123" min="0" max="999" maxlength="3" step="1" onchange="checkCapacity()" required>
+                <input type="number" id="planeBusinessSeats" name="planeBusinessSeats" placeholder="123" min="0" max="999" maxlength="3" step="1" onchange="checkCapacity()" required>
             </li>
             <li><div class="planeFormInputTitle"><b>First Seats: </b></div>
-                <input type="number" id="planeFirstSeats" placeholder="123" min="0" max="999" maxlength="3" step="1" onchange="checkCapacity()" required>
+                <input type="number" id="planeFirstSeats" name="planeFirstSeats" placeholder="123" min="0" max="999" maxlength="3" step="1" onchange="checkCapacity()" required>
             </li>
             <li><div class="planeFormInputTitle"><b>Base Price: </b></div>
-                <input type="number" id="planeBasePrice" placeholder="123" min="0" max="9999" maxlength="5" step="1.00" required>
+                <input type="number" id="planeBasePrice" name="planeBasePrice" placeholder="123" min="0" max="9999" maxlength="5" step="1" required>
             </li>
             <li><div class="planeFormInputTitle"><b>Economy Price Multiplier: </b></div>
-                <input type="number" id="planeEconomyMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="0.1" required>
+                <input type="number" id="planeEconomyMultiple" name="planeEconomyMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="1" required>
             </li>
             <li><div class="planeFormInputTitle"><b>Business Price Multiplier: </b></div>
-                <input type="number" id="planeBusinessMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="0.1" required>
+                <input type="number" id="planeBusinessMultiple" name="planeBusinessMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="1" required>
             </li>
             <li><div class="planeFormInputTitle"><b>First Price Multiplier: </b></div>
-                <input type="number" id="planeFirstMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="0.1" required>
+                <input type="number" id="planeFirstMultiple" name="planeFirstMultiple" placeholder="1.23" min="1" max="10" maxlength="4" step="1" required>
+            </li>
+            <li>
+                <button type="submit" id="addPlaneButton" name="addPlaneButton" >Add Plane</button>
             </li>
         </ul>
-        <button type="submit" id="addPlaneButton">Add Plane</button>
     </form>
     <br>
     <%=AdminPlanes.getPlanes()%>
-    <br>than
-
+    <br>
 </div>
 
 <footer>
