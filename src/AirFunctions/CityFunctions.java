@@ -120,6 +120,14 @@ public class CityFunctions {
         return htmlCode;
     }
 
+    public static String getActiveCitiesList(){
+        return cityList(true);
+    }
+
+    public static String getActiveStatesList(String call){
+        return stateList(call,true);
+    }
+
     // Only call this. It will populate States, Cities, Lat, and Long.
     private static void addStatesAndCities(Connection con){
         String[][] stateCityInfo =
@@ -212,67 +220,11 @@ public class CityFunctions {
     }
 
     public static String getStates(){
-        Statement stmt = null;
-        String stateCode = "";
-
-        try{
-
-            Connection con = AccountFunctions.OpenDatabase();
-            con.setAutoCommit(false);
-
-            stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT DISTINCT state FROM cities ORDER BY state;");
-
-            while(rs.next()){
-                String currentState = rs.getString("state");
-                String classState = currentState.replace(" ","-").toLowerCase();
-
-                stateCode += "<option value=\""+currentState+"\" onclick=\"alterCityMenu(&quot;" + classState + "&quot;)\">";
-                stateCode += currentState;
-                stateCode += "</option>\n";
-            }
-
-            con.close();
-
-        } catch (Exception e){
-            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-
-        }
-
-        return stateCode;
+        return stateList( "alterCityMenu",false);
     }
 
     public static String getCities(){
-        Statement stmt = null;
-        String cityCode = "";
-
-        try{
-            Connection con = AccountFunctions.OpenDatabase();
-
-            stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM cities ORDER BY state, cityname;");
-
-            while(rs.next()){
-                String currentState = rs.getString("state");
-                String currentCity = rs.getString("cityName");
-                String classState = currentState.replace(" ","-").toLowerCase();
-
-                cityCode += "<option class=\""+classState+" adminAllCities\" value=\"" + currentCity + "\">";
-                cityCode += currentCity;
-                cityCode += "</option>\n";
-
-            }
-
-            con.close();
-
-        } catch (Exception e){
-            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-
-        }
-
-        return cityCode;
+        return cityList(false);
     }
 
     private static void addLatAndLon(Connection con){
@@ -636,5 +588,98 @@ public class CityFunctions {
 
     }
 
+    private static String cityList(boolean activeList){
+        Statement stmt = null;
+        String cityCode = "";
+        String sql = "SELECT * FROM cities ";
+        if(activeList){
+            sql += " WHERE active=true ";
+        }
+        sql += "ORDER BY state, cityname;";
+        try{
+             Connection con = AccountFunctions.OpenDatabase();
+
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()){
+                String currentState = rs.getString("state");
+                String currentCity = rs.getString("cityName");
+                String classState = currentState.replace(" ","-").toLowerCase();
+
+                cityCode += "<option class=\""+classState+" adminAllCities\" value=\"" + currentCity + "\">";
+                cityCode += currentCity;
+                cityCode += "</option>\n";
+
+            }
+
+            con.close();
+
+        } catch (Exception e){
+            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+
+        }
+        return cityCode;
+    }
+
+    private static String stateList(String call, boolean activeList){
+        Statement stmt = null;
+        String stateCode = "";
+        String sql = "SELECT DISTINCT state FROM cities ";
+        if(activeList){
+            sql += " WHERE active=true ";
+        }
+        sql += " ORDER BY state;";
+
+        try{
+
+            Connection con = AccountFunctions.OpenDatabase();
+            con.setAutoCommit(false);
+
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()){
+                String currentState = rs.getString("state");
+                String classState = currentState.replace(" ","-").toLowerCase();
+
+                stateCode += "<option value=\""+currentState+"\" onclick=\""+call+"(&quot;" + classState + "&quot;)\">";
+                stateCode += currentState;
+                stateCode += "</option>\n";
+            }
+
+            con.close();
+
+        } catch (Exception e){
+            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+
+        }
+        return stateCode;
+    }
+
+    public static String[] getLatAndLong(Connection con, String state, String city){
+        String[] latandlong = new String[2];
+        Statement stmt = null;
+
+        try{
+            con.setAutoCommit(false);
+
+            String sql = "SELECT * FROM cities WHERE state='"+state+"' AND cityname='"+city+"';";
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if(rs.next()){
+                latandlong[0] = rs.getString("latitude");
+                latandlong[1] = rs.getString("longitude");
+            }
+        } catch (Exception e){
+            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+
+        }
+        return latandlong;
+    }
 
 }

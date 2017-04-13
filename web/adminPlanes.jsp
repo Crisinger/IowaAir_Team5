@@ -162,7 +162,11 @@
     <form action="AirFunctions.Admin.AdminPlanes">
         <ul class="planeForm">
             <li><div class="planeFormInputTitle"><b>Plane Type: </b></div>
-                <%=AdminPlaneModels.getPlaneModelList()%>
+                <select id=\"planeModelSelect\" name=\"planeSelect\" onchange="alterForm()">
+                    <option disabled selected>Select Plane Model</option>
+                    <%=AdminPlaneModels.getPlaneModelList()%>
+                </select>
+                <%=AdminPlaneModels.getPlaneModelListDetails()%>
             </li>
             <li><div class="planeFormInputTitle"><b>Capacity: </b></div>
                 <input type="number" id="planeCapacity" name="planeCapacity" placeholder="123" min="1" max="999" maxlength="3" step="1" onchange="checkCapacity()" required>

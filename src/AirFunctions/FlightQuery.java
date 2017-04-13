@@ -94,10 +94,10 @@ public class FlightQuery extends HttpServlet {
         return htmlCode;
     }
 
-    public static String getDates(){
+    public static String getDateAndTimeSrc(){
         String htmlCode = "";
-        htmlCode += "<link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\">";
-        htmlCode += "<link rel=\"stylesheet\" href=\"/resources/demos/style.css\">";
+        htmlCode += "<link rel=\"stylesheet\" href=\"https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\">";
+        //htmlCode += "<link rel=\"stylesheet\" href=\"/resources/demos/style.css\">";
         htmlCode += "<script src=\"https://code.jquery.com/jquery-1.12.4.js\"></script>";
         htmlCode += "<script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>";
 

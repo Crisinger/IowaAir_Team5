@@ -31,11 +31,6 @@ public class AdminFunctions extends HttpServlet {
             updateManager(request.getParameter("managerID"),request.getParameter("managerEmail"), request.getParameter("managerPassword"));
             response.sendRedirect("adminManagers.jsp");
 
-        }else if(request.getParameter("addFlightButton") != null){
-
-
-        } else if(request.getParameter("editFlightButton") != null){
-
         }
     }
 
@@ -259,7 +254,7 @@ public class AdminFunctions extends HttpServlet {
         return htmlCode;
     }
 
-    public static String getPlaneInfo(String type){
+    /*public static String getPlaneInfo(String type){
         Connection con = AccountFunctions.OpenDatabase();
         Statement stmt = null;
         String htmlCode = "";
@@ -284,7 +279,7 @@ public class AdminFunctions extends HttpServlet {
         }
 
         return htmlCode;
-    }
+    }*/
 
 }
 

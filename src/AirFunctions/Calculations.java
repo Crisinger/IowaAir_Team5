@@ -3,7 +3,7 @@ package AirFunctions;
 /**
  * Created by johnn on 4/9/2017.
  */
-public class Calculations {
+final public class Calculations {
 
     private static double distanceBetweenCitiesInMiles(double lat1, double lon1, double lat2, double lon2){
         double theta = lon1 - lon2;
@@ -32,14 +32,19 @@ public class Calculations {
     }
 
     public static boolean hasEnoughFuel(double fuel, double burn, double distance){
-        return distance > fuel / burn;
+        return distance < (fuel / (burn/1000));
     }
 
     public static boolean hasEnoughFuel(double fuel, double burn, double lat1, double lon1, double lat2, double lon2 ){
         return hasEnoughFuel(fuel, burn, getDistanceBetweenCitiesInKilometers(lat1, lon1, lat2, lon2));
     }
 
-    public static int pricePerSeat(double base, double distance, double multiple){
-        return (int)((base+distance)*multiple);
+    public static int pricePerSeat(double base, double distance){
+        return (int)(base+distance/100);
+    }
+
+    public static int getBasePrice(int fuelCapacity, double distance, int passengers){
+        int jetFuel = 565; // $/tonne
+        return fuelCapacity*jetFuel/passengers;
     }
 }

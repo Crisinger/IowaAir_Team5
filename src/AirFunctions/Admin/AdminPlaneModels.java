@@ -95,4 +95,16 @@ public class AdminPlaneModels extends HttpServlet {
         return htmlCode;
     }
 
+    public static String getPlaneModelListDetails(){
+        String htmlCode = "";
+        try {
+            Connection con = AccountFunctions.OpenDatabase();
+            htmlCode = AirplaneFunctions.planeModelListDetails(con);
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return htmlCode;
+    }
+
 }

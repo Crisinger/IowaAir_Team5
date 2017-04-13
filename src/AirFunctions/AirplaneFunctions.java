@@ -313,10 +313,7 @@ public class AirplaneFunctions {
     }
 
     public static String planeModelsList(Connection con){
-        String htmlCode=
-                "<select id=\"planeModelSelect\" name=\"planeSelect\" onchange=\"alterForm()\">\n" +
-                "       <option disabled selected>Select Plane Model</option>\n";
-        String detailCode="";
+        String htmlCode="";
         Statement stmt = null;
         try {
 
@@ -327,25 +324,10 @@ public class AirplaneFunctions {
             while(rs.next()){
                 String id = rs.getString("id");
                 String model = rs.getString("plane_model");
-                String capacity = rs.getString("capacity");
-                String hasEcon = rs.getString("hasEconomy");
-                String hasBus = rs.getString("hasBusiness");
-                String hasFirst = rs.getString("hasFirst");
-
-                System.out.println(hasEcon);
 
                 htmlCode +=
                         "<option id=\"planeModel"+id+"\" name=\"planeSelectionModelID\" value=\""+id+"\">"+model+"</option>";
-                detailCode +=
-                        "<span id=\"planeModelModel"+id+"\" name=\"planeModelModel" + id + "\"style=\"display: none;\" >"+model+"</span>\n" +
-                        "<span id=\"planeModelCapacity"+id+"\" name=\"planeModelCapacity" + id + "\" style=\"display: none;\">"+capacity+"</span>\n" +
-                        "<span id=\"planeModelEconomy"+id+"\" name=\"planeModelEconomy" + id + "\"  style=\"display: none;\">"+hasEcon+"</span>\n" +
-                        "<span id=\"planeModelBusiness"+id+"\" name=\"planeModelBusiness" + id + "\" style=\"display: none;\">"+hasBus+"</span>\n" +
-                        "<span id=\"planeModelFirst"+id+"\" name=\"planeModelFirst" + id + "\" style=\"display: none;\">"+hasFirst+"</span>\n";
             }
-
-            htmlCode += "</select>";
-            htmlCode += detailCode;
 
             con.commit();
         } catch ( Exception e ) {
@@ -567,5 +549,68 @@ public class AirplaneFunctions {
         }
         System.out.println("Airplaine "+planeID+" deleted");
 
+    }
+
+    public static String planeModelListDetails(Connection con){
+        String detailCode="";
+        Statement stmt = null;
+        try {
+
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT DISTINCT * FROM planemodels;");
+
+            while(rs.next()){
+                String id = rs.getString("id");
+                String model = rs.getString("plane_model");
+                String capacity = rs.getString("capacity");
+                String hasEcon = rs.getString("hasEconomy");
+                String hasBus = rs.getString("hasBusiness");
+                String hasFirst = rs.getString("hasFirst");
+
+                detailCode +=
+                        "<span id=\"planeModelModel"+id+"\" name=\"planeModelModel" + id + "\"style=\"display: none;\" >"+model+"</span>\n" +
+                                "<span id=\"planeModelCapacity"+id+"\" name=\"planeModelCapacity" + id + "\" style=\"display: none;\">"+capacity+"</span>\n" +
+                                "<span id=\"planeModelEconomy"+id+"\" name=\"planeModelEconomy" + id + "\"  style=\"display: none;\">"+hasEcon+"</span>\n" +
+                                "<span id=\"planeModelBusiness"+id+"\" name=\"planeModelBusiness" + id + "\" style=\"display: none;\">"+hasBus+"</span>\n" +
+                                "<span id=\"planeModelFirst"+id+"\" name=\"planeModelFirst" + id + "\" style=\"display: none;\">"+hasFirst+"</span>\n";
+            }
+
+            con.commit();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Records updated successfully");
+
+        return detailCode;
+
+
+    }
+
+    public static String[] planeModelSpecifics(Connection con, String modelID){
+        String[] specificDetail = new String[4];
+        Statement stmt = null;
+        try {
+
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM planemodels WHERE id="+modelID+";");
+
+            if(rs.next()){
+                specificDetail[0] = rs.getString("capacity");
+                specificDetail[1] = rs.getString("fuel_capacity");
+                specificDetail[2] = rs.getString("fuel_burn_rate");
+                specificDetail[3] = rs.getString("average_velocity");
+            }
+
+            con.commit();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Records updated successfully");
+
+        return specificDetail;
     }
 }

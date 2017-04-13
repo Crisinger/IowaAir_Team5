@@ -8,6 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="AirFunctions.Admin.AdminFunctions" %>
 <%@ page import="AirFunctions.FlightQuery" %>
+<%@ page import="AirFunctions.Admin.AdminPlaneModels" %>
+<%@ page import="AirFunctions.CityFunctions" %>
+
 <%
     String accountText = "";
     if(session.getAttribute("role").toString().equals("admin")){
@@ -29,9 +32,12 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%=FlightQuery.getDates()%>
-    <%=FlightQuery.addPickers("flightDeparture")%>
-    <%=FlightQuery.addPickers("flightArrival")%>
+
+
+    <%=FlightQuery.getDateAndTimeSrc()%>
+    <%//=FlightQuery.addPickers("flightDeparture")%>
+    <%//=FlightQuery.addPickers("flightArrival")%>
+    <script src="js/adminFlights.js"></script>
 
 </head>
 
@@ -92,34 +98,46 @@
 
 <div id="adminFlights">
     <h1>Flights</h1>
-    <form action="AirFunctions.AdminFunctions">
+    <form action="AirFunctions.Admin.AdminFlights">
         <p class="admin_flight_type"><b>Departure</b></p>
         <p class="admin_flight_info">
             Date: <input type="text" name="flightDepartureDate" placeholder="Select Date" id="flightDeparturedatepicker" required>
             Time: <input type="text" name="flightDepartureTime" placeholder="Select Time" id="flightDeparturetimepicker" required>
-            Location: <input type="text" name="flightDepartureLocation" placeholder="City of Airport" required>
+            Location:
+            <select id="flightDepartureLocationState" name="flightDepartureLocationState" required>
+                <option disabled selected>---Select a state---</option>
+                <%=CityFunctions.getActiveStatesList("alterDepartureCitySelect")%>
+            </select>
+            <select id="flightDepartureLocationCity" name="flightDepartureLocationCity" required>
+                <option disabled selected>---Select a city---</option>
+                <%=CityFunctions.getActiveCitiesList()%>
+            </select>
         </p>
         <p class="admin_flight_type"><b>Arrival</b></p>
         <p class="admin_flight_info">
-            Date: <input type="text" name="flightArrivalDate" placeholder="Select Date" id="flightArrivaldatepicker" required>
-            Time: <input type="text" name="flightArrivalTime" placeholder="Select Time" id="flightArrivaltimepicker" required>
-            Location: <input type="text" name="flightArrivalLocation" placeholder="City of Airport" required>
+            Date: <input type="text" name="flightArrivalDate" placeholder="Select Date" id="flightArrivaldatepicker" disabled>
+            Time: <input type="text" name="flightArrivalTime" placeholder="Select Time" id="flightArrivaltimepicker" disabled>
+            Location:
+            <select id="flightArrivalLocationState" name="flightArrivalLocationState">
+                <option disabled selected>---Select a state---</option>
+                <%=CityFunctions.getActiveStatesList("alterArrivalCitySelect")%>
+            </select>
+            <select id="flightArrivalLocationCity" name="flightArrivalLocationCity">
+                <option disabled selected>---Select a city---</option>
+                <%=CityFunctions.getActiveCitiesList()%>
+            </select>
         </p>
         <p class="admin_flight_plane"><b>Plane</b></p>
         <p class = "admin_flight_plane_info">
             Type:
-            <select id="admin_plane_type" required>
-                <option selected="selected" value=""/>
-                <%=AdminFunctions.getPlaneInfo("Plane_Type")%>
-            </select>
-            Available:
-            <select id="admin_plane_available" required>
-                <option selected="selected" value=""/>
+            <select id="flightPlaneModelSelect" name="flightPlaneModel" onchange="canModelMakeTheDistance()" >
+                <option disabled selected>---Select a model---</option>
+                <%=AdminPlaneModels.getPlaneModelList()%>
             </select>
         </p>
         <button type="submit" name="addFlightButton" class="admin_flight_info_button">Add Flight</button>
     </form>
-    <%=AdminFunctions.getFlights()%>
+    <p id="flightResponseDemo">patry</p>
 </div>
 
 <footer>
