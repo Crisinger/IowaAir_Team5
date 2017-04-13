@@ -60,10 +60,6 @@ public class FlightQuery extends HttpServlet {
             System.exit(0);
 
         }
-
-
-
-
     }
 
     public static String getLocations(String type){

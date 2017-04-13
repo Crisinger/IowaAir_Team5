@@ -11,7 +11,7 @@ public class FlightsFunctions {
         try {
             boolean working = false;
             connection = AccountFunctions.OpenDatabase();
-            CreateFlightsTable(connection);
+            //CreateFlightsTable(connection);
             // add flight will not work until the city references (1 and 2) are defined in the city table
             //AddFlight(connection, 1,new Date(2005,04,15), new Time(5),1, new Date(04,04,2017), new Time(12), 2, 250);
 
@@ -76,7 +76,7 @@ public class FlightsFunctions {
 
 
     public static void AddFlight(Connection con, int planeID, Date deptDate, Time deptTime, int deptLocation,
-                                 Date arrivalDate, Time arrivalTime, int arrivalLocation, int price)
+                                 Date arrivalDate, Time arrivalTime, int arrivalLocation, int demand)
     //i assume that if a plane has first class, it also has business and coach. If it has business it also has coach
     {
         Connection c = con;
@@ -85,9 +85,9 @@ public class FlightsFunctions {
 
             c.setAutoCommit(false);
             stmt = c.createStatement();
-            String sql = "INSERT INTO FLIGHTS (PLANE_ID,DEPARTURE_DATE,DEPARTURE_TIME,DEPARTURE_LOCATION,ARRIVAL_DATE,ARRIVAL_TIME,ARRIVAL_LOCATION,PRICE) " +
+            String sql = "INSERT INTO FLIGHTS (PLANE_ID,DEPARTURE_DATE,DEPARTURE_TIME,DEPARTURE_LOCATION,ARRIVAL_DATE,ARRIVAL_TIME,ARRIVAL_LOCATION,DEMAND) " +
                     "VALUES ( '" + planeID + "' , '" + deptDate + "' , '"+ deptTime +"' , '"+ deptLocation +"' , '"+ arrivalDate + "','" +
-                    arrivalTime + "','" + arrivalLocation +"','" + price + "');";
+                    arrivalTime + "','" + arrivalLocation +"','" + demand + "');";
             stmt.executeUpdate(sql);
 
             stmt.close();
@@ -121,5 +121,73 @@ public class FlightsFunctions {
 
     }
 
+    public static String[][] getUpcomingFlights(Connection con, int userID){ //gathers upcoming flights
+        boolean found = false;
+        String[][] display = new String[10][7];
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM BOOKEDFLIGHTS WHERE USERID = "+  userID + "AND Completed=0;");
+            int i = 0;
+            while (rs.next()){
+                display[i][0] = rs.getString("FlightID");
+                display[i][1] = rs.getString("TotalTickets");
+                display[i][2] = rs.getString("ticketsEconomy");
+                display[i][3] = rs.getString("ticketsBusiness");
+                display[i][4] = rs.getString("ticketsFirst");
+                display[i][5] = rs.getString("priceEconomy");
+                display[i][6] = rs.getString("priceBusiness");
+                display[i][7] = rs.getString("priceFirst");
+                i++;
+            }
+            rs.close();
+            stmt.close();
 
+
+        } catch(Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return display;
+    }
+
+    public static String[][] getCompletedFlights(Connection con, int userID){ //gathers upcoming flights
+        boolean found = false;
+        String[][] display = new String[10][7];
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM BOOKEDFLIGHTS WHERE USERID = "+  userID + "AND Completed=1;");
+            int i = 0;
+            while (rs.next()){
+                display[i][0] = rs.getString("FlightID");
+                display[i][1] = rs.getString("TotalTickets");
+                display[i][2] = rs.getString("ticketsEconomy");
+                display[i][3] = rs.getString("ticketsBusiness");
+                display[i][4] = rs.getString("ticketsFirst");
+                display[i][5] = rs.getString("priceEconomy");
+                display[i][6] = rs.getString("priceBusiness");
+                display[i][7] = rs.getString("priceFirst");
+                i++;
+            }
+            rs.close();
+            stmt.close();
+
+
+        } catch(Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return display;
+    }
+
+    public static void setFlightCompleted(Connection con, int flightID){
+        try{
+            Statement stmt = con.createStatement();
+            stmt.executeQuery( "UPDATE BOOKEDFLIGHTS SET completed = 1 WHERE flightID = " + flightID +";");
+            stmt.close();
+
+        } catch(Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
 }

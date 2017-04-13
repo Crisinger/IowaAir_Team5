@@ -3,8 +3,6 @@ package AirFunctions; /**
  */
 
 import java.sql.*;
-
-import AirFunctions.Email.SendEmail;
 import com.mysql.jdbc.Driver;
 public class AccountFunctions
 {
@@ -167,35 +165,6 @@ public class AccountFunctions
                 stmt.executeUpdate(sql);
                 stmt.close();
                 accountAdded = true;
-
-                // Send email to manager accounts created
-                if (role.equals("MANAGER")){
-                    // SMTP server information
-                    String host = "smtp.gmail.com"; // Host
-                    String port = "587"; // Port
-                    String adminEmail = "test.iowa.air@gmail.com"; // Email address for sender
-                    String adminPass = "testtesttest123"; // Password for sender email
-
-                    // outgoing message information
-                    // Would change email here however, so we don't spam random people it will stay as my email.
-                    String mailTo = "ReedStock1992@gmail.com"; // Recipient
-                    String subject = "Hello Manager"; // Subject line
-                    String message = "This is your Iowa Air Email:" + email + "\nThis is your Iowa Air Password" + password; // Message contents
-
-                    // Create new SendEmail class
-                    SendEmail mailer = new SendEmail();
-
-                    // Try catch block
-                    try {
-                        mailer.sendEmail(host, port, adminEmail, adminPass, mailTo,
-                                subject, message);
-                        System.out.println("Email sent.");
-                    } catch (Exception ex) {
-                        System.out.println("Failed to sent email.");
-                        ex.printStackTrace();
-                    }
-                }
-                // Ends email to manager account block
             }
 
             c.commit();
@@ -251,9 +220,8 @@ public class AccountFunctions
     public static void updateAccount(Connection con, String id, String email, String password, String role){
         Statement stmt = null;
         try {
-            if(addAccount(con, email, password, role)){
-                deleteAccount(con, id);
-            }
+            deleteAccount(con, id);
+            addAccount(con, email, password, role);
             con.commit();
         } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
