@@ -76,26 +76,6 @@ function alterArrivalCitySelect(classID){
 
 function canModelMakeTheDistance(){
 
-   /* var departStateSelect = document.getElementById("flightDepartureLocationState");
-    var departState = departStateSelect.options[departStateSelect.selectedIndex].value;
-    console.log(departState);
-
-    var departCitySelect = document.getElementById("flightDepartureLocationCity");
-    var departCity = departCitySelect.options[departCitySelect.selectedIndex].value;
-    console.log(departCity);
-
-
-    var arrivalStateSelect = document.getElementById("flightArrivalLocationState");
-    var arrivalState = arrivalStateSelect.options[arrivalStateSelect.selectedIndex].value;
-    console.log(arrivalState);
-
-    var arrivalCitySelect = document.getElementById("flightArrivalLocationCity");
-    var arrivalCity = arrivalCitySelect.options[arrivalCitySelect.selectedIndex].value;
-    console.log(arrivalCity);
-
-    var departDate = $( "#flightDeparturedatepicker" ).datepicker('getDate');
-    console.log(departDate);
-*/
     var planeModelSelect = document.getElementById("flightPlaneModelSelect");
     var planeModel = planeModelSelect.options[planeModelSelect.selectedIndex].value;
 
@@ -111,12 +91,12 @@ function canModelMakeTheDistance(){
             ableTimedPrice = JSON.parse(msg);
             if(ableTimedPrice.canTravel){
                 modifyArrivalDateAndTime(ableTimedPrice.timed);
+                getAvailablAirplanes(planeModel);
             } else{
-                alert("pick a different plane. This one can't make it");
+                alert("this plane can't make the trip");
             }
        }
     );
-
 
 }
 
@@ -133,4 +113,26 @@ function modifyArrivalDateAndTime(tripTime){
 
     $("#flightArrivaldatepicker").datepicker('setDate',arrivalDate);
     $("#flightArrivaltimepicker").timepicker('setTime',arrivalDate);
+}
+
+
+function getAvailablAirplanes(planeModelID){
+    var departDate = $("#flightDeparturedatepicker").datepicker('getDate');
+    var departTime = $("#flightDeparturetimepicker").timepicker('getTime');
+    var arrivalDate = $("#flightArrivaldatepicker").datepicker('getDate');
+    var arrivalTime = $("#flightArrivaltimepicker").timepicker('getTime');
+
+    var nextSeries;
+    nextSeries =    "flightDepartureDate="+departDate.getFullYear()+"-"+ ((departDate.getMonth()<10)?"0":"") +departDate.getMonth() +"-"+((departDate.getDate()<10)?"0":"") + departDate.getDate() + "&";
+    nextSeries +=   "flightDepartureTime="+((departTime.getHours()<10)?"0":"")+departTime.getHours()+":"+((departTime.getMinutes()<10)?"0":"")+departTime.getMinutes()+":00&";
+    nextSeries +=   "flightArrivalDate="+arrivalDate.getFullYear()+"-"+((arrivalDate.getMonth()<10)?"0":"")+arrivalDate.getMonth()+"-"+((arrivalDate.getDate()<10)?"0":"")+arrivalDate.getDate()+"&";
+    nextSeries +=   "flightArrivalTime="+((arrivalTime.getHours()<10)?"0":"")+arrivalTime.getHours()+":"+((arrivalTime.getMinutes()<10)?"0":"")+arrivalTime.getMinutes()+":00&";
+    nextSeries +=   "flightPlaneModelSelect="+planeModelID;
+
+    $.post("AirFunctions.Admin.AdminFlights",nextSeries,
+        function(msg){
+            console.log(msg);
+        }
+    )
+
 }

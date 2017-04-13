@@ -74,11 +74,11 @@ public class AdminFlights extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String departDate = request.getParameter("departDate");
-            String departTime = request.getParameter("departTime");
-            String arrivalDate = request.getParameter("arrivalDate");
-            String arrivalTime = request.getParameter("arrivalTime");
-            String planeModel = request.getParameter("planeModel");
+            String departDate = request.getParameter("flightDepartureDate");
+            String departTime = request.getParameter("flightDepartureTime");
+            String arrivalDate = request.getParameter("flightArrivalDate");
+            String arrivalTime = request.getParameter("flightArrivalTime");
+            String planeModel = request.getParameter("flightPlaneModelSelect");
 
             System.out.println("-----------------------");
             System.out.println("departDate: " + departDate);
@@ -96,6 +96,8 @@ public class AdminFlights extends HttpServlet {
             //System.out.println(fuelBurnRate);
             //System.out.println(canTravel);
 
+
+            response.getWriter().print("birdsFly");
 
         }catch(Exception e){
             e.printStackTrace();
@@ -133,5 +135,9 @@ public class AdminFlights extends HttpServlet {
         return value;
 
     }
+
+
+
+
 
 }
