@@ -375,7 +375,7 @@ nav a.selected, nav a:hover {
     background: #969696;
 }
 
-.admin_flight_info input{
+.admin_flight_info input, .admin_flight_info select{
     margin: 0 5% 0 0;
 }
 
@@ -455,27 +455,7 @@ nav a.selected, nav a:hover {
 
 
 
-/*
-#adminFlights form p1 {
-    width: 90%;
-    display: block;
-    font-size: 1.2em;
-    margin: 0 0 10px 0;
-}
 
-#adminFlights form p2 {
-    display: block;
-    width: 90%;
-    font-size: 1em;
-    margin: 0 0 10px 0;
-}
-
-#adminFlights form input {
-    width: 20%;
-    margin: 0 0 10px 0;
-}
-
-*/
 
 .planeFormInputTitle {
     width: 30ch;
@@ -499,4 +479,47 @@ nav a.selected, nav a:hover {
 
 #adminPlanes form button, #adminLocations form ul li button{
     margin: 5px 0 0 0;
+}
+
+
+
+
+
+/* The Modal (background) */
+.planeModelModal , .planeModal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.planeModelModalContent , .planeModalContent{
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+}
+
+/* The Close Button */
+.planeModelModalClose , .planeModalClose {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.planeModelModalClose:hover, .planeModelModalClose:focus,
+.planeModalClose:hover, .planeModalClose:focus{
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }

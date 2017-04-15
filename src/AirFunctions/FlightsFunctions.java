@@ -13,7 +13,7 @@ public class FlightsFunctions {
             connection = AccountFunctions.OpenDatabase();
             //CreateFlightsTable(connection);
             // add flight will not work until the city references (1 and 2) are defined in the city table
-            //AddFlight(connection, 1,new Date(2005,04,15), new Time(5),1, new Date(04,04,2017), new Time(12), 2, 250);
+            //AdminAddFlight(connection, 1,new Date(2005,04,15), new Time(5),1, new Date(04,04,2017), new Time(12), 2, 250);
 
             //deleteFlight(connection, 1);
             //working = checkLogin(connection,"test@gmail.com","test");
@@ -26,7 +26,7 @@ public class FlightsFunctions {
 
 
 
-    public static void CreateFlightsTable(Connection con)
+    public static void createFlightsTable(Connection con)
     {
         Connection c = con;
         Statement stmt = null;
@@ -75,29 +75,31 @@ public class FlightsFunctions {
 
 
 
-    public static void AddFlight(Connection con, int planeID, Date deptDate, Time deptTime, int deptLocation,
-                                 Date arrivalDate, Time arrivalTime, int arrivalLocation, int demand)
+    public static boolean addFlight(Connection con, String planeID, String deptDate, String deptTime, String deptLocation,
+                                 String arrivalDate, String arrivalTime, String arrivalLocation, String demand, String distancePrice)
     //i assume that if a plane has first class, it also has business and coach. If it has business it also has coach
     {
-        Connection c = con;
+        boolean isFlightAdded = false;
         Statement stmt = null;
         try {
 
-            c.setAutoCommit(false);
-            stmt = c.createStatement();
-            String sql = "INSERT INTO FLIGHTS (PLANE_ID,DEPARTURE_DATE,DEPARTURE_TIME,DEPARTURE_LOCATION,ARRIVAL_DATE,ARRIVAL_TIME,ARRIVAL_LOCATION,DEMAND) " +
-                    "VALUES ( '" + planeID + "' , '" + deptDate + "' , '"+ deptTime +"' , '"+ deptLocation +"' , '"+ arrivalDate + "','" +
-                    arrivalTime + "','" + arrivalLocation +"','" + demand + "');";
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            String sql = "INSERT INTO FLIGHTS (PLANE_ID,DEPARTURE_DATE,DEPARTURE_TIME,DEPARTURE_LOCATION,ARRIVAL_DATE,ARRIVAL_TIME,ARRIVAL_LOCATION,DEMAND, DISTANCE_PRICE) " +
+                    "VALUES ( " + planeID + " , '" + deptDate + "' , '"+ deptTime +"' , "+ deptLocation +" , '"+ arrivalDate + "','" +
+                    arrivalTime + "'," + arrivalLocation +"," + demand + ", "+ distancePrice+");";
             stmt.executeUpdate(sql);
+            isFlightAdded = true;
 
             stmt.close();
-            c.commit();
+            con.commit();
             //c.close();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
         System.out.println("Flight created ");
+        return isFlightAdded;
     }
 
     public static void deleteFlight(Connection con, int flightID){

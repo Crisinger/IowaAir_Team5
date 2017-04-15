@@ -68,31 +68,6 @@ public class AccountFunctions
         System.out.println("Table created successfully");
     }
 
-
-    public static void AddCustomer(Connection con, String email, String password)
-    {
-        Connection c = con;
-        Statement stmt = null;
-        try {
-
-            c.setAutoCommit(false);
-
-
-            stmt = c.createStatement();
-            String sql = "INSERT INTO ACCOUNTS (EMAIL,PASSWORD,ROLE) " +
-                    "VALUES ( '" + email + "' , '" + password + "' , 'CUSTOMER');";
-            stmt.executeUpdate(sql);
-
-            stmt.close();
-            c.commit();
-            //c.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-        }
-        System.out.println("Records created successfully");
-    }
-
     public static boolean checkLogin(Connection con, String user, String pass)
     {
         Connection c = con;

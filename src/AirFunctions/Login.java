@@ -26,6 +26,7 @@ public class Login extends HttpServlet {
         // Checks if account is in system then redirects if it is a valid account
         if(AccountFunctions.checkLogin(c,userEmail,userPassword)){
 
+            System.out.println("i am currently right here!");
             HttpSession mySession = request.getSession();
             mySession.setAttribute("userEmail",userEmail);
 
@@ -33,24 +34,26 @@ public class Login extends HttpServlet {
             switch(AccountFunctions.checkRole(c, userEmail)){
                 // Checks if role is admin
                 case 'A':
-                case 'a':
                     AccountFunctions.closeConnection(c);
                     System.out.println("HERE AT ADMIN");
-                    mySession.setAttribute("role","admin");
+                    mySession.setAttribute("role","ADMIN");
                     response.sendRedirect("admin.jsp");
 
                     break;
                 // Checks if role is manager
                 case 'M':
-                case 'm':
                     AccountFunctions.closeConnection(c);
-                    mySession.setAttribute("role","manager");
+                    System.out.println("HERE AT MANAGER");
+
+                    mySession.setAttribute("role","MANAGER");
                     response.sendRedirect("manager.jsp");
                     break;
                 // Customers
                 default:
                     AccountFunctions.closeConnection(c);
-                    mySession.setAttribute("role","customer");
+                    System.out.println("HERE AT CUSTOMER");
+
+                    mySession.setAttribute("role","CUSTOMER");
                     response.sendRedirect("index.jsp");
             }
 

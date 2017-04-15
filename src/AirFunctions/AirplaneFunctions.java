@@ -3,6 +3,10 @@ package AirFunctions;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by crisi_000 on 3/30/2017.
@@ -613,4 +617,70 @@ public class AirplaneFunctions {
 
         return specificDetail;
     }
+
+    public static ArrayList<String[]> airplanesCurrentlyAvailable(Connection con, String planeModel, String departDate,
+                                                          String departTime, String arriveDate, String arriveTime){
+        ArrayList<String[]> availablePlanesList = new ArrayList<>();
+        String[] availablePlanes = new String[7];
+        boolean isAvailable;
+        try {
+            Statement stmt = null;
+            Statement stmtInner = null;
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            stmtInner = con.createStatement();
+            ResultSet rs = stmt.executeQuery(
+                    "SELECT * FROM planes WHERE plane_type='"+planeModel+"' ORDER BY id;");
+
+            while(rs.next()){
+                ResultSet innerRS = stmtInner.executeQuery("Select * FROM flights WHERE plane_id="+rs.getString("id")+";");
+
+                isAvailable = true;
+                if (innerRS.next()) {
+                    do {
+                        if (!checkDates(innerRS.getString("Departure_Date"),
+                                innerRS.getString("Arrival_Date"), departDate, arriveDate)) {
+
+                            isAvailable = checkTimes(innerRS.getString("Departure_time"),
+                                    innerRS.getString("Arrival_time"), departTime, arriveTime);
+                        }
+                    } while (innerRS.next());
+                } else {
+                    isAvailable = true;
+                }
+
+                if (isAvailable) {
+                    availablePlanes[0] = rs.getString("plane_type");
+                    availablePlanes[1] = rs.getString("id");
+                    availablePlanes[2] = rs.getString("capacity");
+                    availablePlanes[3] = rs.getString("maxEconomy");
+                    availablePlanes[4] = rs.getString("maxBusiness");
+                    availablePlanes[5] = rs.getString("maxFirst");
+                    availablePlanes[6] = rs.getString("Base_Price");
+                    availablePlanesList.add(availablePlanes);
+                }
+            }
+            stmt.close();
+            stmtInner.close();
+            con.commit();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Finished Making Available Planes Array");
+
+        return availablePlanesList;
+
+    }
+
+    private static boolean checkDates(String qDepart, String qArrive, String cDepart, String cArrive) {
+        return LocalDate.parse(qDepart).isAfter(LocalDate.parse(cArrive)) ||
+                LocalDate.parse(qArrive).isBefore(LocalDate.parse(cDepart));
+    }
+
+    private static boolean checkTimes(String qDTime, String qATime, String cDTime, String cATime){
+        return LocalTime.parse(qDTime).isAfter(LocalTime.parse(cATime))
+                || LocalTime.parse(cDTime).isAfter(LocalTime.parse(qATime));
+    }
+
 }

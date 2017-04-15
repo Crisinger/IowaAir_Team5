@@ -40,7 +40,7 @@ public class CreateAccount extends HttpServlet {
             response.sendRedirect("createAccount.jsp");
         } else {
             Connection con = AccountFunctions.OpenDatabase(); // open the database
-            AccountFunctions.AddCustomer(con,userEmail,userPassword); // add customer to database
+            AccountFunctions.addAccount(con,userEmail,userPassword,"CUSTOMER"); // add customer to database
             AccountFunctions.closeConnection(con); // close connection
             HttpSession mySession = request.getSession();
             mySession.setAttribute("userEmail",userEmail);

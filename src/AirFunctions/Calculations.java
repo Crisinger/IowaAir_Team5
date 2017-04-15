@@ -47,4 +47,8 @@ final public class Calculations {
         int jetFuel = 565; // $/tonne
         return fuelCapacity*jetFuel/passengers;
     }
+
+    public static int getDistancePrice(double distance){
+        return (int)(distance / 100.0); // where 100 is $1/100km
+    }
 }

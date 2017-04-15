@@ -9,7 +9,7 @@
 
 <%
     String accountText = "";
-    if(session.getAttribute("role").toString().equals("admin")){
+    if(session.getAttribute("role").toString().equals("ADMIN")){
         accountText = session.getAttribute("userEmail").toString();
     } else {
         response.sendRedirect("logout.jsp");
