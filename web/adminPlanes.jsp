@@ -140,19 +140,19 @@
                 <input type="text" id="planeModel" name="planeModel" placeholder="Type" maxlength="40" required>
             </li>
             <li><div class="planeFormInputTitle"><b>Carrying Capacity: </b></div>
-                <input type="range" id="modelCapacity" name="modelCapacity" placeholder="Capacity" min="25" max="850" maxlength = "3" step="25"  onchange="alterText()" required>
+                <input type="range" id="modelCapacity" name="modelCapacity" placeholder="Capacity" min="1" max="400" maxlength = "3" step="1"  onchange="alterText()" required>
                 <input type="text" id="modelCapacityText" name="modelCapacityText" value="0" disabled required>
             </li>
             <li><div class="planeFormInputTitle"><b>Fuel Capacity: </b></div>
-                <input type="range" id="modelFuel" name="modelFuel" placeholder="tonnes" min="10" max="300" maxlength = "4" step="10"  onchange="alterText()" required>
+                <input type="range" id="modelFuel" name="modelFuel" placeholder="tonnes" min="1" max="250" maxlength = "4" step="1"  onchange="alterText()" required>
                 <input type="text" id="modelFuelText" name="modelFuelText" value="0" disabled required>
             </li>
             <li><div class="planeFormInputTitle"><b>Fuel Burn Rate: </b></div>
-                <input type="range" id="modelBurn" name="modelBurn" placeholder="kg/km" min="1" max="10" maxlength = "4" step="0.2"  onchange="alterText()" required>
+                <input type="range" id="modelBurn" name="modelBurn" placeholder="kg/km" min="0.4" max="10" maxlength = "4" step="0.2"  onchange="alterText()" required>
                 <input type="text" id="modelBurnText" name="modelBurnText" value="0" disabled required>
             </li>
             <li><div class="planeFormInputTitle"><b>Average Velocity: </b></div>
-                <input type="range" id="modelVelocity" name="modelVelocity" min="250" max="2250" maxlength = "4" step="50" onchange="alterText()" required>
+                <input type="range" id="modelVelocity" name="modelVelocity" min="250" max="2000" maxlength = "4" step="25" onchange="alterText()" required>
                 <input type="text" id="modelVelocityText" name="modelVelocity" value="0" disabled required>
             </li>
 
@@ -162,18 +162,18 @@
                     <ul class="classesCheckbox" >
                         <li><div class="planeFormInputTitle"></div>
                             <input type="checkbox" name="hasEconomyClass" value="true" title="Economy" onclick="alterSlider(0)" ><b>Economy</b>
-                            <input type="range" id="seatsEconomyRange" name="seatsEconomy" value="0" min="0" max="850" step="5" onchange="alterText()" disabled required>
+                            <input type="range" id="seatsEconomyRange" name="seatsEconomy" value="0" min="0" max="400" step="1" onchange="alterText()" disabled required>
                             <input type="text" id="seatsEconomy" name="seatsEconomy" value="0" disabled required>
                         </li>
                         <li><div class="planeFormInputTitle"></div>
                             <input type="checkbox" name="hasBusinessClass" value="true" title="Business" onclick="alterSlider(1)"><b>Business</b>
-                            <input type="range" id="seatsBusinessRange" name="seatsBusiness" value="0" min="0" max="850" step="5" onchange="alterText()" disabled required>
+                            <input type="range" id="seatsBusinessRange" name="seatsBusiness" value="0" min="0" max="400" step="1" onchange="alterText()" disabled required>
                             <input type="text" id="seatsBusiness" name="seatsBusiness" value="0" disabled required>
 
                         </li>
                         <li><div class="planeFormInputTitle"></div>
                             <input type="checkbox" name="hasFirstClass" value="true" title="First" onclick="alterSlider(2)" ><b>First</b>
-                            <input type="range" id="seatsFirstRange" name="seatsFirst" value="0" min="0" max="850" step="5"  onchange="alterText()" disabled required>
+                            <input type="range" id="seatsFirstRange" name="seatsFirst" value="0" min="0" max="400" step="1"  onchange="alterText()" disabled required>
                             <input type="text" id="seatsFirst" name="seatsFirst" value="0" disabled required>
 
                         </li>
@@ -281,19 +281,19 @@
                     <input type="text" id="modelModal" name="modelModal" placeholder="Type" maxlength="40" required>
                 </li>
                 <li><div class="planeFormInputTitle"><b>Carrying Capacity: </b></div>
-                    <input type="range" id="modelModalCapacity" name="modelModalCapacity" placeholder="Capacity" min="25" max="850" maxlength = "3" step="25"  onchange="alterModalText()" required>
+                    <input type="range" id="modelModalCapacity" name="modelModalCapacity" placeholder="Capacity" min="1" max="400" maxlength = "3" step="1"  onchange="alterModalText()" required>
                     <input type="text" id="modelModalCapacityText" name="modelModalCapacityText" value="0" disabled required>
                 </li>
                 <li><div class="planeFormInputTitle"><b>Fuel Capacity: </b></div>
-                    <input type="range" id="modelModalFuel" name="modelModalFuel" placeholder="tonnes" min="10" max="300" maxlength = "4" step="10"  onchange="alterModalText()" required>
+                    <input type="range" id="modelModalFuel" name="modelModalFuel" placeholder="tonnes" min="1" max="250" maxlength = "4" step="1"  onchange="alterModalText()" required>
                     <input type="text" id="modelModalFuelText" name="modelModalFuelText" value="0" disabled required>
                 </li>
                 <li><div class="planeFormInputTitle"><b>Fuel Burn Rate: </b></div>
-                    <input type="range" id="modelModalBurn" name="modelModalBurn" placeholder="kg/km" min="1" max="10" maxlength = "4" step="0.2"  onchange="alterModalText()" required>
+                    <input type="range" id="modelModalBurn" name="modelModalBurn" placeholder="kg/km" min="0.4" max="10" maxlength = "4" step="0.2"  onchange="alterModalText()" required>
                     <input type="text" id="modelModalBurnText" name="modelModalBurnText" value="0" disabled required>
                 </li>
                 <li><div class="planeFormInputTitle"><b>Average Velocity: </b></div>
-                    <input type="range" id="modelModalVelocity" name="modelModalVelocity" min="250" max="2250" maxlength = "4" step="50" onchange="alterModalText()" required>
+                    <input type="range" id="modelModalVelocity" name="modelModalVelocity" min="250" max="2000" maxlength = "4" step="25" onchange="alterModalText()" required>
                     <input type="text" id="modelModalVelocityText" name="modelModalVelocity" value="0" disabled required>
                 </li>
 
@@ -303,18 +303,18 @@
                         <ul class="classesCheckbox" >
                             <li><div class="planeFormInputTitle"></div>
                                 <input type="checkbox" id="hasEconomyModal" name="hasEconomyModal" value="true" title="Economy" onclick="alterModalSlider(0)" ><b>Economy</b>
-                                <input type="range" id="seatsEconomyRangeModal" name="seatsEconomyRangeModal" value="0" min="0" max="850" step="5" onchange="alterModalText()"  required>
+                                <input type="range" id="seatsEconomyRangeModal" name="seatsEconomyRangeModal" value="0" min="0" max="400" step="1" onchange="alterModalText()"  required>
                                 <input type="text" id="seatsEconomyModalText" name="seatsEconomyModalText" value="0" disabled required>
                             </li>
                             <li><div class="planeFormInputTitle"></div>
                                 <input type="checkbox" id="hasBusinessModal" name="hasBusinessModal" value="true" title="Business" onclick="alterModalSlider(1)"><b>Business</b>
-                                <input type="range" id="seatsBusinessRangeModal" name="seatsBusinessRangeModal" value="0" min="0" max="850" step="5" onchange="alterModalText()"  required>
+                                <input type="range" id="seatsBusinessRangeModal" name="seatsBusinessRangeModal" value="0" min="0" max="400" step="1" onchange="alterModalText()"  required>
                                 <input type="text" id="seatsBusinessModalText" name="seatsBusinessModalText" value="0" disabled required>
 
                             </li>
                             <li><div class="planeFormInputTitle"></div>
                                 <input type="checkbox" id="hasFirstModal" name="hasFirstModal" value="true" title="First" onclick="alterModalSlider(2)" ><b>First</b>
-                                <input type="range" id="seatsFirstRangeModal" name="seatsFirstRangeModal" value="0" min="0" max="850" step="5"  onchange="alterModalText()"  required>
+                                <input type="range" id="seatsFirstRangeModal" name="seatsFirstRangeModal" value="0" min="0" max="400" step="1"  onchange="alterModalText()"  required>
                                 <input type="text" id="seatsFirstModalText" name="seatsFirstModalText" value="0" disabled required>
 
                             </li>
