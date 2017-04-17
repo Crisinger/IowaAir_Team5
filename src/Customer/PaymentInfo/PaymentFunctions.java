@@ -1,6 +1,6 @@
-package AirFunctions.Payment;
+package Customer.PaymentInfo;
 
-import AirFunctions.AccountFunctions;
+import General.AccountFunctions;
 
 import java.sql.Connection;
 import java.sql.Date;

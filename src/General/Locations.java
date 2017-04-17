@@ -1,20 +1,18 @@
-package AirFunctions.Admin;// Imported packages
-import AirFunctions.AccountFunctions;
-import AirFunctions.CityFunctions;
+package General;// Imported packages
+import General.AccountFunctions;
+import General.CityFunctions;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
-import java.util.Random;
 
-@WebServlet("/AirFunctions.Admin.AdminLocations")
-public class AdminLocations extends HttpServlet{
+@WebServlet(name="Locations",value="/General.Locations")
+public class Locations extends HttpServlet{
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(request.getParameter("addLocationButton") != null){
@@ -45,6 +43,10 @@ public class AdminLocations extends HttpServlet{
             response.sendRedirect("adminLocations.jsp");
 
         }
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 
     public static String getAirports(){

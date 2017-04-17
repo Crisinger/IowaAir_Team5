@@ -1,4 +1,6 @@
-package AirFunctions;// Imported packages
+package General;// Imported packages
+import General.AccountFunctions;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -10,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/AirFunctions.FlightQuery")
+@WebServlet("/General.FlightQuery")
 public class FlightQuery extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

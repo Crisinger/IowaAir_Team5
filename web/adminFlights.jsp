@@ -6,15 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="AirFunctions.Admin.AdminFunctions" %>
-<%@ page import="AirFunctions.FlightQuery" %>
-<%@ page import="AirFunctions.Admin.AdminPlaneModels" %>
-<%@ page import="AirFunctions.CityFunctions" %>
-<%@ page import="AirFunctions.Admin.AdminAddFlight" %>
+<%@ page import="General.AdminFunctions" %>
+<%@ page import="General.FlightQuery" %>
+<%@ page import="General.CityFunctions" %>
+<%@ page import="Admin.Flights.AddFlight" %>
+<%@ page import="Admin.Planes.PlaneModelsList" %>
 
 <%
     String accountText = "";
-    if(session.getAttribute("role").toString().equals("admin")){
+    if(session.getAttribute("role").toString().equals("ADMIN")){
         accountText = session.getAttribute("userEmail").toString();
     } else {
         response.sendRedirect("logout.jsp");
@@ -38,7 +38,7 @@
     <%=FlightQuery.getDateAndTimeSrc()%>
     <%//=FlightQuery.addPickers("flightDeparture")%>
     <%//=FlightQuery.addPickers("flightArrival")%>
-    <script src="js/adminFlights.js"></script>
+    <script src="js/Admin/Flights.js"></script>
     <style>
         /* The Modal (background) */
         .adminAddFlightModal{
@@ -228,7 +228,7 @@
 
 <div id="adminFlights">
     <h1>Flights</h1>
-    <div action="AirFunctions.Admin.AdminFlights">
+    <div action="IowaAir.Admin.Flights.AdminFlights">
         <p class="admin_flight_type"><b>Departure</b></p>
         <p class="admin_flight_info">
             Date: <input type="text" name="flightDepartureDate" placeholder="Select Date" id="flightDeparturedatepicker" onclick="enableNextEntry(1)" required>
@@ -261,8 +261,6 @@
         <p class = "admin_flight_info">
             Type:
             <select id="flightPlaneModelSelect" name="flightPlaneModel" onchange="canModelMakeTheDistance()" onclick="enableNextEntry(7)" disabled >
-                <option disabled selected>---Select a model---</option>
-                <%=AdminPlaneModels.getPlaneModelList()%>
             </select>
             Price Adjustment:<input type="text" id="flightDistancePrice" placeholder="$" value="" style="width:5ch;" disabled >
             Demand: <input type="range" id="flightDemandSlider" name="points" min="1" max="20" step="1" onchange="updateSliderText()">

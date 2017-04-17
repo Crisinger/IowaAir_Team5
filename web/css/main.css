@@ -314,13 +314,17 @@ nav a.selected, nav a:hover {
     margin: 0 5%;
 }
 
-#adminManagers form, #adminLocations form{
+#adminManagers div, #adminLocations form{
     width: 90%;
     margin: 0 5%;
 }
 
-#adminManagers form input, #adminLocations form input{
+#adminManagers div input, #adminLocations form input{
     margin: 0 5% 0 0;
+}
+
+#adminManagers div div {
+    display: inline-block;
 }
 
 .admin_man_table{
@@ -333,7 +337,7 @@ nav a.selected, nav a:hover {
     font-size: 1.3em;
     text-align: left;
     padding: 20px 0 0 0;
-    width: 30%;
+    width: 25%;
 }
 .admin_man_table td, .admin_man_table tr{
     padding: 10px 0 0 0;
@@ -341,7 +345,7 @@ nav a.selected, nav a:hover {
 }
 
 .admin_man_table td {
-    width: 30%;
+    width: 25%;
 }
 
 .admin_man_table td button {

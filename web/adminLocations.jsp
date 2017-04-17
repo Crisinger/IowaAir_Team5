@@ -6,8 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="AirFunctions.Admin.AdminLocations" %>
-<%@ page import="AirFunctions.CityFunctions" %>
+<%@ page import="General.Locations" %>
+<%@ page import="General.CityFunctions" %>
 <%
     String accountText = "";
     if(session.getAttribute("role").toString().equals("ADMIN")){
@@ -89,29 +89,29 @@
 
 <div id="adminLocations">
     <h1>Locations</h1>
-    <form action="AirFunctions.Admin.AdminLocations">
+    <form action="General.Locations">
         <ul>
             <li>
                 <div class="locationFormInputTitle"><b>State: </b></div>
-                <select name="stateName" style="width: 20ch" required>
+                <select id="stateName" name="stateName" style="width: 20ch" required>
                     <option disabled selected>Select State</option>
                     <%=CityFunctions.getStates()%>
                 </select>
             </li>
             <li>
                 <div class="locationFormInputTitle"><b>City: </b></div>
-                <select name="cityName" style="width: 20ch" required>
+                <select id="cityName" name="cityName" style="width: 20ch" required>
                     <option disabled selected>Select City</option>
                     <%=CityFunctions.getCities()%>
                 </select>
             </li>
             <li>
                 <button type="submit" name="addLocationButton">Add Location</button>
+
             </li>
         </ul>
-
     </form>
-    <%=AdminLocations.getAirports()%>
+    <%=Locations.getAirports()%>
 </div>
 
 

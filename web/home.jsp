@@ -44,7 +44,7 @@ background-repeat: no-repeat;
     <li><a href="home.jsp">Home</a></li>
     <li><a href="#news">News</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li style="float:right"><a class="active" href="login.jsp">AirFunctions.Login</a></li>
+    <li style="float:right"><a class="active" href="login.jsp">General.Login</a></li>
 </ul>
 
 <div style="padding:20px;margin-top:30px;height:1500px;">

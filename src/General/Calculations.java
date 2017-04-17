@@ -1,4 +1,4 @@
-package AirFunctions;
+package General;
 
 /**
  * Created by johnn on 4/9/2017.
@@ -43,9 +43,9 @@ final public class Calculations {
         return (int)(base+distance/100);
     }
 
-    public static int getBasePrice(int fuelCapacity, double distance, int passengers){
-        int jetFuel = 565; // $/tonne
-        return fuelCapacity*jetFuel/passengers;
+    public static String calcBasePrice(String fuelCap, String modelCap){
+        int jetFuel = 565; // per tonne;
+        return Integer.toString((Integer.parseInt(fuelCap)*jetFuel/Integer.parseInt(modelCap)));
     }
 
     public static int getDistancePrice(double distance){

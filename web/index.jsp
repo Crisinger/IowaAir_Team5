@@ -7,7 +7,7 @@
 
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="AirFunctions.FlightQuery"%>
+<%@ page import="General.FlightQuery"%>
 <%
     String logPage, logSet, accountText, paymentPage, activePage, historyPage, flightQuery;
 

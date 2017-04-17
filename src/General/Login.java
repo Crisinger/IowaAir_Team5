@@ -1,4 +1,6 @@
-package AirFunctions;// Imported packages
+package General;// Imported packages
+import General.AccountFunctions;
+
 import java.io.IOException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
@@ -8,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-// Servlet class AirFunctions.Login
-@WebServlet("/AirFunctions.Login")
+// Servlet class General.Login
+@WebServlet("/General.Login")
 public class Login extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -17,7 +19,7 @@ public class Login extends HttpServlet {
         String userPassword = request.getParameter("userPassword");
 
         // I get an error locating com.mysql.jdc.Driver
-        //AirFunctions.AccountFunctions AF = new AirFunctions.AccountFunctions();
+        //General.AccountFunctions AF = new General.AccountFunctions();
 
         System.out.println(userEmail);
         System.out.println(userPassword);

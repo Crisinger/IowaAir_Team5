@@ -39,8 +39,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body onload=document.getElementById("loginForm").reset()>
@@ -107,11 +106,11 @@
 
     <section id="loginSection">
         hello
-        <form action="AirFunctions.Login">
+        <form action="General.Login">
             User email: <input type="email" name="userEmail" maxlength="40" align="middle" placeholder="Email" required><br>
             User password: <input type="password" name="userPassword" maxlength="16" align="middle"
                                   placeholder="Password" required><br>
-            <input type="submit" value="AirFunctions.Login">
+            <input type="submit" value="General.Login">
         </form>
         <a href="createAccount.jsp">Create Account</a>
     </section>

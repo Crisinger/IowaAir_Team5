@@ -126,7 +126,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>AirFunctions.Login</title>
+<title>General.Login</title>
 </head>
 <style>
 body {
@@ -181,7 +181,7 @@ width:0%;">
 
 <body style = "text-align:center;">
 
-<form action="AirFunctions.CreateAccount">
+<form action="General.CreateAccount">
 <br>
 <br>
 <br>

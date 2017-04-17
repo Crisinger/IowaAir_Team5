@@ -1,4 +1,6 @@
-package AirFunctions;
+package General;
+
+import General.AccountFunctions;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +15,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by ReedS on 3/25/2017.
  */
-@WebServlet("/AirFunctions.CreateAccount")
+@WebServlet("/General.CreateAccount")
 public class CreateAccount extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -22,6 +24,7 @@ public class CreateAccount extends HttpServlet {
 
     // Takes input from html and checks if user gave valid password and email
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userName = request.getParameter("userName");
         String userEmail = request.getParameter("userEmail");
         String userPassword = request.getParameter("userPassword");
         String confirmUserPassword = request.getParameter("confirmUserPassword");
@@ -40,7 +43,7 @@ public class CreateAccount extends HttpServlet {
             response.sendRedirect("createAccount.jsp");
         } else {
             Connection con = AccountFunctions.OpenDatabase(); // open the database
-            AccountFunctions.addAccount(con,userEmail,userPassword,"CUSTOMER"); // add customer to database
+            AccountFunctions.addAccount(con,userName,userEmail,userPassword,"CUSTOMER"); // add customer to database
             AccountFunctions.closeConnection(con); // close connection
             HttpSession mySession = request.getSession();
             mySession.setAttribute("userEmail",userEmail);

@@ -1,4 +1,6 @@
-package AirFunctions;
+package General;
+
+import General.AccountFunctions;
 
 import java.sql.*;
 
@@ -13,7 +15,7 @@ public class FlightsFunctions {
             connection = AccountFunctions.OpenDatabase();
             //CreateFlightsTable(connection);
             // add flight will not work until the city references (1 and 2) are defined in the city table
-            //AdminAddFlight(connection, 1,new Date(2005,04,15), new Time(5),1, new Date(04,04,2017), new Time(12), 2, 250);
+            //AddFlight(connection, 1,new Date(2005,04,15), new Time(5),1, new Date(04,04,2017), new Time(12), 2, 250);
 
             //deleteFlight(connection, 1);
             //working = checkLogin(connection,"test@gmail.com","test");
@@ -82,14 +84,30 @@ public class FlightsFunctions {
         boolean isFlightAdded = false;
         Statement stmt = null;
         try {
-
             con.setAutoCommit(false);
             stmt = con.createStatement();
-            String sql = "INSERT INTO FLIGHTS (PLANE_ID,DEPARTURE_DATE,DEPARTURE_TIME,DEPARTURE_LOCATION,ARRIVAL_DATE,ARRIVAL_TIME,ARRIVAL_LOCATION,DEMAND, DISTANCE_PRICE) " +
-                    "VALUES ( " + planeID + " , '" + deptDate + "' , '"+ deptTime +"' , "+ deptLocation +" , '"+ arrivalDate + "','" +
-                    arrivalTime + "'," + arrivalLocation +"," + demand + ", "+ distancePrice+");";
-            stmt.executeUpdate(sql);
-            isFlightAdded = true;
+            System.out.println("About to get result set.");
+            ResultSet rs = stmt.executeQuery("Select seatsEconomy, seatsBusiness, seatsFirst from planes JOIN planemodels on planes.model_id=planemodels.ID Where planes.ID="+planeID+";");
+            if(rs.next()){
+                String aEcon = rs.getString("seatsEconomy");
+                String aBus = rs.getString("seatsBusiness");
+                String aFirst = rs.getString("seatsFirst");
+
+                System.out.println("Error about to happen");
+                String sql = "INSERT INTO FLIGHTS (PLANE_ID, DEPARTURE_DATE, DEPARTURE_TIME, DEPARTURE_LOCATION," +
+                        "ARRIVAL_DATE, ARRIVAL_TIME, ARRIVAL_LOCATION, availableECONOMY, availableBUSINESS, availableFIRST," +
+                        "takenECONOMY, takenBUSINESS, takenFIRST, DEMAND, DISTANCE_PRICE,IS_ACTIVE) " +
+                        "VALUES ( " + planeID + " , '" + deptDate + "' , '"+ deptTime +"' , "+ deptLocation +" , '"+ arrivalDate + "','" +
+                        arrivalTime + "'," + arrivalLocation +","+aEcon+","+aBus+","+aFirst+",0,0,0," + demand + ", "+ distancePrice+",1);";
+                stmt.executeUpdate(sql);
+
+                System.out.println("error is actually here");
+                ResultSet innerRs = stmt.executeQuery("Select count(*) from flights where PLANE_ID="+planeID+" AND DEPARTURE_DATE='"+deptDate+"' AND DEPARTURE_TIME='"+deptTime+"' AND DEPARTURE_LOCATION="+deptLocation+" AND ARRIVAL_DATE='"+arrivalDate+"' AND ARRIVAL_TIME='"+arrivalTime+"' AND ARRIVAL_LOCATION="+arrivalLocation+" AND availableECONOMY="+aEcon+" AND availableBUSINESS="+aBus+" AND availableFIRST="+aFirst+" AND DEMAND="+demand+" AND DISTANCE_PRICE="+distancePrice+" AND IS_ACTIVE=1;");
+                innerRs.next();
+                if(innerRs.getInt("count(*)")==1){
+                    isFlightAdded = true;
+                }
+            }
 
             stmt.close();
             con.commit();

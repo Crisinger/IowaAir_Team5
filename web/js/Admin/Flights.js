@@ -1,50 +1,60 @@
 /**
+ * Created by johnn on 4/16/2017.
+ */
+/**
  * Created by johnn on 4/11/2017.
  */
-
+var planeModelList ="";
 var availablePlaneList = "";
 
 /**
  * Date picker for Flight Departure
  */
-$( function() { $( "#flightDeparturedatepicker" ).datepicker({
-    beforeShow: function(input,inst){
-        var today = new Date();
-        today.setDate(today.getDate()+1);
-        $(this).datepicker('option','minDate',today);
-    }
-});} );
-
-/**
- * Date picker for Flight Arrival
- */
-$( function() { $( "#flightArrivaldatepicker" ).datepicker({
-    beforeShow: function(input,inst){
-        var today = new Date();
-        today.setDate(today.getDate()+1);
-        $(this).datepicker('option','minDate',today);
-    }
-});} );
-
-/**
- * Time picker for Flight Departure
- */
 $( function() {
-    $( "#flightDeparturetimepicker" ).timepicker({
-    timeFormat: 'HH:mm',
-    minTime: new Date(0,0,0,0,0)
+
+    console.log("Starting Flights Page");
+    createPlaneModelSelection();
+    console.log("Starting Flights Page");
+
+
+    $( "#flightDeparturedatepicker" ).datepicker({
+        beforeShow: function(input,inst){
+            var today = new Date();
+            today.setDate(today.getDate()+1);
+            $(this).datepicker('option','minDate',today);
+        }
     });
-} );
 
-/**
- * Time picker for Flight Arrival
- */
-$( function() {
+
+    $( "#flightArrivaldatepicker" ).datepicker({
+        beforeShow: function(input,inst){
+            var today = new Date();
+            today.setDate(today.getDate()+1);
+            $(this).datepicker('option','minDate',today);
+        }
+    });
+
+    $( "#flightDeparturetimepicker" ).timepicker({
+        timeFormat: 'HH:mm',
+        minTime: new Date(0,0,0,0,0)
+    });
+
     $( "#flightArrivaltimepicker" ).timepicker({
         timeFormat: 'HH:mm',
         minTime: new Date(0,0,0,0,0)
     });
+
+    $(".adminAddFlightModalButtons").onclick=function(){
+        var prev = document.getElementById("adminAddFlightModalPreviousPage");
+        var next = document.getElementById("adminAddFlightModalCurrentPage");
+        if(this == prev){
+            getAvailableAirplanes(prev);
+        }else if(this == next){
+            getAvailableAirplanes(next);
+        }
+    };
 } );
+
 
 function enableNextEntry(number){
     if(number == 1){
@@ -72,20 +82,6 @@ function enableNextEntry(number){
     }
 }
 
-/**
- *
- */
-$( function() {
-    $(".adminAddFlightModalButtons").onclick=function(){
-        var prev = document.getElementById("adminAddFlightModalPreviousPage");
-        var next = document.getElementById("adminAddFlightModalCurrentPage");
-        if(this == prev){
-            getAvailableAirplanes(prev);
-        }else if(this == next){
-            getAvailableAirplanes(next);
-        }
-    };
-});
 
 /**
  * Implemented to only show cities that go with the Departure State
@@ -149,24 +145,63 @@ function getLocationInfo(){
 }
 
 
+function createPlaneModelSelection(){
+    console.log("building plane models table");
+
+    $.get("Admin.Planes.PlaneModelsList","",function(msg){
+        console.log("plane msg = "+msg);
+        if(msg.length>0){
+            planeModelList = JSON.parse(msg).models;
+            console.log("finished parsing planes msg");
+            resetDisplayPlaneModelSelection();
+            for (var i = 0; i < planeModelList.length; i++) {
+                console.log("at plane #"+i);
+                displayPlaneModel(i);
+            }
+        }
+    });
+}
+
+function displayPlaneModel(count){
+    var parent = document.getElementById("flightPlaneModelSelect");
+    var child = document.createElement("option");
+    child.value = planeModelList[count].mID;
+    child.innerText = planeModelList[count].mModel;
+    parent.appendChild(child);
+}
+
+function resetDisplayPlaneModelSelection(){
+    var parent = document.getElementById("flightPlaneModelSelect");
+    while(parent.hasChildNodes()){
+        parent.removeChild(parent.firstChild);
+    }
+    var child = document.createElement("option");
+    child.innerText = "---Select Model---";
+    child.selected = true;
+    child.disabled = true;
+    parent.appendChild(child);
+}
+
 /**
  * Determines if the selected plane model can travel the distance
- * "doGets" the information to "AirFunctions.Admin.AdminFlights"
+ * "doGets" the information to "IowaAir.Admin.AdminFlights"
  * The returned information includes a simple boolean, trip time,
  * and price adjustment due to distance traveled
  */
 function canModelMakeTheDistance(){
+    console.log("Determining if this model is valid...");
     document.getElementById("flightDemandSlider").value = 1; // resets slider
     updateSliderText(); // updates slider text to new value
     availablePlaneList = "";
     var planeModelSelect = document.getElementById("flightPlaneModelSelect");
-    var planeModel = planeModelSelect.options[planeModelSelect.selectedIndex].value;
-    var series = getLocationInfo() + "&flightPlaneModelSelect="+planeModel;
+    var planeModelID = planeModelSelect.options[planeModelSelect.selectedIndex].value;
+    var series = getLocationInfo() + "&flightPlaneModelSelect="+planeModelID; // now it is just a number, not text. yay.
 
-   $.get(
-        "AirFunctions.Admin.AdminFlights", series,
-       function(msg){
-           var ableTimedPrice = JSON.parse(msg);
+    $.get(
+        "Admin.Flights.CheckModelChoiceIsValid", series,
+        function(msg){
+            console.log(msg);
+            var ableTimedPrice = JSON.parse(msg);
             if(ableTimedPrice.canTravel == 1){
                 modifyArrivalDateAndTime(ableTimedPrice.timed);
                 document.getElementById("flightDistancePrice").value = ableTimedPrice.distancePrice;
@@ -175,7 +210,7 @@ function canModelMakeTheDistance(){
             } else{
                 alert("this plane can't make the trip");
             }
-       }
+        }
     );
 
 }
@@ -203,35 +238,36 @@ function modifyArrivalDateAndTime(tripTime){
 
 
 function getAvailableAirplanes(page){
-
-    //String[] list = {"planeType","id","capacity","maxEcon","maxBus","maxFirst","basePrice"};
-    $.post("AirFunctions.Admin.AdminFlights",getAvailabilityInfo(),
+    console.log("getting available planes...");
+    //String[] list = {"pID","mID"};
+    $.post("Admin.Flights.GetAvailablePlanes",getAvailabilityInfo(),
         function(msg){
             var response = JSON.parse(msg);
             removePreviousPlaneQuery();
             availablePlaneList = response.planes;
-            if(response.numberOfPlanes == 0){
-                // Code for when the number of planes that match the criteria is 0
-            }else{
+            console.log(response.numberOfPlanes);
+            if(!response.numberOfPlanes == 0){
                 setModalHeader();
                 document.getElementById("adminAddFlightModalFormNumber").value = availablePlaneList.length;
                 console.log(availablePlaneList.length);
                 whatAirplanesToDisplay(0);
+            }else{
+                // Code for when the number of planes that match the criteria is 0.
             }
+            resetAddFlightButtonValue();
         }
-    )
+    );
 
 }
 
 function whatAirplanesToDisplay(page){
 
-
     for(var i=page*10; i<page*10+10; i++){
         if(i < availablePlaneList.length) {
-            displayAvailablePlane(availablePlaneList[i].id);
+            displayAvailablePlane(availablePlaneList[i].pID);
         }
     }
-    hideShowButtons(page)
+    hideShowButtons(page);
 }
 
 /**
@@ -245,11 +281,11 @@ function getAvailabilityInfo(){
     var arrivalTime = $("#flightArrivaltimepicker").timepicker('getTime');
     var planeModelSelect = document.getElementById("flightPlaneModelSelect");
     var nextSeries;
-    nextSeries =    "flightDepartureDate="+returnDateInMSQLFormat(departDate,0) + "&";
+    nextSeries =    "flightDepartureDate="+returnDateInMSQLFormat(departDate,1) + "&";
     nextSeries +=   "flightDepartureTime="+returnTimeInMSQLFormat(departTime)+":00&";
-    nextSeries +=   "flightArrivalDate="+returnDateInMSQLFormat(arrivalDate,0)+"&";
+    nextSeries +=   "flightArrivalDate="+returnDateInMSQLFormat(arrivalDate,1)+"&";
     nextSeries +=   "flightArrivalTime="+returnTimeInMSQLFormat(arrivalTime)+":00&";
-    nextSeries +=   "flightPlaneModelSelect="+planeModelSelect.options[planeModelSelect.selectedIndex].text;
+    nextSeries +=   "flightPlaneModelSelect="+planeModelSelect.options[planeModelSelect.selectedIndex].value;
     return nextSeries;
 }
 
@@ -263,25 +299,27 @@ function returnTimeInMSQLFormat(time){
 }
 
 //String[] list = {"planeType","id","capacity","maxEcon","maxBus","maxFirst","basePrice"};
-function displayAvailablePlane(id){
+function displayAvailablePlane(pID){
     var ul = document.getElementById("adminAddFlightModalUL");
     var li = document.createElement("li");
     var liDivPlane = document.createElement("div");
-    var liDivCenter = document.createElement("div")
-    var liDivResponse = document.createElement("div")
+    var liDivCenter = document.createElement("div");
+    var liDivResponse = document.createElement("div");
     var liDivP = document.createElement("p");
     var liDivInput = document.createElement("input");
 
-
     liDivInput.type="checkbox";
     liDivInput.class="addFlightCheckBoxes";
-    liDivInput.value=id;
+    liDivInput.value=pID;
     liDivInput.onclick = function(){
         console.log(this.value);
-      document.getElementById("adminAddFlightModalFormButton").value = this.value;
+        var addFlightButtonInstant = document.getElementById("adminAddFlightModalFormButton");
+        addFlightButtonInstant.value = this.value;
+        addFlightButtonInstant.disabled = false;
+
     };
 
-    liDivP.innerHTML="ID: "+id;
+    liDivP.innerHTML="ID: "+pID;
     liDivCenter.innerHTML="";
     liDivPlane.appendChild(liDivP);
     liDivResponse.appendChild(liDivInput);
@@ -331,7 +369,7 @@ function hideShowButtons(page){
         prev.show = true;
     }
 
-    if(page == 0){
+    if(page === 0){
         current.hidden = true;
     } else {
         current.show = true;
@@ -364,7 +402,6 @@ function setModalHeader(){
     document.getElementById("adminAddFlightModalTitle").innerText = planeModelSelect.options[planeModelSelect.selectedIndex].text;
 }
 
-
 function submitToDatabase(){
     if(confirm("Are you sure?")){
 
@@ -373,13 +410,17 @@ function submitToDatabase(){
         data += "&distancePrice="+document.getElementById("flightDistancePrice").value;
         data += "&flightDemandSlider="+document.getElementById("flightDemandSlider").value;
 
-        $.get("AirFunctions.Admin.AdminAddFlight", data,
+        console.log("sending flight to database..."+data);
+        $.get("Admin.Flights.AddFlight", data,
             function(msg){
-                temp = JSON.parse(msg);
-                if(temp.isAdded == 1){
-                    // put something here (?)
-                }else{
-                    alert("something went wrong");
+                console.log(msg);
+                if(msg.length>0) {
+                    var temp = JSON.parse(msg);
+                    if (temp.isAdded == 1) {
+                        resetAllFlightInformationInputs();
+                    } else {
+                        alert("something went wrong");
+                    }
                 }
                 closeAddFlightModal();
                 canModelMakeTheDistance();
@@ -393,4 +434,13 @@ function submitToDatabase(){
 
 function updateSliderText(){
     document.getElementById("flightDemandValue").value = document.getElementById("flightDemandSlider").value;
+}
+
+function resetAddFlightButtonValue(){
+    var addFlightButton = document.getElementById("adminAddFlightModalFormButton");
+    addFlightButton.value="";
+    addFlightButton.disabled = true;
+}
+
+function resetAllFlightInformationInputs(){
 }

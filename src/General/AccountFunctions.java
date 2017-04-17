@@ -1,9 +1,10 @@
-package AirFunctions; /**
+package General; /**
  * Created by crisi_000 on 3/21/2017.
  */
 
 import java.sql.*;
-import com.mysql.jdbc.Driver;
+import java.util.ArrayList;
+
 public class AccountFunctions
 {
 
@@ -126,7 +127,7 @@ public class AccountFunctions
         }
     }
 
-    public static boolean addAccount(Connection c, String email, String password, String role){
+    public static boolean addAccount(Connection c, String fullname, String email, String password, String role){
         Statement stmt = null;
         boolean accountAdded = false;
         try {
@@ -135,8 +136,8 @@ public class AccountFunctions
             ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE email='"+email+"';");
 
             if(!rs.next()){
-                String sql = "INSERT INTO ACCOUNTS (EMAIL,PASSWORD,ROLE) " +
-                        "VALUES ('" + email + "' , '" + password + "' , '"+role+"' );";
+                String sql = "INSERT INTO ACCOUNTS (FULL_NAME,EMAIL,PASSWORD,ROLE) " +
+                        "VALUES ('"+fullname+"' , '" + email + "' , '" + password + "' , '"+role+"' );";
                 stmt.executeUpdate(sql);
                 stmt.close();
                 accountAdded = true;
@@ -151,20 +152,28 @@ public class AccountFunctions
         return accountAdded;
     }
 
-    public static void deleteAccount(Connection c, String accountID){
+    public static boolean deleteAccount(Connection con, String accountID){
         Statement stmt = null;
+        boolean isDeleted = false;
         try {
-            c.setAutoCommit(false);
+            con.setAutoCommit(false);
 
-            stmt = c.createStatement();
+            stmt = con.createStatement();
             String sql = "DELETE FROM accounts WHERE ID = "+accountID+";";
             stmt.executeUpdate(sql);
+            sql = "Select Count(*) FROM accounts WHERE ID = "+accountID+";";
+            ResultSet rs = stmt.executeQuery(sql);
+            rs.next();
+            if(rs.getString("count(*)").equals("0")){
+                isDeleted = true;
+            }
             stmt.close();
-            c.commit();
+            con.commit();
         } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
+        return isDeleted;
     }
 
     public static Character checkRole(Connection c, String email){
@@ -192,15 +201,53 @@ public class AccountFunctions
         return result;
     }
 
-    public static void updateAccount(Connection con, String id, String email, String password, String role){
+    public static boolean updateAccount(Connection con, String id, String name, String email, String password, String role){
         Statement stmt = null;
+        boolean isUpdated = false;
         try {
-            deleteAccount(con, id);
-            addAccount(con, email, password, role);
+
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM accounts WHERE email='"+email+"';");
+            rs.next();
+            if(rs.getString("count(*)").equals("1")){
+                String sql = "UPDATE ACCOUNTS SET FULL_NAME='"+name+"', EMAIL='" + email + "', PASSWORD='" + password + "' WHERE ID="+id+";";
+                stmt.executeUpdate(sql);
+                stmt.close();
+                isUpdated = true;
+            }
             con.commit();
         } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
+        return isUpdated;
+    }
+
+    public static ArrayList<String[]> getManagerList(Connection con){
+        Statement stmt = null;
+        ArrayList<String[]> managerList = new ArrayList<>();
+
+        try{
+            con.setAutoCommit(false);
+
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM accounts WHERE role='MANAGER' ORDER BY id;");
+
+            while(rs.next()){
+                String[] info = {rs.getString("id"),rs.getString("full_name"),
+                        rs.getString("email"),rs.getString("password")};
+                managerList.add(info);
+            }
+
+            con.close();
+
+        } catch (Exception e){
+            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+
+        }
+
+        return managerList;
     }
 }

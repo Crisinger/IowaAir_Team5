@@ -1,9 +1,8 @@
-package AirFunctions.Admin;
+package Admin.Flights;
 
-import AirFunctions.AccountFunctions;
-import AirFunctions.AirplaneFunctions;
-import AirFunctions.CityFunctions;
-import AirFunctions.FlightsFunctions;
+import General.AccountFunctions;
+import General.CityFunctions;
+import General.FlightsFunctions;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +15,8 @@ import java.sql.Connection;
 /**
  * Created by johnn on 4/14/2017.
  */
-@WebServlet("/AirFunctions.Admin.AdminAddFlight")
-public class AdminAddFlight extends HttpServlet {
+@WebServlet(name="AddFlight",value="/Admin.Flights.AddFlight")
+public class AddFlight extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 
@@ -52,7 +51,7 @@ public class AdminAddFlight extends HttpServlet {
 
         response.setContentType("text/plain");
 
-        String isAddedStringBoolean = (addAirplaneToDataBase(planeID,departDate,
+        String isAddedStringBoolean = (attemptAddFlight(planeID,departDate,
                 departTime,departState,departCity,arrivalDate,arrivalTime,
                 arrivalState,arrivalCity,distancePrice,demand)) ? "1":"0";
 
@@ -61,7 +60,7 @@ public class AdminAddFlight extends HttpServlet {
         response.getWriter().print(isAddedStringBoolean);
     }
 
-    private static boolean addAirplaneToDataBase(String planeID, String departDate, String departTime,
+    private static boolean attemptAddFlight(String planeID, String departDate, String departTime,
                                                  String departState, String departCity, String arrivalDate,
                                                  String arrivalTime, String arrivalState, String arrivalCity,
                                                  String distancePrice, String demand){
