@@ -12,11 +12,29 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/General.FlightQuery")
+@WebServlet(name="Flight Query", value="/General.FlightQuery")
 public class FlightQuery extends HttpServlet {
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String dState = request.getParameter("departState");
+        String dCity = request.getParameter("departCity");
+        String aState = request.getParameter("arriveState");
+        String aCity = request.getParameter("arriveCity");
+        String model = request.getParameter("planeModel");
+
+        String queryList = attemptFlightQuery(dCity,aCity,model);
+
+        System.out.println("----------");
+        System.out.println(dCity+","+dState+"   "+aCity+","+aState);
+        System.out.println("----------");
+
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String startLocation = "Departure_Location='" + request.getParameter("startLocation")+"'";
+
+
+
+        /*String startLocation = "Departure_Location='" + request.getParameter("startLocation")+"'";
         String endLocation = "Arrival_Location='" + request.getParameter("endLocation")+"'";
         //String startDate = "Departure_Date="+request.getParameter("startDate");
         //String endDate = "Arrival_Date="+request.getParameter("endDate");
@@ -62,9 +80,10 @@ public class FlightQuery extends HttpServlet {
             System.exit(0);
 
         }
+        */
     }
 
-    public static String getLocations(String type){
+    /*public static String getLocations(String type){
         Connection con = AccountFunctions.OpenDatabase();
         Statement stmt = null;
         String htmlCode = "";
@@ -90,7 +109,7 @@ public class FlightQuery extends HttpServlet {
         }
 
         return htmlCode;
-    }
+    }*/
 
     public static String getDateAndTimeSrc(){
         String htmlCode = "";
@@ -127,6 +146,18 @@ public class FlightQuery extends HttpServlet {
                 "scrollbar: true" +
                 "}); </script>\n";*/
         return htmlCode;
+    }
+
+    private static String attemptFlightQuery(String dCity, String aCity, String model){
+        Connection con = AccountFunctions.OpenDatabase();
+        //String queryList = FlightsFunctions.getFlightQuery(con,dCity,aCity,model);
+        AccountFunctions.closeConnection(con);
+        return "";
+    }
+
+    private static String queryTOJSON(){
+
+        return "";
     }
 }
 

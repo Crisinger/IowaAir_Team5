@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by ReedS on 3/25/2017.
  */
-@WebServlet("/General.CreateAccount")
+@WebServlet(name="Create Account", value="/General.CreateAccount")
 public class CreateAccount extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
