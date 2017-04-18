@@ -5,6 +5,7 @@ import General.AccountFunctions;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Created by crisi_000 on 4/6/2017.
@@ -224,6 +225,8 @@ public class CityFunctions {
                 latandlong[0] = rs.getString("latitude");
                 latandlong[1] = rs.getString("longitude");
             }
+            stmt.close();
+            rs.close();
         } catch (Exception e){
             System.err.println(e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
@@ -231,5 +234,39 @@ public class CityFunctions {
         }
         return latandlong;
     }
+
+    public static ArrayList<String[]> getActiveLocations(Connection con){
+        ArrayList<String[]> activeLocations = new ArrayList<String[]>();
+        Statement stmt = null;
+
+        try{
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            String sql = "SELECT DISTINCT state FROM cities ORDER BY STATE";
+            ResultSet states = stmt.executeQuery(sql);
+            String[] stateList = new String[50];
+            int counter=0;
+            while(states.next()){
+                stateList[counter] = states.getString("state");
+            }
+            activeLocations.add(stateList);
+            sql = "SELECT * FROM cities WHERE ACTIVE=1 ORDER BY STATE, CITY;"; // aka true
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                String[] active = new String[2];
+                active[0] = rs.getString("ID");
+                active[1] = rs.getString("state");
+                active[2] = rs.getString("city");
+                activeLocations.add(active);
+            }
+        } catch (Exception e){
+            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+
+        }
+        return activeLocations;
+    }
+
+
 
 }
