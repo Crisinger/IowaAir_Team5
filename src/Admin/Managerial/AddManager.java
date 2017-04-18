@@ -1,5 +1,6 @@
 package Admin.Managerial;
 
+import AirFunctions.Email.SendEmail;
 import General.AccountFunctions;
 
 import javax.servlet.ServletException;
@@ -37,8 +38,24 @@ public class AddManager extends HttpServlet {
 
     private static boolean addManager(String managerName, String managerEmail){
         Connection con = AccountFunctions.OpenDatabase();
-        boolean managerAdded = AccountFunctions.addAccount(con,managerName, managerEmail,randomPassword(),"MANAGER");
+
+        // Added a string to hold the random pass for a short period of time
+        String managerPass = randomPassword();
+        boolean managerAdded = AccountFunctions.addAccount(con,managerName, managerEmail, managerPass,"MANAGER");
         AccountFunctions.closeConnection(con);
+
+        // Added email functionality
+        SendEmail mailer = new SendEmail();
+
+        try {
+            mailer.sendEmail(managerEmail, managerPass);
+            System.out.println("Email sent.");
+        } catch (Exception ex) {
+            System.out.println("Failed to sent email.");
+            ex.printStackTrace();
+        }
+        // End of added email functionality
+
         return managerAdded;
     }
 
