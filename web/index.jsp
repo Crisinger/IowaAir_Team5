@@ -27,12 +27,6 @@
         historyPage = "login.jsp";
     }
 
-    if(session.getAttribute("flightQuery") != null){
-        flightQuery = session.getAttribute("flightQuery").toString();
-    } else {
-        flightQuery = "nothing to show here";
-    }
-
 %>
 
 <!DOCTYPE html>
@@ -121,9 +115,8 @@
         <button id="flightQueryButton">Search</button>
     </section>
 
-    <section>
-        <%=flightQuery%>
-        <%session.setAttribute("flightQuery",""); %>
+    <section id="flightQueryView">
+
     </section>
 
 </div>

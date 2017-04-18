@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 @WebServlet(name="Flight Query", value="/General.FlightQuery")
@@ -25,8 +26,13 @@ public class FlightQuery extends HttpServlet {
         String queryList = attemptFlightQuery(dCity,aCity,model);
 
         System.out.println("----------");
-        System.out.println(dCity+","+dState+"   "+aCity+","+aState);
+        System.out.println(dCity+","+dState+"   "+aCity+","+aState+"    "+model);
         System.out.println("----------");
+
+        System.out.println(queryList);
+
+        response.setContentType("text/plain");
+        response.getWriter().print(queryList);
 
     }
 
@@ -150,14 +156,25 @@ public class FlightQuery extends HttpServlet {
 
     private static String attemptFlightQuery(String dCity, String aCity, String model){
         Connection con = AccountFunctions.OpenDatabase();
-        //String queryList = FlightsFunctions.getFlightQuery(con,dCity,aCity,model);
+        String queryList = queryTOJSON(FlightsFunctions.getFlightQuery(con,dCity,aCity,model));
         AccountFunctions.closeConnection(con);
-        return "";
+        return queryList;
     }
 
-    private static String queryTOJSON(){
-
-        return "";
+    private static String queryTOJSON(ArrayList<ArrayList<String>> queryList){
+        String[] list = {"fID","pID","mID","dLoc","aLoc","aEcon","aBus","aFirst","Dem","DP","dDate","dTime","aDate","aTime"};
+        String jsonQuery = "{\"flights\":[  ";
+        for(int i=0; i<queryList.size(); i++){
+            jsonQuery +="{";
+            for(int j=0; j<queryList.get(i).size()-4;j++){
+                jsonQuery += "\""+list[j]+"\":"+queryList.get(i).get(j)+",";
+            }
+            for(int k=queryList.get(i).size()-4;k<queryList.get(i).size();k++){
+                jsonQuery += "\""+list[k]+"\":\""+queryList.get(i).get(k)+"\",";
+            }
+            jsonQuery = jsonQuery.substring(0,jsonQuery.length()-1)+"},";
+        }
+        return jsonQuery.substring(0,jsonQuery.length()-1)+"]}";
     }
 }
 
