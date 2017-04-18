@@ -92,8 +92,12 @@ function attemptFlightQuery(){
         if(msg.length>0){
             console.log(msg);
             querriedFlights = JSON.parse(msg).flights;
-            for(var i=0; i<querriedFlights.length; i++){
-                buildFlightInfo(querriedFlights[i]);
+            if(querriedFlights.length>0) {
+                for (var i = 0; i < querriedFlights.length; i++) {
+                    buildFlightInfo(querriedFlights[i]);
+                }
+            }else{
+                alert("No flights are currently set for this criteria");
             }
 
         }
