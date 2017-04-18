@@ -103,7 +103,7 @@
     </section>
 
     <section id="main">
-        <form action="AirFunctions.CreateAccount">
+        <form action="General.CreateAccount">
             Email: <input type="text" name="userEmail" maxlength="40" align="middle" placeholder="Email" required><br>
             Password: <input type="password" name="userPassword" maxlength="16" align="middle" placeholder="Password"
                              required><br>

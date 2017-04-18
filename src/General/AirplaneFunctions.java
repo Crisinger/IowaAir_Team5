@@ -184,7 +184,7 @@ public class AirplaneFunctions {
 
             con.setAutoCommit(false);
             stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM planemodels;");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM planemodels ORDER BY PLANE_MODEL;");
 
             while(rs.next()){
                 String[] temp = {rs.getString("plane_model"), rs.getString("id"),
@@ -206,6 +206,25 @@ public class AirplaneFunctions {
         System.out.println("Records planemodels obtained");
 
         return modelSpecs;
+    }
+
+    public static ArrayList<String[]> getBasicModelList(Connection con){
+        ArrayList<String[]> basicModelInfo = new ArrayList<String[]>();
+        Statement stmt = null;
+        try{
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("Select ID, PLANE_MODEL From planemodels ORDER BY PLANE_MODEL;");
+            while(rs.next()){
+                String[] tempInfo = new String[2];
+                tempInfo[0] = rs.getString("ID");
+                tempInfo[1] = rs.getString("plane_model");
+                basicModelInfo.add(tempInfo);
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return basicModelInfo;
     }
 
     //i assume that if a plane has first class, it also has business and coach. If it has business it also has coach

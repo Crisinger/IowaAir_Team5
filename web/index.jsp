@@ -46,6 +46,9 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.min.js"></script>
+
+    <script src="js/General/FlightQuery.js"></script>
 </head>
 
 <body>
@@ -95,19 +98,27 @@
 <div id="viewwrapper">
 
     <section id="sidebar">
-        <form action="AirFunctions.FlightQuery">
+        <form id="flightQueryForm">
             Departure Location:
-            <select name="startLocation" required>
-                <option selected="selected" value=""/>
-                <%=FlightQuery.getLocations("Departure_Location")%>
-            </select><br>
+            <select id="flightQueryDepartState" name="departState" required>
+            </select>
+            <br>
+            <select id="flightQueryDepartCity" name="departCity" required>
+            </select>
+            <br>
             Arrival Location:
-            <select name="endLocation" required>
-                <option selected="selected" value=""/>
-                <%=FlightQuery.getLocations("Arrival_Location")%>
-            </select><br>
-            <input type="submit" value="Search"><br>
+            <select id="flightQueryArrivalState" name="arriveState" required>
+            </select>
+            <br>
+            <select id="flightQueryArrivalCity" name="arriveCity" required>
+            </select>
+            Plane Model:
+            <br>
+            <select id="flightQueryPlaneModel" name="planeModel">
+            </select>
+            <br>
         </form>
+        <button id="flightQueryButton">Search</button>
     </section>
 
     <section>

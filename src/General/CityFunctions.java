@@ -235,29 +235,36 @@ public class CityFunctions {
         return latandlong;
     }
 
-    public static ArrayList<String[]> getActiveLocations(Connection con){
-        ArrayList<String[]> activeLocations = new ArrayList<String[]>();
+    public static ArrayList<ArrayList<String[]>> getLocationList(Connection con, boolean activity){
+        ArrayList<ArrayList<String[]>> activeLocations = new ArrayList<ArrayList<String[]>>();
         Statement stmt = null;
-
+        String wantActive = activity ? "WHERE ACTIVE=1":"";
         try{
             con.setAutoCommit(false);
             stmt = con.createStatement();
-            String sql = "SELECT DISTINCT state FROM cities ORDER BY STATE";
+            String sql = "SELECT DISTINCT state FROM cities "+wantActive+" ORDER BY STATE";
             ResultSet states = stmt.executeQuery(sql);
-            String[] stateList = new String[50];
-            int counter=0;
+            //String[] stateList = new String[50];
             while(states.next()){
-                stateList[counter] = states.getString("state");
+                activeLocations.add(new ArrayList<>());
+                String[] stateName = new String[1];
+                stateName[0] = states.getString("state");
+                activeLocations.get(activeLocations.size()-1).add(stateName);
             }
-            activeLocations.add(stateList);
-            sql = "SELECT * FROM cities WHERE ACTIVE=1 ORDER BY STATE, CITY;"; // aka true
+            sql = "SELECT * FROM cities "+wantActive+" ORDER BY STATE, ID"; // aka true
             ResultSet rs = stmt.executeQuery(sql);
-            if(rs.next()){
-                String[] active = new String[2];
-                active[0] = rs.getString("ID");
-                active[1] = rs.getString("state");
-                active[2] = rs.getString("city");
-                activeLocations.add(active);
+            while(rs.next()){
+                for(int i=0; i<activeLocations.size();i++){
+                    if(activeLocations.get(i).get(0)[0].equals(rs.getString("state"))){
+                        String[] info = new String[2];
+                        info[0] = rs.getString("ID");
+                        info[1] = rs.getString("cityName");
+                        //activeLocations.get(i).add(rs.getString("ID"));
+                        //activeLocations.get(i).add(rs.getString("cityName"));
+                        activeLocations.get(i).add(info);
+                        i = activeLocations.size()+1;
+                    }
+                }
             }
         } catch (Exception e){
             System.err.println(e.getClass().getName() + ": " + e.getMessage() );
