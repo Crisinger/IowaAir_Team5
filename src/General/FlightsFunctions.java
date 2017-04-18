@@ -216,7 +216,8 @@ public class FlightsFunctions {
         String criteria="";
         criteria += (dCity!=null) ? "DEPARTURE_LOCATION="+ dCity + " AND ":"";
         criteria += (aCity!=null) ? "ARRIVAL_LOCATION="+ aCity + " AND ":"";
-        criteria += (model!=null && !model.equals("0"))?" ":"";
+        criteria += (model!=null && !model.equals("0"))?"MODEL_ID="+model+" AND ":"";
+
 
         Statement stmt = null;
 
@@ -224,22 +225,23 @@ public class FlightsFunctions {
 
         try{
             stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("Select * FROM FLIGHTS JOIN PLANES ON flights.plane_ID=plane.ID WHERE "+criteria+" AND IS_ACTIVE=1;");
+            ResultSet rs = stmt.executeQuery("Select * FROM FLIGHTS JOIN PLANES ON flights.plane_ID=planes.ID WHERE "+criteria+" IS_ACTIVE=1;");
             while(rs.next()){
                 flightInfo.add(new ArrayList<String>());
-                flightInfo.get(flightInfo.size()).add(rs.getString("Plane_ID"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("Model_ID"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("Departure_date"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("Departure_Time"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("Departure_Location"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("Arrival_Date"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("Arrival_Time"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("Arrival_Location"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("availableEconomy"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("availableBusiness"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("availableFirst"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("Demand"));
-                flightInfo.get(flightInfo.size()).add(rs.getString("Distance_Price"));
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("ID"));
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("Plane_ID"));
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("Model_ID"));
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("Departure_Location"));
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("Arrival_Location"));
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("availableEconomy"));
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("availableBusiness"));
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("availableFirst"));
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("Demand"));
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("Distance_Price"));
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("Departure_date")); // these and below are
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("Departure_Time")); // only on bottom
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("Arrival_Date")); // because of how JSON
+                flightInfo.get(flightInfo.size()-1).add(rs.getString("Arrival_Time")); // parse is set up
             }
         }catch(Exception ex){
             ex.printStackTrace();

@@ -28,7 +28,7 @@ $(function(){
     $.post("General.BasicPlaneModels","",function(msg){
         if(msg.length>0){
             modelList = JSON.parse(msg).models;
-            console.log(msg);
+            //console.log(msg);
             var modelSelect = document.getElementById("flightQueryPlaneModel");
             resetParentSelection(modelSelect,"Plane Model");
             addChildrenToParent(modelSelect,modelList,3,"");
@@ -89,14 +89,104 @@ function attemptFlightQuery(){
     var criteria = $("#flightQueryForm").serialize();
 
     $.post("General.FlightQuery", criteria, function(msg){
-        if(msg>0){
+        if(msg.length>0){
+            console.log(msg);
             querriedFlights = JSON.parse(msg).flights;
+            for(var i=0; i<querriedFlights.length; i++){
+                buildFlightInfo(querriedFlights[i]);
+            }
 
         }
     });
 
-
-
-
 }
 
+function buildFlightInfo(flight){
+    //String[] list = {"fID","pID","mID","dLoc","aLoc","aEcon","aBus","aFirst","Dem","DP","dDate","dTime","aDate","aTime"};
+    var parent = document.getElementById("flightQueryView");
+    var container = document.createElement("div");
+    var leftSide = document.createElement("div").appendChild(buildFlightLeftSide(flight));
+    var rightSide = document.createElement("div").appendChild(buildFlightRightSide(flight));
+    container.appendChild(leftSide);
+    container.appendChild(rightSide);
+
+    parent.appendChild(container);
+    container.setAttribute("display","block");
+    container.setAttribute("border-bottom","solid black 1px");
+    container.setAttribute("width","80%");
+}
+
+function buildFlightLeftSide(flight){
+    var unorderedList = document.createElement("ul");
+    var dates = document.createElement("li");
+    var times = document.createElement("li");
+    var locations = document.createElement("li");
+    var planeInfo = document.createElement("li");
+    var dateText = document.createElement("p");
+    var timeText = document.createElement("p");
+    var locationsText = document.createElement("p");
+    var planeInfoText = document.createElement("p");
+
+    dateText.innerText = flight.dDate + " -> " + flight.aDate;
+    timeText.innerText = flight.dTime + " -> " + flight.aTime;
+    locationsText.innerText = flight.dLoc + " -> " + flight.aLoc;
+    planeInfoText.innerText = flight.mID + " : " +flight.pID;
+
+    dates.appendChild(dateText);
+    times.appendChild(timeText);
+    locations.appendChild(locationsText);
+    planeInfo.appendChild(planeInfoText);
+
+    unorderedList.append(times);
+    unorderedList.append(dates);
+    unorderedList.append(locations);
+    unorderedList.append(planeInfo);
+    //unorderedList.setAttribute("display","inline");
+    unorderedList.setAttribute("float","left");
+    return unorderedList;
+}
+
+function buildFlightRightSide(flight){
+    var unorderedList = document.createElement("ul");
+    var firstList = document.createElement("li");
+    var busList = document.createElement("li");
+    var econList = document.createElement("li");
+    var seatList = document.createElement("li");
+    var first = document.createElement("button");
+    var business = document.createElement("button");
+    var economy = document.createElement("button");
+    var seatInfo = document.createElement("p");
+
+    first.innerText="F: $ 200";
+    business.innerText="B: $ 100";
+    economy.innerText="E: $  50";
+    seatInfo.innerText="Available Seats: #F #B #E";
+
+    first.setAttribute("class","buyFirstClass");
+    business.setAttribute("class","buyBusinessClass");
+    economy.setAttribute("class","buyEconomyClass");
+
+    if(flight.aEcon==0){
+        economy.disabled=true;
+    }
+    if(flight.aBus==0){
+        business.disabled=true;
+    }
+    if(flight.aFirst==0){
+        first.disabled=true;
+    }
+
+    firstList.appendChild(first);
+    busList.appendChild(business);
+    econList.appendChild(economy);
+    seatList.appendChild(seatInfo);
+
+    unorderedList.appendChild(firstList);
+    unorderedList.appendChild(busList);
+    unorderedList.appendChild(econList);
+    unorderedList.appendChild(seatList);
+
+    //unorderedList.setAttribute("display","inline");
+    unorderedList.setAttribute("float","right");
+    return unorderedList;
+}
