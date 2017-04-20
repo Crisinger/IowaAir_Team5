@@ -1,23 +1,31 @@
 /*************************************************************
 GENERAL
 *************************************************************/
-
+html,body{
+    height:100%;
+}
 body {
     font-family: 'Open Sans', sans-serif;
+    background: #969696;
 }
 
 #wrapper {
-    max-width: 940px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 0 5%;
 }
 
 #sidebar {
     display: block;
-    max-width: 90%;
-    padding: 0 5%;
+    max-width: 30%;
+    height: 100%;
     text-align: left;
-    margin-top: 0;
+    float: left;
+    width: 15%;
+    background: yellow;
+    padding: 0 20px;
+    margin: 0 5% 100% 5%;
+    border: solid black 2px;
 }
 
 #sidebar.login, #sidebar.contact, #sidebar.account{
@@ -26,22 +34,20 @@ body {
     margin: 5px 10px;
 }
 
-
 #main {
-    display: inline-block;
     width: 90%;
-    padding: 0 10px;
     text-align: center;
     background: yellow;
-    margin-top: 0;
+    display: flex;
+    flex-direction: row;
+    padding: 0 20px;
+    margin: 0 20px 0 20px;
 }
 
 
 #loginSection form input{
     align-content: center;
 }
-
-
 
 
 a {
@@ -59,6 +65,39 @@ p {
     background: #cdcdcd;
 }
 
+#sidebar form{
+    padding-bottom: 20px;
+}
+
+#sidebar p{
+    background: transparent;
+    padding: 10px 0;
+}
+
+#sidebar select{
+    padding: 5px 5px;
+    width: 25ch;
+    display: inline-block;
+}
+#sidebar div{
+    display: block;
+    padding-bottom: 20px;
+}
+#sidebar button{
+    padding: 5px 10px;
+    background-color: black;
+    color: white;
+    text-shadow: none;
+    box-shadow: none;
+    border: none;
+}
+
+#sidebar button:hover{
+
+    background-color: dimgray;
+    color: white;
+}
+
 /*************************************************************
 HEADING
 *************************************************************/
@@ -74,21 +113,23 @@ header {
 }
 
 #logo {
-    text-align: center;
-    margin: 0;
+    float: left;
+    margin-left: 5%;
+    text-align: left;
+    width: 150px;
 }
 
 h1 {
     font-family: 'Changa One', sans-serif;
     margin: 15px 0;
-    font-size: 1.75em;
+    font-size: 2em;
     font-weight: normal;
     line-height: 0.8em;
 }
 
 h2 {
     font-size: 0.75em;
-    margin: -5px 0 0;
+    margin: -5px 0 20px;
     font-weight: normal;
 }
 /*************************************************************
@@ -96,13 +137,17 @@ NAVIGATION
 *************************************************************/
 
 nav {
-    text-align: center;
     padding: 10px 0;
-    margin: 10px 0 0;
+    background: none;
+    float: right;
+    font-size: 1.125em;
+    margin-right: 5%;
+    text-align: right;
+    width: 60%;
+
 }
 
 nav ul {
-    line-style: none;
     margin: 0 0;
     padding: 0;
 }
@@ -193,8 +238,8 @@ COLORS
 
 /* site body */
 body {
-    background-color: #000000;
     color: #000000;
+    background: #969696;
 }
 
 #navsite {
@@ -269,10 +314,6 @@ nav a.selected, nav a:hover {
     color: black;
 }
 
-#loginSection, #loginSection form {
-    color: blue;
-}
-
 #flightQuery{
     display: block;
     width: 90%;
@@ -306,7 +347,87 @@ nav a.selected, nav a:hover {
     font-size: 1.1em;
 }
 
+#loginSection{
+    width: 20%;
+    border: solid black 2px;
+    display: block;
+    max-width: 30%;
+    height: 100%;
+    text-align: center;
+    float: left;
+    background: yellow;
 
+    margin: 0 40% 100% 40%;
+}
+
+#loginOptions{
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
+#loginOptions div{
+    display: inline-flex;
+    width: 50%;
+}
+
+#loginOptions button{
+    display: inline-flex;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-shadow: none;
+    box-shadow: none;
+    border: none;
+    width:100%;
+    text-align: center;
+    margin:auto;
+}
+
+#loginOptions button.selected, #loginOptions button:hover{
+    color:black;
+    background-color: yellow;
+}
+
+#loginSection form {
+    background-color: yellow;
+}
+#loginSection form input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#loginSection form p {
+    background: transparent;
+
+}
+
+#signInContentArea{
+    padding: 0 20px;
+}
+
+#loginDiv{
+    display: block;
+}
+
+#createDiv{
+    display: none;
+}
+
+.loginCreateButtons{
+    margin: 20px 0;
+    padding: 5px 5px;
+    width: 50%;
+    background-color: black;
+    color: white;
+    border:black solid 2px;
+}
+
+.loginCreateButtons:hover{
+    background-color: yellow;
+    color:black;
+}
 
 
 #adminManagers, #adminLocations{
@@ -527,3 +648,90 @@ nav a.selected, nav a:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+.helpingMadre{
+    background-color: green;
+}
+
+#flightQueryView {
+    margin-left: 25%;
+}
+
+#flightQueryView div {
+    width: 70%;
+    height: 120px;
+    display: flex;
+    border: solid black 2px;
+    margin-bottom: 10px;
+    background-color: whitesmoke;
+}
+
+#flightQueryView div div{
+    width: 45%;
+    height: 100%;
+    display: inline-block;
+    border: none;
+    margin:auto;
+    align-items: stretch;
+    vertical-align: middle;
+    background-color: transparent;
+}
+
+#flightQueryView div div ul li{
+    font-size: 1em;
+    margin:5px 0 0 5px;
+}
+
+#flightQueryView div div ul li p{
+    font-weight: bold;
+    font-size: 2em;
+    padding: 0;
+    background-color: transparent;
+}
+
+#flightQueryView div div div {
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    vertical-align: middle;
+    background-color: transparent;
+
+}
+
+#flightQueryView div div div div {
+    width:33%;
+    height: 100%;
+    display:inline-block;
+    margin: auto;
+    align-content: center;
+    background-color: transparent;
+
+}
+
+#flightQueryView div div div div button {
+    width:100%;
+    height: 100%;
+    display:inline-block;
+
+}
+
+
+.buyFirstClass, .buyBusinessClass, .buyEconomyClass{
+    background-color: black;
+    color: white;
+    text-shadow: none;
+    box-shadow: none;
+    border: whitesmoke solid 4px;
+    font-size: 1.2em;
+}
+
+.buyFirstClass:hover, .buyBusinessClass:hover, .buyEconomyClass:hover{
+    background-color: yellow;
+    color: black;
+    border: whitesmoke solid 4px;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+
+

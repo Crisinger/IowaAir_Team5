@@ -13,25 +13,15 @@ Tablet
     }
 
     #logo {
-        float: left;
-        margin-left: 5%;
-        text-align: left;
-        width: 150px;
+
     }
 
     #sidebar {
-        width: 100px;
-        background: yellow;
-        padding: 0 20px;
-        margin: 0 20px 0 20px;
+
     }
 
     #main {
-        display: flex;
-        flex-direction: row;
-        background: yellow;
-        padding: 0 20px;
-        margin: 0 20px 0 20px;
+
     }
 
     /**********************************
@@ -73,7 +63,7 @@ Desktop
 @media screen and (min-width: 660px) {
 
     body {
-        background: #969696;
+
     }
 
     /**********************************

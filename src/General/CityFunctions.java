@@ -256,9 +256,11 @@ public class CityFunctions {
             while(rs.next()){
                 for(int i=0; i<activeLocations.size();i++){
                     if(activeLocations.get(i).get(0)[0].equals(rs.getString("state"))){
-                        String[] info = new String[2];
+                        String[] info = new String[4];
                         info[0] = rs.getString("ID");
                         info[1] = rs.getString("cityName");
+                        info[2] = rs.getString("latitude");
+                        info[3] = rs.getString("longitude");
                         //activeLocations.get(i).add(rs.getString("ID"));
                         //activeLocations.get(i).add(rs.getString("cityName"));
                         activeLocations.get(i).add(info);

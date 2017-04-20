@@ -131,20 +131,3 @@ function checkCreatePassword(password){
 	}	
 }
 
-
-/*
-    Performs the necessary log in steps to access the account. Not sure what to put here temporarily.
- */
-function loginProcess(username, password){
-	
-	// Needs a section to check this info against database for duplicate possibilitiy//
-	
-    alert("Logged In!");
-}
-
-/*  
- 	Performs the necessary steps to create an account.  Temporarily just alerts that function has been accessed.
- */
-function createProcess(username, password){
-	alert("Created  Account!");
-}

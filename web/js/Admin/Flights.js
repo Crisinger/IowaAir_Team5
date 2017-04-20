@@ -26,6 +26,7 @@ $( function() {
     });
 
 
+
     $( "#flightArrivaldatepicker" ).datepicker({
         beforeShow: function(input,inst){
             var today = new Date();

@@ -38,11 +38,12 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <%--<link rel="stylesheet" href="css/responsive.css">--%>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.min.js"></script>
 
     <script src="js/General/FlightQuery.js"></script>
+
 </head>
 
 <body>
@@ -89,34 +90,35 @@
 </header>
 
 
-<div id="viewwrapper">
+<div id="vwrapper">
 
     <section id="sidebar">
         <form id="flightQueryForm">
-            Departure Location:
+            <p><b>Departure Location:</b></p>
             <select id="flightQueryDepartState" name="departState" required>
             </select>
-            <br>
             <select id="flightQueryDepartCity" name="departCity" required>
             </select>
             <br>
-            Arrival Location:
+            <p><b>Arrival Location:</b></p>
             <select id="flightQueryArrivalState" name="arriveState" required>
             </select>
-            <br>
             <select id="flightQueryArrivalCity" name="arriveCity" required>
-            </select>
-            Plane Model:
+            </select>.
             <br>
+            <p><b>Plane Model:</b></p>
             <select id="flightQueryPlaneModel" name="planeModel">
             </select>
             <br>
         </form>
-        <button id="flightQueryButton">Search</button>
+        <br>
+        <div>
+            <button id="flightQueryButton">Search</button>
+        </div>
     </section>
 
     <section id="flightQueryView">
-
+        <%-- Flight stuff is being populated from javascript file --%>
     </section>
 
 </div>
@@ -124,7 +126,5 @@
 <footer>
 
 </footer>
-
 </body>
-
 </html>

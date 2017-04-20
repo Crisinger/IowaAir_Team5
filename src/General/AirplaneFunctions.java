@@ -214,11 +214,12 @@ public class AirplaneFunctions {
         try{
             con.setAutoCommit(false);
             stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("Select ID, PLANE_MODEL From planemodels ORDER BY PLANE_MODEL;");
+            ResultSet rs = stmt.executeQuery("Select ID, PLANE_MODEL, BASE_PRICE From planemodels ORDER BY PLANE_MODEL;");
             while(rs.next()){
-                String[] tempInfo = new String[2];
+                String[] tempInfo = new String[3];
                 tempInfo[0] = rs.getString("ID");
                 tempInfo[1] = rs.getString("plane_model");
+                tempInfo[2] = rs.getString("Base_price");
                 basicModelInfo.add(tempInfo);
             }
         }catch(Exception ex){
