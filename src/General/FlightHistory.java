@@ -45,7 +45,7 @@ public class FlightHistory {
 
                 while (rs.next()) {
                     int flightnum = rs.getInt("flightID");
-                    ResultSet rs2 = stmt.executeQuery("SELECT * FROM flights where flight_id = '" + flightnum + "';");
+                    ResultSet rs2 = stmt.executeQuery("SELECT * FROM flights where flight_id = " + flightnum + ";");
 
                     if(rs2.next()) {
                         htmlCode += "<tr>";
@@ -73,6 +73,7 @@ public class FlightHistory {
 
         }
 
+        System.out.println(htmlCode);
 
         return htmlCode;
     }

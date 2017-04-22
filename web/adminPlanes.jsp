@@ -171,8 +171,10 @@
                             <input type="text" id="seatsBusiness" name="seatsBusiness" value="0" disabled required>
 
                         </li>
-                        <li><div class="planeFormInputTitle"></div>
+                        <li>
                             <input type="checkbox" name="hasFirstClass" value="true" title="First" onclick="alterSlider(2)" ><b>First</b>
+
+                            <div class="planeFormInputTitle"></div>
                             <input type="range" id="seatsFirstRange" name="seatsFirst" value="0" min="0" max="400" step="1"  onchange="alterText()" disabled required>
                             <input type="text" id="seatsFirst" name="seatsFirst" value="0" disabled required>
 
@@ -241,19 +243,9 @@
         <tr>
             <th><b>ID</b></th>
             <th><b>Model</b></th>
-            <th><b>Capacity</b></th>
-            <th><b>Business</b></th>
-            <th><b>First</b></th>
-            <th><b>Fuel</b></th>
-            <th><b>Economy</b></th>
-            <th><b>Business</b></th>
+            <th><b>Action</b></th>
         </tr>
         <tr>
-            <th></th>
-            <th></th>
-            <th>(persons)</th>
-            <th></th>
-            <th></th>
             <th></th>
             <th></th>
             <th></th>

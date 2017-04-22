@@ -28,6 +28,28 @@ body {
     border: solid black 2px;
 }
 
+#googlemapContainer{
+    border: solid black 2px;
+    background: yellow;
+    display: flex;
+    max-width: 70%;
+    height: 640px;
+    text-align: left;
+    float: left;
+    width:60%;
+    padding: 0 20px;
+    margin-right:5%;
+    align-items: center;
+}
+
+#googlemap{
+    display: inline-flex;
+    width: 95%;
+    height:95%;
+    margin: auto;
+    border: black solid 2px;
+}
+
 #sidebar.login, #sidebar.contact, #sidebar.account{
     display: none;
     max-width: 90%;
@@ -83,19 +105,23 @@ p {
     display: block;
     padding-bottom: 20px;
 }
+
 #sidebar button{
     padding: 5px 10px;
     background-color: black;
     color: white;
     text-shadow: none;
     box-shadow: none;
-    border: none;
+    border: yellow solid 2px;
+    margin: 10px 0;
+    font-weight: bold;
 }
 
 #sidebar button:hover{
 
-    background-color: dimgray;
-    color: white;
+    background-color: yellow;
+    color: black;
+    border: black solid 2px;
 }
 
 /*************************************************************

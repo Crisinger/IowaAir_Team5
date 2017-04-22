@@ -44,6 +44,7 @@
 
     <script src="js/General/FlightQuery.js"></script>
 
+
 </head>
 
 <body>
@@ -104,7 +105,7 @@
             <select id="flightQueryArrivalState" name="arriveState" required>
             </select>
             <select id="flightQueryArrivalCity" name="arriveCity" required>
-            </select>.
+            </select>
             <br>
             <p><b>Plane Model:</b></p>
             <select id="flightQueryPlaneModel" name="planeModel">
@@ -117,14 +118,23 @@
         </div>
     </section>
 
+    <section id="googlemapContainer">
+        <div id="googlemap" style="width:95%;height:95%;">
+        </div>
+    </section>
+
+
     <section id="flightQueryView">
         <%-- Flight stuff is being populated from javascript file --%>
     </section>
+
 
 </div>
 
 <footer>
 
 </footer>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmOyQqedQY902x2uHDZ80Xr6c2mW-JtwQ&callback=myMap"></script>
+
 </body>
 </html>

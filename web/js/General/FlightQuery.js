@@ -5,8 +5,72 @@ var placeList = "";
 var modelList = "";
 var queryFlights = "";
 
-$(function(){
+var map;
+var depart;
+var arrive;
+var path;
 
+function myMap() {
+    var mapOptions = {
+        center: new google.maps.LatLng(44.580207622, -103.461760283),
+        zoom: 3,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById("googlemap"), mapOptions);
+}
+
+function placeMarker(marker, latt, longg){
+    var make = new google.maps.LatLng(latt,longg);
+    if(marker==0){
+        if(depart!=null){
+            depart.setPosition(make);
+        }else{
+            depart = new google.maps.Marker({
+                position: make,
+                map:map,
+                animation: google.maps.Animation.DROP,
+            });
+        }
+    }else if(marker==1){
+        if(arrive!=null){
+            arrive.setPosition(make);
+        }else{
+            arrive = new google.maps.Marker({
+                position: make,
+                map:map,
+                animation: google.maps.Animation.DROP,
+            });
+        }
+    }
+    createFlightPath();
+}
+
+function createFlightPath(){
+
+
+    if(depart!=null && arrive!=null && path!=null){
+        path.setMap(null);
+        path.setPath([depart.getPosition(),arrive.getPosition()]);
+        path.setMap(map);
+    } else{
+        path = new google.maps.Polyline({
+            path:[depart.getPosition(), arrive.getPosition()],
+            geodesic:true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: map
+        });
+    }
+
+
+
+}
+
+
+
+
+$(function(){
 
     $.post("General.ListLocations","activity=1",function(msg){
         if(msg.length>0){
@@ -20,6 +84,7 @@ $(function(){
 
     $("#flightQueryButton").click(function(){
         if(validateTripLocations()){
+            $("#googlemapContainer").slideUp();
             attemptFlightQuery();
         }else{
             alert("Please enter departure and arrival locations");
@@ -72,14 +137,12 @@ function addChildrenToParent(parent, array, type, travelType, posChild){
             child.setAttribute("onclick",
                 "setUpCitySelection(\""+posChild+"\","+array[count].ID+","+travelType+")");
         }
+        if(type==1){
+            child.setAttribute("onclick","placeMarker(\""+travelType+"\","+array[count].LAT+","+array[count].LONG+")");
+        }
         parent.appendChild(child);
     }
 }
-
-
-
-
-
 function validateTripLocations(){
     var dState = document.getElementById("flightQueryDepartState").selectedIndex;
     var dCity = document.getElementById("flightQueryDepartCity").selectedIndex;

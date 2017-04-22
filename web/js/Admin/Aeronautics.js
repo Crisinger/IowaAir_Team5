@@ -85,8 +85,6 @@ $(function(){
 
 });
 
-
-
 function attemptAddAirplane(){
     var modelSelection = document.getElementById("planeModelSelect");
     var model = "modelID="+modelSelection.options[modelSelection.selectedIndex].value;
@@ -135,9 +133,15 @@ function displayPlane(count){
 
     for(var i=0; i<list.length; i++){
         var subChild = document.createElement("td");
-        if(i!=list.length-1) {
+        if(i==1){
+            for(var j=0; j<modelList.length; j++){
+                if(modelList[j].mID == list[i]){
+                    subChild.innerText = modelList[j].mModel;
+                }
+            }
+        } else if(i!=list.length-1) {
             subChild.innerText = list[i]; // for all other table entities
-        } else{
+        } else {
             subChild.append(list[i]); // keeps action button last in table
         }
         subChild.name="col"+i;
@@ -337,9 +341,15 @@ function displayPlaneModel(count){
 
     for(var i=0; i<list.length; i++){
         var subChild = document.createElement("td");
-        if(i!=list.length-1) {
+        if(i==2 || i==3 || i==4){
+            if(list[i]=="0"){
+                subChild.innerHTML="<img src=\"img/no-icon.png\" alt=\"NO\" height=\"24\" width=\"24\">";
+            }else{
+                subChild.innerHTML="<img src=\"img/check-icon.png\" alt=\"YES\" height=\"24\" width=\"24\">";
+            }
+        }else if(i!=list.length-1) {
             subChild.innerText = list[i]; // for all other table entities
-        } else{
+        }else {
             subChild.append(list[i]); // keeps action button last in table
         }
         subChild.name="col"+i;
