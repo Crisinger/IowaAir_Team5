@@ -29,6 +29,8 @@ function placeMarker(marker, latt, longg){
                 position: make,
                 map:map,
                 animation: google.maps.Animation.DROP,
+                icon: "/img/takeoff.png"
+
             });
         }
     }else if(marker==1){
@@ -39,6 +41,7 @@ function placeMarker(marker, latt, longg){
                 position: make,
                 map:map,
                 animation: google.maps.Animation.DROP,
+                icon: "/img/landing.png"
             });
         }
     }
@@ -52,25 +55,39 @@ function createFlightPath(){
         path.setMap(null);
         path.setPath([depart.getPosition(),arrive.getPosition()]);
         path.setMap(map);
-    } else{
+        centerMapOnLocations();
+    } else if(depart!=null && arrive!=null){
         path = new google.maps.Polyline({
             path:[depart.getPosition(), arrive.getPosition()],
             geodesic:true,
             strokeColor: '#FF0000',
             strokeOpacity: 1.0,
             strokeWeight: 2,
-            map: map
+            map: map,
         });
+        path.setMap(null);
+        path.setPath([depart.getPosition(),arrive.getPosition()]);
+        path.setMap(map);
+        centerMapOnLocations();
+    }else{
+        // do nothing - waiting on my input.
     }
 
+}
 
-
+function centerMapOnLocations(){
+    var bounds = new google.maps.LatLngBounds();
+    bounds.extend(depart.getPosition());
+    bounds.extend(arrive.getPosition());
+    var latlng = new google.maps.LatLng((depart.getPosition().lat() + arrive.getPosition().lat())/2,(depart.getPosition().lng() + arrive.getPosition().lng())/2);
+    map.panTo(latlng);
+    map.fitBounds(bounds);
 }
 
 
 
-
 $(function(){
+    var firstSearch = 1;
 
     $.post("General.ListLocations","activity=1",function(msg){
         if(msg.length>0){
@@ -84,8 +101,13 @@ $(function(){
 
     $("#flightQueryButton").click(function(){
         if(validateTripLocations()){
-            $("#googlemapContainer").slideUp();
             attemptFlightQuery();
+
+            if(firstSearch==1){
+                $("#googlemapContainer").slideUp("1000");
+                firstSearch = 0;
+            }
+
         }else{
             alert("Please enter departure and arrival locations");
         }
@@ -100,6 +122,10 @@ $(function(){
             addChildrenToParent(modelSelect,modelList,3,"");
         }
     });
+
+    $("#showGoogleMap").click(function(){
+        $("#googlemapContainer").slideToggle("slow");
+    })
 
 
 });

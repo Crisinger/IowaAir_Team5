@@ -111,10 +111,40 @@
             <select id="flightQueryPlaneModel" name="planeModel">
             </select>
             <br>
+            <p><b>Number of Tickets:</b></p>
+            <select id="flightQueryNumberOfPassengers" name="numberPassengers">
+                <option disabled selected>--Select Amount--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <p><b>Seating Preference:</b></p>
+            <select id="flightQueryPreferredSeating" name="preference">
+                <option disabled selected>--Select Preference--</option>
+                <option value="0">Economy</option>
+                <option value="1">Business</option>
+                <option value="2">First</option>
+            </select>
+            <br>
+            <p><b>Travel Type:</b></p>
+            <select id="flightQueryTravelType" name="travelType">
+                <option disabled selected>--Select Ticket Type--</option>
+                <option value="0">One-Way</option>
+                <option value="1">Round</option>
+            </select>
+            <br>
         </form>
         <br>
         <div>
             <button id="flightQueryButton">Search</button>
+            <button id="showGoogleMap" >Toggle Map View</button>
         </div>
     </section>
 
@@ -122,7 +152,6 @@
         <div id="googlemap" style="width:95%;height:95%;">
         </div>
     </section>
-
 
     <section id="flightQueryView">
         <%-- Flight stuff is being populated from javascript file --%>
