@@ -255,7 +255,7 @@ public class FlightsFunctions {
 
         try{
             stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("Select * FROM FLIGHTS JOIN PLANES ON flights.plane_ID=planes.ID WHERE "+criteria+" IS_ACTIVE=1;");
+            ResultSet rs = stmt.executeQuery("Select * FROM FLIGHTS JOIN PLANES ON flights.plane_ID=planes.ID WHERE "+criteria+" IS_ACTIVE=1 ORDER BY departure_date, departure_time;");
             while(rs.next()){
                 flightInfo.add(new ArrayList<String>());
                 flightInfo.get(flightInfo.size()-1).add(rs.getString("ID"));
