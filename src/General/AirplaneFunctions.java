@@ -420,12 +420,12 @@ public class AirplaneFunctions {
 
     }
 
-    private static boolean checkDates(String qDepart, String qArrive, String cDepart, String cArrive) {
+    public static boolean checkDates(String qDepart, String qArrive, String cDepart, String cArrive) {
         return LocalDate.parse(qDepart).isAfter(LocalDate.parse(cArrive)) ||
                 LocalDate.parse(qArrive).isBefore(LocalDate.parse(cDepart));
     }
 
-    private static boolean checkTimes(String qDTime, String qATime, String cDTime, String cATime){
+    public static boolean checkTimes(String qDTime, String qATime, String cDTime, String cATime){
         return LocalTime.parse(qDTime).isAfter(LocalTime.parse(cATime))
                 || LocalTime.parse(cDTime).isAfter(LocalTime.parse(qATime));
     }

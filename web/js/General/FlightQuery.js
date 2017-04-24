@@ -5,10 +5,15 @@ var placeList = "";
 var modelList = "";
 var queryFlights = "";
 
+var page=0;
+var numPerPage = 5;
+
 var map;
 var depart;
 var arrive;
 var path;
+var firstSearch = 1;
+
 
 function myMap() {
     var mapOptions = {
@@ -84,11 +89,9 @@ function centerMapOnLocations(){
     map.fitBounds(bounds);
 }
 
-
-
 $(function(){
-    var firstSearch = 1;
 
+    $("#flightQueryControls").hide();
     $.post("General.ListLocations","activity=1",function(msg){
         if(msg.length>0){
             placeList = JSON.parse(msg).states;
@@ -102,12 +105,6 @@ $(function(){
     $("#flightQueryButton").click(function(){
         if(validateTripLocations()){
             attemptFlightQuery();
-
-            if(firstSearch==1){
-                $("#googlemapContainer").slideUp("1000");
-                firstSearch = 0;
-            }
-
         }else{
             alert("Please enter departure and arrival locations");
         }
@@ -127,6 +124,17 @@ $(function(){
         $("#googlemapContainer").slideToggle("slow");
     })
 
+    $("#flightQueryPrevious").click(function(){
+        resetBuildFlightSection();
+        page = page-1;
+        showFlightQuery(page);
+    });
+
+    $("#flightQueryNext").click(function(){
+        resetBuildFlightSection();
+        page = page +1;
+        showFlightQuery(page);
+    });
 
 });
 
@@ -188,11 +196,13 @@ function attemptFlightQuery(){
             console.log(queryFlights);
             console.log(queryFlights.length);
             if(queryFlights.length>0) {
+                $("#flightQueryControls").show();
                 resetBuildFlightSection();
-                for (var i = 0; i < queryFlights.length; i++) {
-                    console.log("building a flight...");
-                    buildFlightInfo(queryFlights[i]);
-                    console.log("finishing a flight...");
+                page = 0;
+                showFlightQuery(page);
+                if(firstSearch==1){
+                    $("#googlemapContainer").slideUp("1000");
+                    firstSearch = 0;
                 }
             }else{
                 alert("No flights are currently set for this criteria");
@@ -204,8 +214,44 @@ function attemptFlightQuery(){
 }
 
 
+function showFlightQuery(page){
+    if(page!=0){
+        document.getElementById("flightQueryPrevious").disabled = false;
+    } else {
+        document.getElementById("flightQueryPrevious").disabled = true;
+    }
+    var min = page*numPerPage;
+    var max = (page+1)*numPerPage;
+    var count = 0;
+    var displayed = 0;
 
+    console.log("flights="+queryFlights.length);
 
+    for(var fly=0; fly<queryFlights.length; fly++){
+        console.log("flight#"+fly);
+        if(count<min){
+            count++;
+        }else if(count>=min && count<max){
+            buildFlightInfo(queryFlights[fly]);
+            displayed++;
+            count++;
+        }
+
+        if(count==max){
+            fly = queryFlights.length + 1;
+        }
+    }
+
+    if(displayed<numPerPage){
+        document.getElementById("flightQueryNext").disabled=true;
+        /*while(displayed<numberPerPage){
+            displayed++;
+        }*/
+    }else{
+        document.getElementById("flightQueryNext").disabled=false;
+    }
+
+}
 
 function resetBuildFlightSection(){
     var parent = document.getElementById("flightQueryView");
@@ -268,9 +314,9 @@ function buildFlightRightSide(flight){
     var adjustPrice = parseInt(flight.DP)*parseInt(flight.Dem);
     console.log("basePrice = " +basePrice);
     console.log("adjustedPrice = "+adjustPrice);
-    first.innerText="F: $ "+ Math.floor(basePrice + adjustPrice*(2)); // 2 for first class
-    business.innerText="B: $ "+ Math.floor(basePrice + adjustPrice*(1.5)); // 1.5 for first class
-    economy.innerText="E: $  "+ Math.floor(basePrice + adjustPrice*(1)); // 1 for first class
+    first.innerText="$ "+ Math.floor(basePrice + adjustPrice*(2)); // 2 for first class
+    business.innerText="$ "+ Math.floor(basePrice + adjustPrice*(1.5)); // 1.5 for first class
+    economy.innerText="$ "+ Math.floor(basePrice + adjustPrice*(1)); // 1 for first class
 
     first.setAttribute("class","buyFirstClass");
     business.setAttribute("class","buyBusinessClass");

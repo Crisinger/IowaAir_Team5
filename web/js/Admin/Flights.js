@@ -241,7 +241,7 @@ function modifyArrivalDateAndTime(tripTime){
 function getAvailableAirplanes(page){
     console.log("getting available planes...");
     //String[] list = {"pID","mID"};
-    $.post("Admin.Flights.GetAvailablePlanes",getAvailabilityInfo(),
+    $.post("Admin.Flights.GetAvailablePlanes",getAvailabilityInfo(0),
         function(msg){
             var response = JSON.parse(msg);
             removePreviousPlaneQuery();
@@ -275,16 +275,20 @@ function whatAirplanesToDisplay(page){
  * Gets the information to send to get list of available airplanes from server
  * @returns {string|*} of serialized information to pass to server
  */
-function getAvailabilityInfo(){
+function getAvailabilityInfo(adjust){
     var departDate = $("#flightDeparturedatepicker").datepicker('getDate');
     var departTime = $("#flightDeparturetimepicker").timepicker('getTime');
     var arrivalDate = $("#flightArrivaldatepicker").datepicker('getDate');
     var arrivalTime = $("#flightArrivaltimepicker").timepicker('getTime');
     var planeModelSelect = document.getElementById("flightPlaneModelSelect");
     var nextSeries;
-    nextSeries =    "flightDepartureDate="+returnDateInMSQLFormat(departDate,1) + "&";
+
+    var newDepart = new Date(departDate.getFullYear(), departDate.getMonth(), departDate.getDate()+adjust)
+    var newArrive = new Date(departDate.getFullYear(), departDate.getMonth(), departDate.getDate()+adjust)
+
+    nextSeries =    "flightDepartureDate="+returnDateInMSQLFormat(newDepart,1) + "&";
     nextSeries +=   "flightDepartureTime="+returnTimeInMSQLFormat(departTime)+":00&";
-    nextSeries +=   "flightArrivalDate="+returnDateInMSQLFormat(arrivalDate,1)+"&";
+    nextSeries +=   "flightArrivalDate="+returnDateInMSQLFormat(newArrive,1)+"&";
     nextSeries +=   "flightArrivalTime="+returnTimeInMSQLFormat(arrivalTime)+":00&";
     nextSeries +=   "flightPlaneModelSelect="+planeModelSelect.options[planeModelSelect.selectedIndex].value;
     return nextSeries;
@@ -405,32 +409,35 @@ function setModalHeader(){
 
 function submitToDatabase(){
     if(confirm("Are you sure?")){
+        console.log("sending flight to database...");
 
-        var data = getAvailabilityInfo() + "&" + getLocationInfo() + "&value=";
+        var occurrence = $("#flightOccurrenceSelect").serialize();
+        var timePeriod = $("#flightOccurrencePeriodSelect").serialize();
+
+        var data = getAvailabilityInfo(0) + "&" + getLocationInfo() + "&value=";
         data += document.getElementById("adminAddFlightModalFormButton").value;
         data += "&distancePrice="+document.getElementById("flightDistancePrice").value;
         data += "&flightDemandSlider="+document.getElementById("flightDemandSlider").value;
+        data += "&"+occurrence+"&"+timePeriod;
 
-        console.log("sending flight to database..."+data);
-        $.get("Admin.Flights.AddFlight", data,
-            function(msg){
-                console.log(msg);
-                if(msg.length>0) {
-                    var temp = JSON.parse(msg);
-                    if (temp.isAdded == 1) {
-                        resetAllFlightInformationInputs();
-                    } else {
-                        alert("something went wrong");
-                    }
-                }
-                closeAddFlightModal();
-                canModelMakeTheDistance();
-            }
-        );
-
+        console.log(data);
+        attemptAddToDatabase(data);
     } else {
 
     }
+}
+
+function attemptAddToDatabase(data){
+    $.get("Admin.Flights.AddFlight", data,
+        function (msg) {
+            closeAddFlightModal();
+            resetAllFlightInformationInputs();
+        }
+    );
+}
+
+function infoToSubmitToDatabase(adjust){
+
 }
 
 function updateSliderText(){
@@ -444,4 +451,5 @@ function resetAddFlightButtonValue(){
 }
 
 function resetAllFlightInformationInputs(){
+    // reset info
 }

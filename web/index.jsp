@@ -153,6 +153,28 @@
         </div>
     </section>
 
+    <section id="flightQueryControls">
+        <div>
+            <div>
+                <button id="flightQueryPrevious" >Previous</button>
+                <button id="flightQueryNext" >Next</button>
+            </div>
+            <div>
+                <div>
+                    <div>
+                        Economy
+                    </div>
+                    <div>
+                        Business
+                    </div>
+                    <div>
+                        First
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="flightQueryView">
         <%-- Flight stuff is being populated from javascript file --%>
     </section>

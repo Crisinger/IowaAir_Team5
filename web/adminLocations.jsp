@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="General.Locations" %>
 <%@ page import="General.CityFunctions" %>
 <%
     String accountText = "";
@@ -29,7 +28,8 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/adminLocation.js" ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/Admin/Locations.js" ></script>
 </head>
 
 <body>
@@ -89,35 +89,56 @@
 
 <div id="adminLocations">
     <h1>Locations</h1>
-    <form action="General.Locations">
-        <ul>
-            <li>
-                <div class="locationFormInputTitle"><b>State: </b></div>
-                <select id="stateName" name="stateName" style="width: 20ch" required>
-                    <option disabled selected>Select State</option>
-                    <%=CityFunctions.getStates()%>
-                </select>
-            </li>
-            <li>
-                <div class="locationFormInputTitle"><b>City: </b></div>
-                <select id="cityName" name="cityName" style="width: 20ch" required>
-                    <option disabled selected>Select City</option>
-                    <%=CityFunctions.getCities()%>
-                </select>
-            </li>
-            <li>
-                <button type="submit" name="addLocationButton">Add Location</button>
+    <section id="sidebar" class="locationsidebar">
+        <form id="adminAddLocationForm">
+            <ul>
+                <li>
+                    <br>
+                    <div class="locationFormInputTitle"><b>State: </b></div>
+                    <select id="stateName" name="stateName" style="width: 20ch" required>
+                    </select>
+                </li>
+                <li>
+                    <br>
+                    <div class="locationFormInputTitle"><b>City: </b></div>
+                    <select id="cityName" name="cityName" style="width: 20ch" required>
+                    </select>
+                </li>
+            </ul>
+        </form>
+        <br>
+        <button id="addLocationButton" name="addLocationButton">Add Location</button>
+        <br>
+    </section>
 
-            </li>
-        </ul>
-    </form>
-    <%=Locations.getAirports()%>
+    <section id="googleAdminLocationsContainer">
+        <div id="googleAdminLocations" style="width:95%;height:95%;">
+
+        </div>
+    </section>
+    <br>
+
+
+    <div id="adminLocationTableNavigation">
+        <button id="adminLocationPreviousPage">Previous</button>
+        <button id="adminLocationNextPage">Next</button>
+    </div>
+    <section id="adminLocationTablesContainer">
+        <table class="admin_man_table">
+            <th><b>State</b></th>
+            <th><b>City</b></th>
+            <th><b>Action</b></th>
+        </table>
+        <table id="adminActiveCityList" class="admin_man_table">
+
+        </table>
+    </section>
 </div>
 
 
 <footer>
-
 </footer>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmOyQqedQY902x2uHDZ80Xr6c2mW-JtwQ&callback=adminLocMap"></script>
 
 </body>
 

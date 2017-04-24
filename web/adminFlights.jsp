@@ -228,7 +228,7 @@
 
 <div id="adminFlights">
     <h1>Flights</h1>
-    <div action="IowaAir.Admin.Flights.AdminFlights">
+    <div>
         <p class="admin_flight_type"><b>Departure</b></p>
         <p class="admin_flight_info">
             Date: <input type="text" name="flightDepartureDate" placeholder="Select Date" id="flightDeparturedatepicker" onclick="enableNextEntry(1)" required>
@@ -267,6 +267,33 @@
             <input type="text" id="flightDemandValue" style="width:3ch;" disabled>
         </p>
         <br>
+
+        <div>
+            Occurrence:
+            <select id="flightOccurrenceSelect" name="occurrences">
+                <option disabled selected>--Select Occurrence--</option>
+                <option value="1">1 Time Only</option>
+                <option value="1">Daily</option>
+                <option value="7">Weekly</option>
+            </select>
+
+            Occurrence Period:
+            <select id="flightOccurrencePeriodSelect" name="timePeriod">
+                <option disabled selected>--Select Period--</option>
+                <option value="1">1 Time Only</option>
+                <option value="7">1 Week</option>
+                <option value="30">1 Month</option>
+                <option value="90">3 Month</option>
+                <option value="180">6 Months</option>
+                <option value="365">1 Year</option>
+            </select>
+
+        </div>
+
+
+
+
+
         <button id="addFlightButton" name="addFlightButton" class="admin_flight_info_button" onclick="viewAddFlightModal()" disabled>Show Available Planes</button>
     </div>
 </div>

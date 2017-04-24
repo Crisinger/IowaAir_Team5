@@ -2,6 +2,7 @@ package General;
 
 import General.AccountFunctions;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -70,18 +71,30 @@ public class CityFunctions {
         return id;
     }
 
-    public static void setActivityForCity(Connection con, String index, int active){
+    public static boolean setActivityForCity(Connection con, String index, int active){
 
+        boolean attemptSuccess = false;
         Statement stmt = null;
         try {
             con.setAutoCommit(false);
             stmt = con.createStatement();
             stmt.executeUpdate("UPDATE cities SET active="+active+" WHERE id="+index+";");
             con.commit();
+
+            ResultSet rs = stmt.executeQuery("Select Count(*) from cities WHERE id="+index+" AND active="+active+";");
+            rs.next();
+            if(active==1){
+                attemptSuccess = rs.getInt("count(*)")==1;
+            }else{
+                attemptSuccess = rs.getInt("count(*)")==1;
+            }
+            con.commit();
         } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
+
+        return attemptSuccess;
     }
 
     public static String getActiveCities(Connection con){
@@ -239,10 +252,13 @@ public class CityFunctions {
         ArrayList<ArrayList<String[]>> activeLocations = new ArrayList<ArrayList<String[]>>();
         Statement stmt = null;
         String wantActive = activity ? "WHERE ACTIVE=1":"";
+
+        System.out.println("wantActive = "+wantActive);
+
         try{
             con.setAutoCommit(false);
             stmt = con.createStatement();
-            String sql = "SELECT DISTINCT state FROM cities "+wantActive+" ORDER BY STATE";
+            String sql = "SELECT DISTINCT state FROM cities " + wantActive + " ORDER BY STATE";
             ResultSet states = stmt.executeQuery(sql);
             //String[] stateList = new String[50];
             while(states.next()){

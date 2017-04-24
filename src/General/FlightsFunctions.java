@@ -3,6 +3,7 @@ package General;
 import General.AccountFunctions;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -79,7 +80,7 @@ public class FlightsFunctions {
 
 
     public static boolean addFlight(Connection con, String planeID, String deptDate, String deptTime, String deptLocation,
-                                 String arrivalDate, String arrivalTime, String arrivalLocation, String demand, String distancePrice)
+                                 String arrivalDate, String arrivalTime, String arrivalLocation, String demand, String distancePrice, String timePeriod, String occurrences)
     //i assume that if a plane has first class, it also has business and coach. If it has business it also has coach
     {
         boolean isFlightAdded = false;
@@ -93,21 +94,50 @@ public class FlightsFunctions {
                 String aEcon = rs.getString("seatsEconomy");
                 String aBus = rs.getString("seatsBusiness");
                 String aFirst = rs.getString("seatsFirst");
-
                 System.out.println("Error about to happen");
-                String sql = "INSERT INTO FLIGHTS (PLANE_ID, DEPARTURE_DATE, DEPARTURE_TIME, DEPARTURE_LOCATION," +
-                        "ARRIVAL_DATE, ARRIVAL_TIME, ARRIVAL_LOCATION, availableECONOMY, availableBUSINESS, availableFIRST," +
-                        "takenECONOMY, takenBUSINESS, takenFIRST, DEMAND, DISTANCE_PRICE,IS_ACTIVE) " +
-                        "VALUES ( " + planeID + " , '" + deptDate + "' , '"+ deptTime +"' , "+ deptLocation +" , '"+ arrivalDate + "','" +
-                        arrivalTime + "'," + arrivalLocation +","+aEcon+","+aBus+","+aFirst+",0,0,0," + demand + ", "+ distancePrice+",1);";
-                stmt.executeUpdate(sql);
+
+                int tPeriod = Integer.parseInt(timePeriod);
+                int occur = Integer.parseInt(occurrences);
+
+                LocalDate currentDepart = LocalDate.parse(deptDate);
+                LocalDate currentArrival = LocalDate.parse(arrivalDate);
+                for(int count=0; count<tPeriod; count+=occur) {
+                    LocalDate newDepart = currentDepart.plusDays(count);
+                    LocalDate newArrival = currentArrival.plusDays(count);
+                    // calc new date
+
+
+                    Statement stmtInner = null;
+                    stmtInner = con.createStatement();
+                    boolean isAvailable = false;
+                    ResultSet innerRS = stmtInner.executeQuery("Select * FROM flights WHERE plane_id="+planeID+";");
+                    isAvailable = true;
+                    if (innerRS.next()) {
+                        do {
+                            if (!AirplaneFunctions.checkDates(innerRS.getString("Departure_Date"),
+                                    innerRS.getString("Arrival_Date"), newDepart.toString(), newArrival.toString())) {
+
+                                isAvailable = AirplaneFunctions.checkTimes(innerRS.getString("Departure_time"),
+                                        innerRS.getString("Arrival_time"), deptTime, arrivalTime);
+                            }
+                        } while (innerRS.next());
+                    } else {
+                        isAvailable = true;
+                    }
+
+                    if(isAvailable){
+                        String sql = "INSERT INTO FLIGHTS (PLANE_ID, DEPARTURE_DATE, DEPARTURE_TIME, DEPARTURE_LOCATION," +
+                                "ARRIVAL_DATE, ARRIVAL_TIME, ARRIVAL_LOCATION, availableECONOMY, availableBUSINESS, availableFIRST," +
+                                "takenECONOMY, takenBUSINESS, takenFIRST, DEMAND, DISTANCE_PRICE,IS_ACTIVE) " +
+                                "VALUES ( " + planeID + " , '" + newDepart.toString() + "' , '" + deptTime + "' , " + deptLocation + " , '" + newArrival.toString() + "','" +
+                                arrivalTime + "'," + arrivalLocation + "," + aEcon + "," + aBus + "," + aFirst + ",0,0,0," + demand + ", " + distancePrice + ",1);";
+                        stmt.executeUpdate(sql);
+                        isFlightAdded = true;
+                    }
+
+                }
 
                 System.out.println("error is actually here");
-                ResultSet innerRs = stmt.executeQuery("Select count(*) from flights where PLANE_ID="+planeID+" AND DEPARTURE_DATE='"+deptDate+"' AND DEPARTURE_TIME='"+deptTime+"' AND DEPARTURE_LOCATION="+deptLocation+" AND ARRIVAL_DATE='"+arrivalDate+"' AND ARRIVAL_TIME='"+arrivalTime+"' AND ARRIVAL_LOCATION="+arrivalLocation+" AND availableECONOMY="+aEcon+" AND availableBUSINESS="+aBus+" AND availableFIRST="+aFirst+" AND DEMAND="+demand+" AND DISTANCE_PRICE="+distancePrice+" AND IS_ACTIVE=1;");
-                innerRs.next();
-                if(innerRs.getInt("count(*)")==1){
-                    isFlightAdded = true;
-                }
             }
 
             stmt.close();
