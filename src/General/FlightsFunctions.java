@@ -242,12 +242,17 @@ public class FlightsFunctions {
         }
     }
 
-    public static ArrayList<ArrayList<String>> getFlightQuery(Connection con, String dCity, String aCity, String model){
+    public static ArrayList<ArrayList<String>> getFlightQuery(Connection con, String dCity, String aCity, String model, String tickets, String pref, String travelType){
         String criteria="";
         criteria += (dCity!=null) ? "DEPARTURE_LOCATION="+ dCity + " AND ":"";
         criteria += (aCity!=null) ? "ARRIVAL_LOCATION="+ aCity + " AND ":"";
         criteria += (model!=null && !model.equals("0"))?"MODEL_ID="+model+" AND ":"";
-
+        criteria += (tickets!=null)? "(availableEconomy+availableBusiness+availableFirst) >="+tickets+" AND ":"";
+        criteria += (pref!=null && pref.equals("0"))? "availableEconomy>0 AND ":"";
+        criteria += (pref!=null && pref.equals("1"))? "availableBusiness>0 AND ":"";
+        criteria += (pref!=null && pref.equals("2"))? "availableFirst>0 AND ":"";
+        //criteria += (travelType!=null && travelType.equals("0"))? "availableEconomy>0 AND ":"";
+        //criteria += (travelType!=null && travelType.equals("1"))? "availableEconomy>0 AND ":"";
 
         Statement stmt = null;
 

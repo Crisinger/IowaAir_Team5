@@ -44,7 +44,6 @@
 
     <script src="js/General/FlightQuery.js"></script>
 
-
 </head>
 
 <body>

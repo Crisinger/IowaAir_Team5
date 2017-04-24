@@ -22,8 +22,11 @@ public class FlightQuery extends HttpServlet {
         String aState = request.getParameter("arriveState");
         String aCity = request.getParameter("arriveCity");
         String model = request.getParameter("planeModel");
+        String tickets = request.getParameter("numberPassengers");
+        String pref = request.getParameter("preference");
+        String travelType = request.getParameter("travelType");
 
-        String queryList = attemptFlightQuery(dCity,aCity,model);
+        String queryList = attemptFlightQuery(dCity,aCity,model,tickets,pref,travelType);
 
         System.out.println("----------");
         System.out.println(dCity+","+dState+"   "+aCity+","+aState+"    "+model);
@@ -37,85 +40,7 @@ public class FlightQuery extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-
-        /*String startLocation = "Departure_Location='" + request.getParameter("startLocation")+"'";
-        String endLocation = "Arrival_Location='" + request.getParameter("endLocation")+"'";
-        //String startDate = "Departure_Date="+request.getParameter("startDate");
-        //String endDate = "Arrival_Date="+request.getParameter("endDate");
-        //String passengers = "request.getParameter("passengers");
-
-        String criteria = startLocation + " AND " + endLocation;// + " AND " + startDate + " AND " + endDate;
-        //String[] criteria = {startLocation,endLocation,startDate,endDate,passengers};
-
-        Connection con = AccountFunctions.OpenDatabase();
-        Statement stmt = null;
-        String htmlCode = "";
-
-        try{
-            con.setAutoCommit(false);
-
-            stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM FLIGHTS WHERE "+criteria+";");
-            while(rs.next()){
-                int id = rs.getInt("Flight_ID");
-                htmlCode += "<form id=\"flightQuery\">\n";
-                htmlCode += "<p class=\"trip_places\"><leave>Depart</leave> " + rs.getString("Departure_Location");
-                htmlCode += " <sep>to</sep> " + rs.getString("Arrival_Location") + "</p>";
-                htmlCode += "<p class=\"trip_date\">" + rs.getString("Departure_Date");
-                if(!rs.getString("Departure_Date").equals(rs.getString("Arrival_Date"))) {
-                    htmlCode += " to " + rs.getString("Arrival_Date") + "</p>\n";
-                } else {
-                    htmlCode += "</p>";
-                }
-                htmlCode += "<p class=\"trip_time\">" + rs.getString("Departure_Time");
-                htmlCode += " &#8594; " + rs.getString("Arrival_Time") + "</p>\n";
-                htmlCode += "<input type=\"submit\" name=\""+id+"\" value=\"Book It!\">\n";
-                htmlCode += "</form>\n";
-            }
-
-            HttpSession mySession = request.getSession();
-            mySession.setAttribute("flightQuery",htmlCode);
-            con.close();
-
-            response.sendRedirect("index.jsp");
-
-        } catch (Exception e){
-            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-
-        }
-        */
     }
-
-    /*public static String getLocations(String type){
-        Connection con = AccountFunctions.OpenDatabase();
-        Statement stmt = null;
-        String htmlCode = "";
-
-        try{
-            con.setAutoCommit(false);
-
-            stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT DISTINCT "+type+" FROM flights ;");
-            while(rs.next()){
-                String location = rs.getString(type);
-                htmlCode += "<option value=\""+ location + "\">";
-                htmlCode += location;
-                htmlCode += "</option>\n";
-            }
-
-            con.close();
-
-        } catch (Exception e){
-            System.err.println(e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-
-        }
-
-        return htmlCode;
-    }*/
 
     public static String getDateAndTimeSrc(){
         String htmlCode = "";
@@ -154,9 +79,9 @@ public class FlightQuery extends HttpServlet {
         return htmlCode;
     }
 
-    private static String attemptFlightQuery(String dCity, String aCity, String model){
+    private static String attemptFlightQuery(String dCity, String aCity, String model, String tickets, String pref, String travelType){
         Connection con = AccountFunctions.OpenDatabase();
-        String queryList = queryTOJSON(FlightsFunctions.getFlightQuery(con,dCity,aCity,model));
+        String queryList = queryTOJSON(FlightsFunctions.getFlightQuery(con,dCity,aCity,model,tickets,pref,travelType));
         AccountFunctions.closeConnection(con);
         return queryList;
     }

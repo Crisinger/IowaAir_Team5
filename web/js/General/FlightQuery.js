@@ -87,6 +87,7 @@ function centerMapOnLocations(){
     var latlng = new google.maps.LatLng((depart.getPosition().lat() + arrive.getPosition().lat())/2,(depart.getPosition().lng() + arrive.getPosition().lng())/2);
     map.panTo(latlng);
     map.fitBounds(bounds);
+    map.setZoom(map.getZoom()-1);
 }
 
 $(function(){
@@ -188,13 +189,10 @@ function validateTripLocations(){
 function attemptFlightQuery(){
     var criteria = $("#flightQueryForm").serialize();
 
+    console.log(criteria);
     $.post("General.FlightQuery", criteria, function(msg){
-        console.log("what the fuck is going on");
         if(msg.length>0){
-            console.log(msg);
             queryFlights = JSON.parse(msg).flights;
-            console.log(queryFlights);
-            console.log(queryFlights.length);
             if(queryFlights.length>0) {
                 $("#flightQueryControls").show();
                 resetBuildFlightSection();
@@ -224,8 +222,6 @@ function showFlightQuery(page){
     var max = (page+1)*numPerPage;
     var count = 0;
     var displayed = 0;
-
-    console.log("flights="+queryFlights.length);
 
     for(var fly=0; fly<queryFlights.length; fly++){
         console.log("flight#"+fly);
@@ -272,6 +268,7 @@ function buildFlightInfo(flight){
     container.appendChild(leftSide);
     container.appendChild(rightSide);
     parent.appendChild(container);
+    //container.show("slide",{direction:"left"},1000);
 }
 
 function buildFlightLeftSide(flight){
