@@ -1,7 +1,6 @@
 package Manager;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
@@ -21,4 +20,32 @@ public class ManagerCheckIn {
             System.exit(0);
         }
     }
+
+    public static void managerCancelFlight(Connection con, int referenceID){
+        Statement stmt = null;
+        try {
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            stmt.executeUpdate("DELETE FROM BOOKEDFLIGHTS WHERE ID = " + referenceID +";");
+            stmt.close();
+        } catch (Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
+
+   /* public static void managerBookFlight(Connection con, int referenceID){
+        Statement stmt = null;
+        try {
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            stmt.executeUpdate("DELETE FROM BOOKEDFLIGHTS WHERE ID = " + referenceID +";");
+            stmt.close();
+        } catch (Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    } */
+
+
 }
