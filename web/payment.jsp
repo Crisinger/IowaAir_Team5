@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="Customer.PaymentInfo.PaymentServlet" %>
+<%@ page import="Customer.PaymentInfo.PaymentFunctions" %>
 
 <%
     String logPage, logSet, accountText, paymentPage, activePage, historyPage;
@@ -89,19 +91,64 @@
 
 <div id="viewwrapper">
 
+
+
     <section id="sidebar">
-        <p>
-            Payment
-        </p>
 
+            <div id="paymentDiv">
+                <form id="addPaymentForm" action = "Customer.PaymentInfo.PaymentServlet" method="post">
+                    <br>
+                    <p><b>Name</b></p>
+                    <input type="text" name="cardName" maxlength="24" align="middle" placeholder="Name" required>
+                    <p><b>Card Number</b></p>
+                    <input type="text" name="cardNumber" maxlength="16" align="middle" placeholder="CardNumber" required>
+                    <p><b>Expiration Date</b></p>
+                    <select id="paymentFormExpDay" name="expDay">
+                        <option disabled selected>--Select Year--</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                    </select>
+                    <select id="paymentFormExpMonth" name="expMonth">
+                        <option disabled selected>--Select Month--</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <p><b>Security Code</b></p>
+                    <input type="number" name="securityCode" maxlength="16" align="middle" placeholder="Security Code" required>
+                    <p><b>Street Address</b></p>
+                    <input type="text" name="address" maxlength="24" align="middle" placeholder="Address" required>
+                    <p><b>City</b></p>
+                    <input type="text" name="city" maxlength="16" align="middle" placeholder="City" required>
+                    <p><b>State</b></p>
+                    <input type="text" name="state" maxlength="16" align="middle" placeholder="State" required>
+                    <p><b>ZipCode</b></p>
+                    <input type="number" name="zipCode" maxlength="16" align="middle" placeholder="ZipCode" required>
+                    <p><b>Phone Number</b></p>
+                    <input type="text" name="phoneNumber" maxlength="16" align="middle" placeholder="Phone Number" required>
+                    <br>
 
-    </section>
-
-
-    <section id="main">
-        <p>
-            Info
-        </p>
+                    <button class="paymentCreateButtons" type="submit">Create Payment</button>
+                </form>
+            </div>
     </section>
 
 </div>
