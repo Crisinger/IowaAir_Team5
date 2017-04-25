@@ -30,9 +30,20 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Managers</title>
 </head>
 <body>
-MANAGER PAGE
+<form action="Manager">
+    First name:<br>
+    <input type="text" name="firstname" value="" autofocus required><br>
+    Last name:<br>
+    <input type="text" name="lastname" value="" required><br><br>
+    Flight ID Number:<br>
+    <input type="text" name="flightID" value="" required><br>
+    Number of Bags (between 0 and 4):<br>
+    <input type="number" name="baggage" min="0" max="4" required><br><br>
+    <input type="submit" value="Submit">
+    <input type="reset">
+</form>
 </body>
 </html>
