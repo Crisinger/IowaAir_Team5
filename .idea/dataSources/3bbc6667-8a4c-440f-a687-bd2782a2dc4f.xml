@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="Accounts@localhost">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.1">
+<dataSource name="IowaAir@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
     <root id="1"/>
     <schema id="2" parent="1" name="accounts">
       <Current>1</Current>
@@ -53,7 +53,6 @@
       <ColNames>PaymentID</ColNames>
     </index>
     <key id="23" parent="9" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
@@ -62,8 +61,8 @@
       <RefSchemaName>accounts</RefSchemaName>
       <RefTableName>paymentinfo</RefTableName>
       <RefColNames>PaymentID</RefColNames>
-      <OnUpdate>cascade</OnUpdate>
-      <OnDelete>cascade</OnDelete>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>delete</OnDelete>
     </foreign-key>
     <column id="25" parent="10" name="ID">
       <Position>1</Position>
@@ -128,7 +127,6 @@
       <ColNames>userID</ColNames>
     </index>
     <key id="38" parent="10" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
@@ -137,12 +135,16 @@
       <RefSchemaName>accounts</RefSchemaName>
       <RefTableName>accounts</RefTableName>
       <RefColNames>ID</RefColNames>
+      <OnUpdate>no-action</OnUpdate>
+      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <foreign-key id="40" parent="10" name="flightID">
       <ColNames>flightID</ColNames>
       <RefSchemaName>accounts</RefSchemaName>
       <RefTableName>flights</RefTableName>
       <RefColNames>Flight_ID</RefColNames>
+      <OnUpdate>no-action</OnUpdate>
+      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <column id="41" parent="11" name="ID">
       <Position>1</Position>
@@ -179,7 +181,6 @@
       <DataType>decimal(14,10)|0</DataType>
     </column>
     <key id="48" parent="11" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
@@ -224,49 +225,49 @@
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="57" parent="12" name="availableECONOMY">
-      <Position>9</Position>
-      <DataType>int(11)|0</DataType>
+    <column id="57" parent="12" name="IS_ACTIVE">
+      <Position>17</Position>
+      <DataType>tinyint(4)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="58" parent="12" name="availableBUSINESS">
-      <Position>10</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="59" parent="12" name="availableFIRST">
-      <Position>11</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="60" parent="12" name="takenECONOMY">
-      <Position>12</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="61" parent="12" name="takenBUSINESS">
-      <Position>13</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="62" parent="12" name="takenFIRST">
-      <Position>14</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="63" parent="12" name="DEMAND">
+    <column id="58" parent="12" name="DEMAND">
       <Position>15</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="64" parent="12" name="DISTANCE_PRICE">
+    <column id="59" parent="12" name="DISTANCE_PRICE">
       <Position>16</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="65" parent="12" name="IS_ACTIVE">
-      <Position>17</Position>
-      <DataType>tinyint(4)|0</DataType>
+    <column id="60" parent="12" name="availableECONOMY">
+      <Position>9</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="61" parent="12" name="availableBUSINESS">
+      <Position>10</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="62" parent="12" name="availableFIRST">
+      <Position>11</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="63" parent="12" name="takenECONOMY">
+      <Position>12</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="64" parent="12" name="takenBUSINESS">
+      <Position>13</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="65" parent="12" name="takenFIRST">
+      <Position>14</Position>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <index id="66" parent="12" name="PLANE_idx">
@@ -279,7 +280,6 @@
       <ColNames>DEPARTURE_LOCATION</ColNames>
     </index>
     <key id="69" parent="12" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>Flight_ID</ColNames>
       <Primary>1</Primary>
     </key>
@@ -288,18 +288,24 @@
       <RefSchemaName>accounts</RefSchemaName>
       <RefTableName>planes</RefTableName>
       <RefColNames>ID</RefColNames>
+      <OnUpdate>no-action</OnUpdate>
+      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <foreign-key id="71" parent="12" name="DEPARTURE">
       <ColNames>DEPARTURE_LOCATION</ColNames>
       <RefSchemaName>accounts</RefSchemaName>
       <RefTableName>cities</RefTableName>
       <RefColNames>ID</RefColNames>
+      <OnUpdate>no-action</OnUpdate>
+      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <foreign-key id="72" parent="12" name="ARRIVAL">
       <ColNames>ARRIVAL_LOCATION</ColNames>
       <RefSchemaName>accounts</RefSchemaName>
       <RefTableName>cities</RefTableName>
       <RefColNames>ID</RefColNames>
+      <OnUpdate>no-action</OnUpdate>
+      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <column id="73" parent="13" name="PaymentID">
       <Position>1</Position>
@@ -364,7 +370,6 @@
       <Unique>1</Unique>
     </index>
     <key id="86" parent="13" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>PaymentID</ColNames>
       <Primary>1</Primary>
     </key>
@@ -377,6 +382,8 @@
       <RefSchemaName>accounts</RefSchemaName>
       <RefTableName>paymentinfo</RefTableName>
       <RefColNames>PaymentID</RefColNames>
+      <OnUpdate>no-action</OnUpdate>
+      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <column id="89" parent="14" name="ID">
       <Position>1</Position>
@@ -445,7 +452,6 @@
       <NotNull>1</NotNull>
     </column>
     <key id="102" parent="14" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
@@ -464,7 +470,6 @@
       <ColNames>MODEL_ID</ColNames>
     </index>
     <key id="106" parent="15" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>

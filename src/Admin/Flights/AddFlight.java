@@ -34,6 +34,9 @@ public class AddFlight extends HttpServlet {
         String planeID = request.getParameter("value");
         String distancePrice = request.getParameter("distancePrice");
         String demand = request.getParameter("flightDemandSlider");
+        String timePeriod = request.getParameter("timePeriod");
+        String occurrences = request.getParameter("occurrences");
+
 
         System.out.println("-----------------------------");
         System.out.println(departState);
@@ -53,9 +56,8 @@ public class AddFlight extends HttpServlet {
 
         String isAddedStringBoolean = (attemptAddFlight(planeID,departDate,
                 departTime,departState,departCity,arrivalDate,arrivalTime,
-                arrivalState,arrivalCity,distancePrice,demand)) ? "1":"0";
+                arrivalState,arrivalCity,distancePrice,demand, timePeriod, occurrences)) ? "1":"0";
 
-        isAddedStringBoolean = "{\"isAdded\":"+isAddedStringBoolean+"}";
         System.out.println(isAddedStringBoolean);
         response.getWriter().print(isAddedStringBoolean);
     }
@@ -63,12 +65,12 @@ public class AddFlight extends HttpServlet {
     private static boolean attemptAddFlight(String planeID, String departDate, String departTime,
                                                  String departState, String departCity, String arrivalDate,
                                                  String arrivalTime, String arrivalState, String arrivalCity,
-                                                 String distancePrice, String demand){
+                                                 String distancePrice, String demand, String timePeriod, String occurrences){
         // ---- ///
         Connection con = AccountFunctions.OpenDatabase();
         boolean isPlaneAdded = FlightsFunctions.addFlight(con,planeID,departDate,departTime,
                 CityFunctions.getIndex(con, departState,departCity),arrivalDate,arrivalTime,
-                CityFunctions.getIndex(con,arrivalState,arrivalCity),demand,distancePrice);
+                CityFunctions.getIndex(con,arrivalState,arrivalCity),demand,distancePrice, timePeriod, occurrences);
         AccountFunctions.closeConnection(con);
         return isPlaneAdded;
 

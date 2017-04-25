@@ -14,58 +14,47 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/General.Login")
 public class Login extends HttpServlet {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userEmail = request.getParameter("userEmail");
         String userPassword = request.getParameter("userPassword");
+        String userExists = "false";
 
         // I get an error locating com.mysql.jdc.Driver
         //General.AccountFunctions AF = new General.AccountFunctions();
-
-        System.out.println(userEmail);
-        System.out.println(userPassword);
-
-        Connection c = AccountFunctions.OpenDatabase();
+        Connection con = AccountFunctions.OpenDatabase();
         // Checks if account is in system then redirects if it is a valid account
-        if(AccountFunctions.checkLogin(c,userEmail,userPassword)){
-
+        if(AccountFunctions.checkLogin(con,userEmail,userPassword)){
             System.out.println("i am currently right here!");
             HttpSession mySession = request.getSession();
             mySession.setAttribute("userEmail",userEmail);
 
             // Checks the role of the user
-            switch(AccountFunctions.checkRole(c, userEmail)){
+            switch(AccountFunctions.checkRole(con, userEmail)){
                 // Checks if role is admin
                 case 'A':
-                    AccountFunctions.closeConnection(c);
-                    System.out.println("HERE AT ADMIN");
                     mySession.setAttribute("role","ADMIN");
-                    response.sendRedirect("admin.jsp");
-
+                    userExists = "admin.jsp";
                     break;
                 // Checks if role is manager
                 case 'M':
-                    AccountFunctions.closeConnection(c);
-                    System.out.println("HERE AT MANAGER");
-
                     mySession.setAttribute("role","MANAGER");
-                    response.sendRedirect("manager.jsp");
+                    userExists = "manager.jsp";
                     break;
                 // Customers
                 default:
-                    AccountFunctions.closeConnection(c);
-                    System.out.println("HERE AT CUSTOMER");
-
                     mySession.setAttribute("role","CUSTOMER");
-                    response.sendRedirect("index.jsp");
+                    userExists = "index.jsp";
             }
 
+        } else {
+            userExists = "false";
         }
-        // Redirects back to login screen if invalid account inputs
-        else {
-            AccountFunctions.closeConnection(c);
-            System.out.println("HERE AT ELSE");
-            response.sendRedirect("login.jsp");
-        }
+
+        AccountFunctions.closeConnection(con);
+
+        response.setContentType("text/plain");
+        response.getWriter().print(userExists);
+
     }
 }
 

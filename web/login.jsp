@@ -40,9 +40,10 @@
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/General/LoginCreate.js"></script>
 </head>
 
-<body onload=document.getElementById("loginForm").reset()>
+<body>
 
 <header>
     <a href="index.jsp" id="logo">
@@ -89,30 +90,55 @@
 
 <div id="viewwrapper">
 
-    <section id="sidebar" class="login">
-        <p>
-            My Account
-        </p>
-        <p>
-            Active Flights
-        </p>
-        <p>
-            Flight History
-        </p>
-        <p>
-            Payment Info
-        </p>
-    </section>
-
     <section id="loginSection">
-        hello
-        <form action="General.Login">
-            User email: <input type="email" name="userEmail" maxlength="40" align="middle" placeholder="Email" required><br>
-            User password: <input type="password" name="userPassword" maxlength="16" align="middle"
-                                  placeholder="Password" required><br>
-            <input type="submit" value="General.Login">
-        </form>
-        <a href="createAccount.jsp">Create Account</a>
+        <div id="loginOptions">
+            <div>
+                <button id="loginButton" class="selected">Login</button>
+            </div>
+            <div>
+                <button id="createButton">Create Account</button>
+            </div>
+        </div>
+        <div id="signInContentArea">
+            <div id="loginDiv">
+                <form id="loginAccountForm" method="post" onsubmit="return userExists()">
+                    <br>
+                    <p><b>Email</b></p>
+                    <input type="email" name="userEmail" maxlength="40" align="middle" placeholder="Email" required>
+                    <p><b>Password</b></p>
+                    <input type="password" name="userPassword" maxlength="16" align="middle" placeholder="Password" required>
+                    <br>
+                    <div id="loginErrorMessage">
+                        <p>Incorrect information</p>
+                        <p>Please check username and password</p>
+                    </div>
+                    <button class="loginCreateButtons" type="submit">Login</button>
+                </form>
+            </div>
+            <div id="createDiv">
+                <form id="createAccountForm" onsubmit="return validateForm()" method="post" accept-charset="UTF-8">
+                    <br>
+                    <p><b>Name</b></p>
+                    <input type="text" name="userName" maxlength="16" align="middle" placeholder="Name" required>
+                    <p><b>Email</b></p>
+                    <input type="email" name="userEmail" maxlength="40" align="middle" placeholder="Email" required>
+                    <p><b>Password</b></p>
+                    <input type="password" name="userPassword" maxlength="16" align="middle" placeholder="Password" required>
+                    <br>
+                    <div id="passwordErrorMessage" >
+                        <p>Password must contain:</p>
+                        <p>8 to 16 characters</p>
+                        <p>1 uppercase</p>
+                        <p>1 lowercase</p>
+                        <p>1 number</p>
+                    </div>
+                    <div id="youExistDude">
+                        <p>This email is already in use</p>
+                    </div>
+                    <button class="loginCreateButtons" type="submit">Create Account</button>
+                </form>
+            </div>
+        </div>
     </section>
 
 </div>

@@ -36,7 +36,7 @@ public class ListLocations extends HttpServlet {
     }
 
     private static String locationsToJSON(ArrayList<ArrayList<String[]>> scList){
-        String[] list = {"ID","NM"}; // states[city[]] thus if you want chicago. states[#].cities[#] then .cID or .cName
+        String[] list = {"ID","NM","LAT","LONG"}; // states[city[]] thus if you want chicago. states[#].cities[#] then .cID or .cName
         String jsonList= "{\"states\":[";
 
         for(int cState=0; cState<scList.size(); cState++){
@@ -44,7 +44,10 @@ public class ListLocations extends HttpServlet {
             jsonList += "\"cities\":[";
             for(int cCity=1; cCity<scList.get(cState).size(); cCity++){
                 jsonList += "{\"" + list[0] + "\":" + scList.get(cState).get(cCity)[0] + ",";
-                jsonList += "\"" + list[1] + "\":\"" + scList.get(cState).get(cCity)[1] + "\"},";
+                jsonList += "\"" + list[1] + "\":\"" + scList.get(cState).get(cCity)[1] + "\",";
+                jsonList += "\"" + list[2] + "\":" + scList.get(cState).get(cCity)[2] + ",";
+                jsonList += "\"" + list[3] + "\":" + scList.get(cState).get(cCity)[3] + "},";
+
             }
             jsonList = jsonList.substring(0,jsonList.length()-1)+"]},";
         }

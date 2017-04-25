@@ -38,11 +38,12 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <%--<link rel="stylesheet" href="css/responsive.css">--%>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.min.js"></script>
 
     <script src="js/General/FlightQuery.js"></script>
+
 </head>
 
 <body>
@@ -89,42 +90,101 @@
 </header>
 
 
-<div id="viewwrapper">
+<div id="vwrapper">
 
     <section id="sidebar">
         <form id="flightQueryForm">
-            Departure Location:
+            <p><b>Departure Location:</b></p>
             <select id="flightQueryDepartState" name="departState" required>
             </select>
-            <br>
             <select id="flightQueryDepartCity" name="departCity" required>
             </select>
             <br>
-            Arrival Location:
+            <p><b>Arrival Location:</b></p>
             <select id="flightQueryArrivalState" name="arriveState" required>
             </select>
-            <br>
             <select id="flightQueryArrivalCity" name="arriveCity" required>
             </select>
-            Plane Model:
             <br>
+            <p><b>Plane Model:</b></p>
             <select id="flightQueryPlaneModel" name="planeModel">
             </select>
             <br>
+            <p><b>Number of Tickets:</b></p>
+            <select id="flightQueryNumberOfPassengers" name="numberPassengers">
+                <option disabled selected>--Select Amount--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <p><b>Seating Preference:</b></p>
+            <select id="flightQueryPreferredSeating" name="preference">
+                <option disabled selected>--Select Preference--</option>
+                <option value="0">Economy</option>
+                <option value="1">Business</option>
+                <option value="2">First</option>
+            </select>
+            <br>
+            <p><b>Travel Type:</b></p>
+            <select id="flightQueryTravelType" name="travelType">
+                <option disabled selected>--Select Ticket Type--</option>
+                <option value="0">One-Way</option>
+                <option value="1">Round</option>
+            </select>
+            <br>
         </form>
-        <button id="flightQueryButton">Search</button>
+        <br>
+        <div>
+            <button id="flightQueryButton">Search</button>
+            <button id="showGoogleMap" >Toggle Map View</button>
+        </div>
+    </section>
+
+    <section id="googlemapContainer">
+        <div id="googlemap" style="width:95%;height:95%;">
+        </div>
+    </section>
+
+    <section id="flightQueryControls">
+        <div>
+            <div>
+                <button id="flightQueryPrevious" >Previous</button>
+                <button id="flightQueryNext" >Next</button>
+            </div>
+            <div>
+                <div>
+                    <div>
+                        Economy
+                    </div>
+                    <div>
+                        Business
+                    </div>
+                    <div>
+                        First
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="flightQueryView">
-
+        <%-- Flight stuff is being populated from javascript file --%>
     </section>
+
 
 </div>
 
 <footer>
 
 </footer>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmOyQqedQY902x2uHDZ80Xr6c2mW-JtwQ&callback=myMap"></script>
 
 </body>
-
 </html>

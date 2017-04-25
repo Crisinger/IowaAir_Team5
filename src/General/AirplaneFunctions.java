@@ -214,11 +214,12 @@ public class AirplaneFunctions {
         try{
             con.setAutoCommit(false);
             stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("Select ID, PLANE_MODEL From planemodels ORDER BY PLANE_MODEL;");
+            ResultSet rs = stmt.executeQuery("Select ID, PLANE_MODEL, BASE_PRICE From planemodels ORDER BY PLANE_MODEL;");
             while(rs.next()){
-                String[] tempInfo = new String[2];
+                String[] tempInfo = new String[3];
                 tempInfo[0] = rs.getString("ID");
                 tempInfo[1] = rs.getString("plane_model");
+                tempInfo[2] = rs.getString("Base_price");
                 basicModelInfo.add(tempInfo);
             }
         }catch(Exception ex){
@@ -419,12 +420,12 @@ public class AirplaneFunctions {
 
     }
 
-    private static boolean checkDates(String qDepart, String qArrive, String cDepart, String cArrive) {
+    public static boolean checkDates(String qDepart, String qArrive, String cDepart, String cArrive) {
         return LocalDate.parse(qDepart).isAfter(LocalDate.parse(cArrive)) ||
                 LocalDate.parse(qArrive).isBefore(LocalDate.parse(cDepart));
     }
 
-    private static boolean checkTimes(String qDTime, String qATime, String cDTime, String cATime){
+    public static boolean checkTimes(String qDTime, String qATime, String cDTime, String cATime){
         return LocalTime.parse(qDTime).isAfter(LocalTime.parse(cATime))
                 || LocalTime.parse(cDTime).isAfter(LocalTime.parse(qATime));
     }

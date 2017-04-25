@@ -33,11 +33,13 @@ public class BasicPlaneModels extends HttpServlet {
     }
 
     private static String basicModelListToJSON(ArrayList<String[]> basicList){
-        String[] list = {"ID","NM"};
+        String[] list = {"ID","NM","BP"};
         String jsonBasicList = "{\"models\":[";
         for(int count=0; count<basicList.size(); count++){
             jsonBasicList += "{\""+list[0]+"\":"+basicList.get(count)[0]+",";
-            jsonBasicList += "\""+list[1]+"\":\""+basicList.get(count)[1]+"\"},";
+            jsonBasicList += "\""+list[1]+"\":\""+basicList.get(count)[1]+"\",";
+            jsonBasicList += "\""+list[2]+"\":"+basicList.get(count)[2]+"},";
+
         }
         return jsonBasicList.substring(0,jsonBasicList.length()-1)+"]}";
     }
