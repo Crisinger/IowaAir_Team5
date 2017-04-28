@@ -7,6 +7,10 @@
         <element id="directory" name="classes">
           <element id="module-output" name="IowaAir_Team5" />
         </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="C:/Program Files (x86)/MySQL/Connector.J 5.1/mysql-connector-java-5.1.40-bin.jar" />
+          <element id="file-copy" path="$USER_HOME$/OneDrive/Documents/junit-4.12.jar" />
+        </element>
       </element>
     </root>
   </artifact>

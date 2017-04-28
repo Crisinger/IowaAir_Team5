@@ -57,3 +57,39 @@ public class ListLocations extends HttpServlet {
 
 
 }
+
+
+/*
+
+
+{
+    flight: name,
+    address: 245 cheesecake,
+
+
+    residents:[
+                {
+                    name: billy
+                    age: 23
+                },
+                {
+                    name: charlie
+                    age: 24
+                }
+            ]
+
+}
+
+list = JSON.parse(msg)
+
+list.flight -> name
+list.address -> 245 cheesecake
+list.residents[0].name -> billy
+
+
+
+
+
+
+
+ */

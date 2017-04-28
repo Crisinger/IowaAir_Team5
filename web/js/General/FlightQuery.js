@@ -1,9 +1,9 @@
 /**
  * Created by johnn on 4/17/2017.
  */
-var placeList = "";
-var modelList = "";
-var queryFlights = "";
+var placeList;
+var modelList;
+var queryFlights;
 
 var page=0;
 var numPerPage = 5;
@@ -93,6 +93,7 @@ function centerMapOnLocations(){
 $(function(){
 
     $("#flightQueryControls").hide();
+
     $.post("General.ListLocations","activity=1",function(msg){
         if(msg.length>0){
             placeList = JSON.parse(msg).states;
@@ -186,13 +187,16 @@ function validateTripLocations(){
 
     return !(dState==0 || dCity==0 || aState==0 || aCity==0)
 }
+
 function attemptFlightQuery(){
     var criteria = $("#flightQueryForm").serialize();
 
     console.log(criteria);
+
     $.post("General.FlightQuery", criteria, function(msg){
         if(msg.length>0){
             queryFlights = JSON.parse(msg).flights;
+            console.log(msg);
             if(queryFlights.length>0) {
                 $("#flightQueryControls").show();
                 resetBuildFlightSection();

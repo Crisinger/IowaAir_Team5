@@ -2,8 +2,6 @@
   <library name="mysql-connector-java-5.1.40-bin">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.40-bin.jar!/" />
-      <root url="jar://$USER_HOME$/Desktop/School/Software Engineering/jaf-1_0_2-upd2/jaf-1.0.2/activation.jar!/" />
-      <root url="jar://$USER_HOME$/Desktop/School/Software Engineering/javamail1_4_5/javamail-1.4.5/mail.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

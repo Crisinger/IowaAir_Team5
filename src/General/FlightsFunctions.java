@@ -283,4 +283,21 @@ public class FlightsFunctions {
         }
         return flightInfo;
     }
+
+
+
+    public static boolean getSuperFlightQuery(Connection con, String dCity, String aCity, String model, String tickets, String pref, String travelType, String multiStop){
+
+
+        return true;
+
+    }
+
+
+
+
+
+
+
+
 }

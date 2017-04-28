@@ -41,6 +41,14 @@
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <%-- Needs jquery  and javascript file --%>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.min.js"></script>
+
+    <script src="js/General/FlightHistory.js"></script>
+
+
+
+
 </head>
 
 <body>
@@ -92,11 +100,22 @@
 
     <section id="sidebar">
         <p>
-            <%=FlightHistory.getFlights(FlightHistory.getUserID(session.getAttribute("userEmail").toString()))%>
+           <%-- <%=FlightHistory.getFlights(FlightHistory.getUserID(session.getAttribute("userEmail").toString()))%> --%>
         </p>
+    </section>
 
+    <section>
+        <table>
+            header information
+        </table>
+
+        <table id="someIDcall">
+
+        </table>
 
     </section>
+
+
 
 
 </div>
