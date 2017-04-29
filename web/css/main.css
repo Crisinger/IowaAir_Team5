@@ -774,6 +774,15 @@ nav a.selected, nav a:hover {
     box-shadow: none;
 }
 
+.buyFirstClass:disabled, .buyBusinessClass:disabled, .buyEconomyClass:disabled{
+    background: whitesmoke; /* For browsers that do not support gradients */
+    color: whitesmoke;
+    border: whitesmoke solid 4px;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+
 #adminLocationTablesContainer{
     display: block;
     background-color: whitesmoke;
@@ -815,4 +824,74 @@ nav a.selected, nav a:hover {
     text-align: center;
     font-size: 1.2em;
     font-weight: bold;
+}
+
+#bookingContent{
+    border: solid black 2px;
+    background: yellow;
+    display: block;
+    max-width: 90%;
+    height: 400px;
+    text-align: left;
+    float: left;
+    width:90%;
+    padding: 0 20px;
+    margin-right:5%;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: 5%;
+}
+
+.bottomTable{
+    border-top: solid medium black;
+}
+
+
+.bookingTables{
+    width: 90%;
+    margin: 0 5%;
+}
+
+.bookingTables tr{
+    width:100%;
+}
+
+.bookingTables th {
+    font-size: 1.3em;
+    text-align: left;
+    padding: 20px 0 0 0;
+    width: 11%;
+}
+.bookingTables td{
+    padding: 20px 0 0 0;
+    text-align: left;
+}
+
+.bookingTables td {
+    width: 11%;
+}
+
+.bookingTables td button {
+    alignment: right;
+}
+
+#bookingContent p{
+    background-color: transparent;
+    width:90%;
+    text-align: right;
+    font-weight: bold;
+}
+
+#bookingForm{
+    width:90%;
+    text-align: center;
+    margin:0 auto;
+}
+
+#bookingForm select{
+    width:20ch;
+}
+
+#bookingForm.cvcInput{
+    width:5ch;
 }

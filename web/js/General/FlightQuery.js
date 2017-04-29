@@ -323,14 +323,21 @@ function buildFlightRightSide(flight){
     business.setAttribute("class","buyBusinessClass");
     economy.setAttribute("class","buyEconomyClass");
 
+    first.setAttribute("onclick","sendToBooking("+flight.fID+",2)");
+    business.setAttribute("onclick","sendToBooking("+flight.fID+",1)");
+    economy.setAttribute("onclick","sendToBooking("+flight.fID+",0)");
+
     if(flight.aEcon=="0"){
         economy.disabled=true;
+        economy.innerText="";
     }
     if(flight.aBus=="0"){
         business.disabled=true;
+        business.innerText="";
     }
     if(flight.aFirst=="0"){
         first.disabled=true;
+        first.innerText="";
     }
 
     firstWrap.appendChild(first);
@@ -422,4 +429,13 @@ function locationFormatter(place1, place2){
     }
     return location;
 
+}
+
+function sendToBooking(flightID,classID,oneStop,twoStop){
+    var tickets = $("#flightQueryNumberOfPassengers").val();
+    if(tickets==null){
+        tickets = 1;
+    }
+    var info = "fID="+flightID+"&classID="+classID+"&tickets="+tickets+"&oneStop="+oneStop+"&twoStop="+twoStop;
+    window.location = "BookingFlight.jsp?"+info;
 }

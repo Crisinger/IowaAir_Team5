@@ -39,43 +39,49 @@ public class FlightQuery extends HttpServlet {
 
     }
 
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ArrayList<String> allFlights = new ArrayList<>();
+        String flightID = request.getParameter("flightID");
+        String oneStop = request.getParameter("oneStopID");
+        String twoStop = request.getParameter("twoStopID");
+        if(!flightID.equals("undefined")){
+         allFlights.add(flightID);
+        }
+        if(!oneStop.equals("undefined")){
+            allFlights.add(oneStop);
+        }
+        if(!twoStop.equals("undefined")){
+            allFlights.add(twoStop);
+        }
+        System.out.println(flightID);
+        System.out.println(oneStop);
+        System.out.println(twoStop);
+        System.out.println(allFlights);
+
+        String bookingInfo = attemptBookingQuery(allFlights);
+
+        System.out.println(bookingInfo);
+
+        response.setContentType("text/plain");
+        response.getWriter().print(bookingInfo);
     }
 
     public static String getDateAndTimeSrc(){
         String htmlCode = "";
         htmlCode += "<link rel=\"stylesheet\" href=\"https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\">";
-        //htmlCode += "<link rel=\"stylesheet\" href=\"/resources/demos/style.css\">";
         htmlCode += "<script src=\"https://code.jquery.com/jquery-1.12.4.js\"></script>";
         htmlCode += "<script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>";
-
         htmlCode += "<link rel=\"stylesheet\" href=\"//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css\">";
         htmlCode += "<script src=\"//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js\"></script>";
-
-        //htmlCode += "<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>";
-
-        //htmlCode += "<script type=\"text/javascript\" src=\"http://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js\"></script>";
-        //htmlCode += "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css\">";
-        //htmlCode += "<script type=\"text/javascript\" src=\"http://jonthornton.github.io/jquery-timepicker/lib/bootstrap-datepicker.js\"></script>";
-        //htmlCode += "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://jonthornton.github.io/jquery-timepicker/lib/bootstrap-datepicker.css\">";
-
         return htmlCode;
     }
 
     public static String addPickers(String type){
         String htmlCode = "";
         htmlCode += "<script> $( function() { $( \"#"+type+"datepicker\" ).datepicker();} ); </script>";
-        htmlCode += "<script> $( function() { $(\"#"+type+"timepicker\").timepicker();}) </script>";//{" +
-                /*"timeFormat: 'h:mm p'," +
-                "interval: 30," +
-                "minTime: '12:00 am'," +
-                "maxTime: '11:30 pm'," +
-                "defaultTime: '12:00 am'," +
-                "startTime: '12:00 pm'," +
-                "dynamic: false," +
-                "dropdown: true," +
-                "scrollbar: true" +
-                "}); </script>\n";*/
+        htmlCode += "<script> $( function() { $(\"#"+type+"timepicker\").timepicker();}) </script>";
         return htmlCode;
     }
 
@@ -84,6 +90,13 @@ public class FlightQuery extends HttpServlet {
         String queryList = queryTOJSON(FlightsFunctions.getFlightQuery(con,dCity,aCity,model,tickets,pref,travelType));
         AccountFunctions.closeConnection(con);
         return queryList;
+    }
+
+    private static String attemptBookingQuery(ArrayList<String> allFlights){
+        Connection con = AccountFunctions.OpenDatabase();
+        String allFlightsInfo = queryTOJSON(FlightsFunctions.getBookingQuery(con,allFlights));
+        AccountFunctions.closeConnection(con);
+        return allFlightsInfo;
     }
 
     private static String queryTOJSON(ArrayList<ArrayList<String>> queryList){

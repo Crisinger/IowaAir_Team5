@@ -19,6 +19,7 @@ public class FlightHistory {
 
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM bookedFlights WHERE userID= '" + userID + "';");
+
             if (rs.next()) {
                 htmlCode += "<table class=\"admin_man_table\"><tr>";
                 htmlCode += "<th><b>Flight</b></th>";
