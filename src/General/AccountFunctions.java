@@ -250,4 +250,28 @@ public class AccountFunctions
 
         return managerList;
     }
+
+    public static int getID(Connection con, String email){
+        Connection c = con;
+        Statement stmt = null;
+        int id = 0;
+        try {
+
+            c.setAutoCommit(false);
+
+            stmt = c.createStatement();
+            System.out.println(email);
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM ACCOUNTS WHERE EMAIL = '" + email + "';" );
+            if(rs.next()) {
+                id = rs.getInt("ID");
+            }
+            rs.close();
+            stmt.close();
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        return id;
+    }
 }

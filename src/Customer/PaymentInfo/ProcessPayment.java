@@ -1,3 +1,4 @@
+
 package Customer.PaymentInfo;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import java.io.IOException;
 /**
  * Created by johnn on 4/29/2017.
  */
+/*
 @WebServlet(name = "ProcessPayment", value="Customer.PaymentInfo.ProcessPayment")
 public class ProcessPayment extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,3 +22,4 @@ public class ProcessPayment extends HttpServlet {
         // Not using this because dealing with payment information
     }
 }
+*/

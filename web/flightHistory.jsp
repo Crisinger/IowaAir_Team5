@@ -105,11 +105,36 @@
     </section>
 
     <section>
-        <table>
-            header information
+        <table class = "admin_man_table">
+            <tr>
+                <th><b>Flight</b></th>
+                <th><b>Total</b></th>
+                <th><b>Economy</b></th>
+                <th><b>Business</b></th>
+                <th><b>First</b></th>
+                <th><b>---------</b></th>
+                <th><b>Departure</b></th>
+                <th><b>---------</b></th>
+                <th><b>---------</b></th>
+                <th><b>Arrival</b></th>
+                <th><b>---------</b></th>
+            </tr>
+            <tr>
+                <th><b>Number</b></th>
+                <th><b>Tickets</b></th>
+                <th><b>Tickets</b></th>
+                <th><b>Tickets</b></th>
+                <th><b>Tickets</b></th>
+                <th><b>Date</b></th>
+                <th><b>Time</b></th>
+                <th><b>Location</b></th>
+                <th><b>Date</b></th>
+                <th><b>Time</b></th>
+                <th><b>Location</b></th>
+            </tr>
         </table>
 
-        <table id="someIDcall">
+        <table id="flightHistoryList" class="admin_man_table">
 
         </table>
 
