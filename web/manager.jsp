@@ -14,7 +14,6 @@
     } else {
         response.sendRedirect("logout.jsp");
     }
-
 %>
 
 <html>
@@ -88,11 +87,11 @@
 
 
     <form id="CheckinServlet">
-
         <div class = checkin>
             Customer Information:<br>
             <input type="text" name="firstname" placeholder="First Name" required><br>
             <input type="text" name="lastname" placeholder="Last Name" required><br>
+            <input type="text" name="customerEmail" placeholder="Customer Email" required><br>
             <input type="text" name="flightID" placeholder="Flight ID Number" required><br><br>
         </div>
 
@@ -107,9 +106,9 @@
         </div>
 
         <br>
-        <div class = submitButton>
-            <input type="submit" value="submit">
-        </div>
+
+        <input type="submit" value="Submit" class = "submitButton">
+        <input type="reset" value="Reset" class = "submitButton">
     </form>
 </body>
 </html>
@@ -129,7 +128,7 @@
             if(x < max_fields){ //max input box allowed
                 x++; //text box increment
                 $(wrapper).append('<div><input type="text" name="mytext[]" placeholder="Bag " readonly/><input type="text" name="mytext[]" placeholder="bag lbs"/>' +
-                    '<a href="#" class="remove_field" font color="red">Remove</a></div>'); //add input box
+                    '<a href="#" class="remove_field">Remove</a></div>'); //add input box
             }
         });
 
