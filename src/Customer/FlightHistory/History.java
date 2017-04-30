@@ -50,11 +50,11 @@ public class History extends HttpServlet {
             jsonBasicList += "\""+list[3]+"\":\""+basicList.get(count)[3]+"\",";
             jsonBasicList += "\""+list[4]+"\":\""+basicList.get(count)[4]+"\",";
             jsonBasicList += "\""+list[5]+"\":\""+basicList.get(count)[5]+"\",";
-            jsonBasicList += "\""+list[6]+"\":\""+basicList.get(count)[8]+"\",";
-            jsonBasicList += "\""+list[7]+"\":"+basicList.get(count)[7]+",";
+            jsonBasicList += "\""+list[6]+"\":\""+basicList.get(count)[6]+"\",";
+            jsonBasicList += "\""+list[7]+"\":\""+basicList.get(count)[7]+"\",";
             jsonBasicList += "\""+list[8]+"\":\""+basicList.get(count)[8]+"\",";
             jsonBasicList += "\""+list[9]+"\":\""+basicList.get(count)[9]+"\",";
-            jsonBasicList += "\""+list[10]+"\":"+basicList.get(count)[10]+"},";
+            jsonBasicList += "\""+list[10]+"\":\""+basicList.get(count)[10]+"\"},";
 
         }
         jsonBasicList = jsonBasicList.substring(0,jsonBasicList.length()-1)+"]}";

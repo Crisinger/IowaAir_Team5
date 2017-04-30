@@ -42,9 +42,7 @@ function generateOntoTable(id,totalTix,economyTix,businessTix,firstTix,depDate,d
     var arrivalDate = document.createElement("td");
     var arrivalTime = document.createElement("td");
     var arrivalLocation = document.createElement("td");
-    var action = document.createElement("td");
 
-    var btn = document.createElement("button");
 
     flightId.innerText = id;
     totalTickets.innerText = totalTix;
@@ -58,8 +56,7 @@ function generateOntoTable(id,totalTix,economyTix,businessTix,firstTix,depDate,d
     arrivalTime.innerText = ariTime;
     arrivalLocation.innerText = ariLoc;
 
-    btn.innerText = "Remove";
-    action.appendChild(btn);
+
 
     row.appendChild(flightId);
     row.appendChild(totalTickets);
@@ -72,7 +69,6 @@ function generateOntoTable(id,totalTix,economyTix,businessTix,firstTix,depDate,d
     row.appendChild(arrivalDate);
     row.appendChild(arrivalTime);
     row.appendChild(arrivalLocation);
-    row.appendChild(action);
     parent.appendChild(row);
 }
 

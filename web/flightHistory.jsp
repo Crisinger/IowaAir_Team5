@@ -128,7 +128,7 @@
             </tr>
         </table>
 
-        <table id="flightHistoryList" class="admin_man_table">
+        <table id="flightHistoryList" class="bookingTables">
 
         </table>
 

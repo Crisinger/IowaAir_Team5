@@ -132,10 +132,10 @@ public class FlightHistory {
                 rs2.next();
                 tempInfo[5] = rs2.getString("departure_date");
                 tempInfo[6] = rs2.getString("departure_Time");
-                tempInfo[7] = rs2.getString("departure_location");
+                tempInfo[7] = getLocationName(con, rs2.getInt("departure_location"));
                 tempInfo[8] = rs2.getString("arrival_date");
                 tempInfo[9] = rs2.getString("arrival_time");
-                tempInfo[10] = rs2.getString("arrival_location");
+                tempInfo[10] = getLocationName(con,rs2.getInt("arrival_location"));
                 rs2.close();
                 stmt2.close();
                 basicModelInfo.add(tempInfo);
@@ -146,5 +146,23 @@ public class FlightHistory {
             ex.printStackTrace();
         }
         return basicModelInfo;
+    }
+
+    public static String getLocationName(Connection con, int locID){
+        String name = "";
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM cities WHERE ID = " + locID + ";");
+            if (rs.next()) {
+                name = rs.getString("CITYNAME");
+            } else {
+                name = "Unknown";
+            }
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+        return name;
     }
 }
