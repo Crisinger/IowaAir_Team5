@@ -8,22 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    String logPage, logSet, accountText, paymentPage, activePage, historyPage;
-
-    if(session.getAttribute("userEmail") != null){
+    String accountText = "";
+    if(session.getAttribute("role").toString().equals("MANAGER")){
         accountText = session.getAttribute("userEmail").toString();
-        logPage = "logout.jsp";
-        logSet = "Log Out";
-        paymentPage = "payment.jsp";
-        activePage = "activeFlights.jsp";
-        historyPage = "flightHistory.jsp";
-    }else{
-        accountText = "My Account";
-        logPage = "login.jsp";
-        logSet = "Log In";
-        paymentPage = "login.jsp";
-        activePage = "login.jsp";
-        historyPage = "login.jsp";
+    } else {
+        response.sendRedirect("logout.jsp");
     }
 
 %>
@@ -36,15 +25,65 @@
     <link rel="stylesheet" href="css/manager.css">
     <title>Managers</title>
 </head>
-<body>
-    <ul>
-        <li><a href="ManagerUserLookup.jsp">User Lookup</a></li>
-        <li><a href="ManagerSearchFlight.jsp">Search Flight</a></li>
-        <li><a href="ManagerCancelFlight.jsp">Cancel Flight</a></li>
-        <li><a href="ManagerAddFlight.jsp">Book Flight</a></li>
-        <li style="float:right"><a class="active" href="index.jsp">Logout</a></li>
-    </ul>
+<header>
 
+    <a href="index.jsp" id="logo">
+        <h1>Iowa Air</h1>
+        <h2>Travel Like A Hawkeye</h2>
+    </a>
+    <nav>
+        <ul>
+            <li>
+                <div class="account-dropdown">
+                    <a href="ManagerSearchFlight.jsp">
+                        <button class="account-dropbutton">Search Flight</button>
+                    </a>
+                </div>
+            </li>
+
+            <li>
+                <div class="account-dropdown">
+                    <a href="ManagerUserLookup.jsp">
+                        <button class="account-dropbutton">User Lookup</button>
+                    </a>
+                </div>
+            </li>
+
+            <li>
+                <div class="account-dropdown">
+                    <a href="ManagerAddFlight.jsp">
+                        <button class="account-dropbutton">Book Flight</button>
+                    </a>
+                </div>
+            </li>
+
+            <li>
+                <div class="account-dropdown">
+                    <a href="ManagerCancelFlight.jsp">
+                        <button class="account-dropbutton">Cancel Flight</button>
+                    </a>
+                </div>
+            </li>
+
+            <li>
+                <div class="account-dropdown">
+                    <a href="manager.jsp">
+                        <button class="account-dropbutton selected"><%=accountText%>
+                        </button>
+                    </a>
+                    <div class="account-dropdown-content">
+                        <a href="logout.jsp">Log Out</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+</header>
+
+<br>
+
+<body>
     <br>
 
 

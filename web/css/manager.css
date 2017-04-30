@@ -14,6 +14,7 @@
 }
 
 /* Formatting for manager navigation bar*/
+/*
 ul {
     list-style-type: none;
     margin: 0;
@@ -41,7 +42,7 @@ li a:hover:not(.active) {
 
 .active {
     background-color: yellow;
-}
+}*/
 
 /* Submit button for manager checkin page format*/
 .submitButton{
