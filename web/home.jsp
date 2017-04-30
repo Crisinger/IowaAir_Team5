@@ -10,7 +10,7 @@
         ul {
             list-style-type: none;
             margin: 0;
-            padding: 0;
+            padding: 45px 0 0 0;
             overflow: hidden;
             background-color: #333;
             position: fixed;
@@ -26,6 +26,7 @@
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
+            border-right: 2px solid #bbb;
         }
         li a:hover:not(.active) {
             background-color: #111;
