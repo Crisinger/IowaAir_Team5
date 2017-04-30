@@ -165,4 +165,42 @@ public class FlightHistory {
 
         return name;
     }
+
+    public static ArrayList<String[]> getActiveFlightList(Connection con, String userID){
+        ArrayList<String[]> basicModelInfo = new ArrayList<String[]>();
+        Statement stmt = null;
+
+        try{
+            con.setAutoCommit(false);
+            stmt = con.createStatement();
+            int id =  AccountFunctions.getID(con,userID);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM bookedFlights WHERE userID= " + id + " AND Completed = 0;");
+            while(rs.next()){
+                int flightnum = rs.getInt("flightID");
+                Statement stmt2 = con.prepareStatement("SELECT * FROM flights where flight_id = " + flightnum + ";");
+                ResultSet rs2 = stmt2.executeQuery("SELECT * FROM flights where flight_id = " + flightnum + ";");
+                String[] tempInfo = new String[11];
+                tempInfo[0] = new String() + flightnum;
+                tempInfo[1] = rs.getString("totalTickets");
+                tempInfo[2] = rs.getString("ticketsEconomy");
+                tempInfo[3] = rs.getString("ticketsBusiness");
+                tempInfo[4] = rs.getString("ticketsFirst");
+                rs2.next();
+                tempInfo[5] = rs2.getString("departure_date");
+                tempInfo[6] = rs2.getString("departure_Time");
+                tempInfo[7] = getLocationName(con, rs2.getInt("departure_location"));
+                tempInfo[8] = rs2.getString("arrival_date");
+                tempInfo[9] = rs2.getString("arrival_time");
+                tempInfo[10] = getLocationName(con,rs2.getInt("arrival_location"));
+                rs2.close();
+                stmt2.close();
+                basicModelInfo.add(tempInfo);
+            }
+            rs.close();
+            stmt.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return basicModelInfo;
+    }
 }

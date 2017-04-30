@@ -39,7 +39,7 @@ public class History extends HttpServlet {
         return basicFlightList;
     }
 
-    private static String flightListToJSON(ArrayList<String[]> basicList){
+    public static String flightListToJSON(ArrayList<String[]> basicList){
         String[] list = {"flightID","totalTickets","ticketsEconomy","ticketsBusiness","ticketsFirst","departureDate",
         "departureTime","departureLocation","arrivalDate","arrivalTime","arrivalLocation"};
         String jsonBasicList = "{\"history\":[";

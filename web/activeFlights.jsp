@@ -5,6 +5,7 @@
   Time: 3:15 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="General.FlightHistory" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String logPage, logSet, accountText, paymentPage, activePage, historyPage;
@@ -37,6 +38,10 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.min.js"></script>
+
+    <script src="js/General/activeFlights.js"></script>
 
 
 </head>
@@ -118,7 +123,7 @@
             </tr>
         </table>
 
-        <table id="flightHistoryList" class="bookingTables">
+        <table id="activeFlightHistoryList" class="bookingTables">
 
         </table>
 
