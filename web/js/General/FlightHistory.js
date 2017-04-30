@@ -7,7 +7,7 @@ var activeList;
 $(function() {
     $.post("/Customer.FlightHistory.History", "", function (msg) {
         if (msg.length > 0) {
-            activeList = JSON.parse(msg);
+            activeList = JSON.parse(msg).history;
             console.log(activeList);
             setUpFlightsTable();
         }
@@ -80,8 +80,8 @@ function showFlightsPage(){
     console.log(activeList);
     for(var i=0; i<activeList.length; i++){
         console.log(activeList[i]);
-        generateOntoTable(activeList['flightID'], activeList['totalTickets'], activeList['ticketsEconomy'], activeList['ticketsBusiness'], activeList['ticketsFirst'], activeList['departureDate']
-            , activeList['departureTime'], activeList['departureLocation'], activeList['arrivalDate'], activeList['arrivalTime'], activeList['arrivalLocation']);
+        generateOntoTable(activeList[i]['flightID'], activeList[i]['totalTickets'], activeList[i]['ticketsEconomy'], activeList[i]['ticketsBusiness'], activeList[i]['ticketsFirst'], activeList[i]['departureDate']
+            , activeList[i]['departureTime'], activeList[i]['departureLocation'], activeList[i]['arrivalDate'], activeList[i]['arrivalTime'], activeList[i]['arrivalLocation']);
 
     }
 }

@@ -98,12 +98,6 @@
 
 <div id="viewwrapper">
 
-    <section id="sidebar">
-        <p>
-           <%-- <%=FlightHistory.getFlights(FlightHistory.getUserID(session.getAttribute("userEmail").toString()))%> --%>
-        </p>
-    </section>
-
     <section>
         <table class = "admin_man_table">
             <tr>

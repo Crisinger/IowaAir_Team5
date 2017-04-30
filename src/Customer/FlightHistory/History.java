@@ -42,7 +42,7 @@ public class History extends HttpServlet {
     private static String flightListToJSON(ArrayList<String[]> basicList){
         String[] list = {"flightID","totalTickets","ticketsEconomy","ticketsBusiness","ticketsFirst","departureDate",
         "departureTime","departureLocation","arrivalDate","arrivalTime","arrivalLocation"};
-        String jsonBasicList = "";
+        String jsonBasicList = "{\"history\":[";
         for(int count=0; count<basicList.size(); count++){
             jsonBasicList += "{\""+list[0]+"\":"+basicList.get(count)[0]+",";
             jsonBasicList += "\""+list[1]+"\":\""+basicList.get(count)[1]+"\",";
@@ -57,7 +57,7 @@ public class History extends HttpServlet {
             jsonBasicList += "\""+list[10]+"\":"+basicList.get(count)[10]+"},";
 
         }
-        jsonBasicList = jsonBasicList.substring(0,jsonBasicList.length()-1);
+        jsonBasicList = jsonBasicList.substring(0,jsonBasicList.length()-1)+"]}";
         System.out.println(jsonBasicList);
         return jsonBasicList;
     }
