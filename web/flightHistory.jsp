@@ -99,7 +99,7 @@
 <div id="viewwrapper">
 
     <section>
-        <table class = "admin_man_table">
+        <table class = "bookingTables">
             <tr>
                 <th><b>Flight</b></th>
                 <th><b>Total</b></th>
