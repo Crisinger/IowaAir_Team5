@@ -23,11 +23,11 @@ public class PaymentServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String cardName = request.getParameter("cardName");
         String cardNumber = request.getParameter("cardNumber");
-        int securityCode = request.getIntHeader("securityCode");
+        String securityCode = request.getParameter("securityCode");
         String address = request.getParameter("address");
         String state = request.getParameter("state");
         String city = request.getParameter("city");
-        int zipCode = request.getIntHeader("zipCode");
+        String zipCode = request.getParameter("zipCode");
         int month = request.getIntHeader("expMonth");
         int year = request.getIntHeader("expYear");
         String phoneNumber = request.getParameter("phoneNumber");
