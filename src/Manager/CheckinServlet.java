@@ -22,7 +22,7 @@ public class CheckinServlet extends HttpServlet {
         // Assign parameters to values
         String customerName = request.getParameter("firstname") + request.getParameter("lastname");
         String customerEmail = request.getParameter("customerEmail");
-        String flightID = request.getParameter("flightID");
+        String flightID = request.getParameter("referenceID");
         String baggage = request.getParameter("baggage");
 
         // Add necessary function calls here
