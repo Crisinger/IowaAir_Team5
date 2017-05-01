@@ -105,6 +105,10 @@
             </div>
         </div>
 
+        <div class = checkin>
+            <input type = "text" name="price" placeholder="Price" readonly id=price />
+        </div>
+
         <br>
 
         <input type="submit" value="Submit" class = "submitButton">
@@ -118,22 +122,26 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-        var max_fields      = 5; //maximum input boxes allowed
+        var max_fields      = 4; //maximum input boxes allowed
         var wrapper         = $(".input_fields_wrap"); //Fields wrapper
         var add_button      = $(".add_field_button"); //Add button ID
 
-        var x = 1; //initlal text box count
+        var x = 0; //initlal text box count
         $(add_button).click(function(e){ //on add input button click
             e.preventDefault();
+
             if(x < max_fields){ //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div><input type="text" name="mytext[]" placeholder="Bag " readonly/><input type="text" name="mytext[]" placeholder="bag lbs"/>' +
+                $(wrapper).append('<div><input type="text" name="mytext[]" placeholder="bag lbs"/>' +
                     '<a href="#" class="remove_field">Remove</a></div>'); //add input box
+
+                document.getElementById("price").placeholder = "$" + 50*x;
             }
         });
 
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
             e.preventDefault(); $(this).parent('div').remove(); x--;
+            document.getElementById("price").placeholder = "$" + 50*x;
         })
     });
 </script>
