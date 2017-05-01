@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    String accountText = "";
+    String accountText = "" ;
     if(session.getAttribute("role").toString().equals("MANAGER")){
         accountText = session.getAttribute("userEmail").toString();
     } else {
