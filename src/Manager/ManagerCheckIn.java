@@ -34,7 +34,7 @@ public class ManagerCheckIn {
         }
     }
 
-   /* public static void managerBookFlight(Connection con, int referenceID){
+   /*public static void managerBookFlight(Connection con, int referenceID){
         Statement stmt = null;
         try {
             con.setAutoCommit(false);

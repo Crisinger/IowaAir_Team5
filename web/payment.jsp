@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="Customer.PaymentInfo.PaymentServlet" %>
 <%@ page import="Customer.PaymentInfo.PaymentFunctions" %>
+<%@ page import="Customer.PaymentInfo.PaymentTableServlet" %>
+
 
 <%
     String logPage, logSet, accountText, paymentPage, activePage, historyPage;
@@ -81,6 +83,10 @@
                         <a href="<%=activePage%>">Active Flights</a>
                         <a href="<%=historyPage%>">Flight History</a>
                         <a href="<%=paymentPage%>" class="selected">Payment Info</a>
+
+                        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.min.js"></script>
+
+                        <script src="js/General/payment.js"></script>
                     </div>
                 </div>
             </li>
@@ -149,6 +155,37 @@
                     <button class="paymentCreateButtons" type="submit">Create Payment</button>
                 </form>
             </div>
+    </section>
+
+    <section >
+        <table class = "bookingTables">
+            <tr>
+                <th><b>Full</b></th>
+                <th><b>Card</b></th>
+                <th><b>Exp</b></th>
+                <th><b>Billing</b></th>
+                <th><b>City</b></th>
+                <th><b>State</b></th>
+                <th><b>ZipCode</b></th>
+                <th><b>Phone</b></th>
+
+            </tr>
+            <tr>
+                <th><b>Name</b></th>
+                <th><b>Number</b></th>
+                <th><b>Date</b></th>
+                <th><b>Address</b></th>
+                <th><b> </b></th>
+                <th><b> </b></th>
+                <th><b> </b></th>
+                <th><b>Number</b></th>
+            </tr>
+        </table>
+
+        <table id="billingList" class="bookingTables">
+
+        </table>
+
     </section>
 
 </div>

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Created by crisi_000 on 4/9/2017.
@@ -19,18 +20,18 @@ public class PaymentFunctions {
         try {
             boolean working = false;
             connection = AccountFunctions.OpenDatabase();
-            result = displayPaymentInfo(connection, 1);
+            //result = displayPaymentInfo(connection, 1);
             //addPayment(connection, "John Doe", "1234-5678-9100-2457", new Date(2,2,2020),231,"555 Main St",
             //        "Iowa City", "IA","United States", 52245, "555-555-5555");
-            for (int i = 0; i < 9; i++) {
-                System.out.println(result[i]); //displays the first records information
-            }
+            //for (int i = 0; i < 9; i++) {
+                //System.out.println(result[i]); //displays the first records information
+            //}
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void addPayment(Connection con, String name, String cardNumber, Date expDate, int securityCode, String billingAddress,
+    public static void addPayment(Connection con,int userID, String name, String cardNumber, Date expDate, int securityCode, String billingAddress,
                                   String city, String state, int zipcode, String phoneNumber) {
         Connection c = con;
         Statement stmt = null;
@@ -38,8 +39,8 @@ public class PaymentFunctions {
 
             c.setAutoCommit(false);
             stmt = c.createStatement();
-            String sql = "INSERT INTO PAYMENTINFO (cardName,cardnumber,expdate,securitycode,address,state,city,zipcode,phoneNumber) " +
-                    "VALUES ( '" + name + "' , '" + cardNumber + "' , '"+ expDate + "' , '"+ securityCode + "' , '"+ billingAddress +
+            String sql = "INSERT INTO PAYMENTINFO (userID,cardName,cardnumber,expdate,securitycode,address,state,city,zipcode,phoneNumber) " +
+                    "VALUES ( '" + userID + "' , '" + name + "' , '" + cardNumber + "' , '"+ expDate + "' , '"+ securityCode + "' , '"+ billingAddress +
                     "' , '"+ state + "' , '"+ city + "' , '"+ zipcode + "' , '"+ phoneNumber +"');";
             stmt.executeUpdate(sql);
 
@@ -114,26 +115,30 @@ public class PaymentFunctions {
         System.out.println("Payment Deleted");
     }
 
-    public static String[] displayPaymentInfo(Connection con, int paymentID){
+    public static ArrayList<String[]> displayPaymentInfo(Connection con, int userID){
         Statement stmt;
-        String[] display = new String[9];
+        ArrayList<String[]> paymentList = new ArrayList<String[]>();
+
         try {
             stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM PAYMENTINFO WHERE paymentID = '" + paymentID + "';");
-            rs.next();
-            display[0]= rs.getString("CardName");
-            display[1]= rs.getString("CardNumber");
-            display[2]= rs.getString("ExpDate");
-            display[3]= rs.getString("SecurityCode");
-            display[4]= rs.getString("Address");
-            display[5]= rs.getString("State");
-            display[6]= rs.getString("City");
-            display[7]= rs.getString("Zipcode");
-            display[8]= rs.getString("Phonenumber");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM PAYMENTINFO WHERE userID = " + userID + ";");
+            while (rs.next()) {
+                String[] display = new String[9];
+                display[0] = rs.getString("CardName");
+                display[1] = rs.getString("CardNumber");
+                display[2] = rs.getString("ExpDate");
+                display[3] = rs.getString("SecurityCode");
+                display[4] = rs.getString("Address");
+                display[5] = rs.getString("State");
+                display[6] = rs.getString("City");
+                display[7] = rs.getString("Zipcode");
+                display[8] = rs.getString("Phonenumber");
+                paymentList.add(display);
+            }
         } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
-        return display;
+        return paymentList;
     }
 }
