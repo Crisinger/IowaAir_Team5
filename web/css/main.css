@@ -701,8 +701,11 @@ nav a.selected, nav a:hover {
     height: 120px;
     display: flex;
     border: solid black 2px;
-    margin-bottom: 10px;
     background-color: whitesmoke;
+}
+
+#flightQueryView div{
+    margin-top: 10px;
 }
 
 #flightQueryView div div, #flightQueryControls div div{
@@ -831,7 +834,7 @@ nav a.selected, nav a:hover {
     background: yellow;
     display: block;
     max-width: 90%;
-    height: 400px;
+    height: 500px;
     text-align: left;
     float: left;
     width:90%;
@@ -894,4 +897,31 @@ nav a.selected, nav a:hover {
 
 #bookingForm.cvcInput{
     width:5ch;
+}
+
+#flightQueryView div.one-way, #flightQueryView div.return-trip{
+    border-top:none;
+    margin-top:0;
+    height:100px;
+}
+
+#flightQueryView div.return-trip{
+    background-color: lightyellow;
+}
+
+#flightQueryView div.one-way div, #flightQueryView div.return-trip div{
+    margin: auto auto auto 10%;
+
+}
+
+#flightQueryView div.one-way div ul li, #flightQueryView div.return-trip div ul li{
+    font-size: 0.9em;
+    margin:5px 0 0 5px;
+}
+
+#flightQueryView div.one-way div ul li p,#flightQueryView div.return-trip div ul li p{
+    font-weight: normal;
+    font-size: 1.2em;
+    padding: 0;
+    background-color: transparent;
 }

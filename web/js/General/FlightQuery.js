@@ -92,6 +92,22 @@ function centerMapOnLocations(){
 
 $(function(){
 
+    $( "#flightQueryDepartDate" ).datepicker({
+        beforeShow: function(input,inst){
+            var today = new Date();
+            today.setDate(today.getDate()+1);
+            $(this).datepicker('option','minDate',today);
+        }
+    });
+
+    $( "#flightQueryReturnDate" ).datepicker({
+        beforeShow: function(input,inst){
+            var today = new Date();
+            today.setDate(today.getDate()+1);
+            $(this).datepicker('option','minDate',today);
+        }
+    });
+
     $("#flightQueryControls").hide();
 
     $.post("General.ListLocations","activity=1",function(msg){
@@ -99,16 +115,9 @@ $(function(){
             placeList = JSON.parse(msg).states;
             setUpStateSelection("flightQueryDepartState","flightQueryDepartCity",0);
             setUpStateSelection("flightQueryArrivalState","flightQueryArrivalCity", 1);
+            console.log(placeList);
         }else{
             alert("Could not retrieve information");
-        }
-    });
-
-    $("#flightQueryButton").click(function(){
-        if(validateTripLocations()){
-            attemptFlightQuery();
-        }else{
-            alert("Please enter departure and arrival locations");
         }
     });
 
@@ -139,6 +148,16 @@ $(function(){
     });
 
 });
+
+function enableReturnDatePicker(){
+    document.getElementById("flightQueryReturnDate").disabled = false;
+    document.getElementById("flightQueryReturnDate").required = true;
+}
+
+function disableReturnDatePicker(){
+    document.getElementById("flightQueryReturnDate").disabled = true;
+    document.getElementById("flightQueryReturnDate").required = false;
+}
 
 function setUpStateSelection(stateElement, cityElement, travelType){
     var stateSelection = document.getElementById(stateElement);
@@ -179,14 +198,6 @@ function addChildrenToParent(parent, array, type, travelType, posChild){
         parent.appendChild(child);
     }
 }
-function validateTripLocations(){
-    var dState = document.getElementById("flightQueryDepartState").selectedIndex;
-    var dCity = document.getElementById("flightQueryDepartCity").selectedIndex;
-    var aState = document.getElementById("flightQueryArrivalState").selectedIndex;
-    var aCity = document.getElementById("flightQueryArrivalCity").selectedIndex;
-
-    return !(dState==0 || dCity==0 || aState==0 || aCity==0)
-}
 
 function attemptFlightQuery(){
     var criteria = $("#flightQueryForm").serialize();
@@ -195,7 +206,7 @@ function attemptFlightQuery(){
 
     $.post("General.FlightQuery", criteria, function(msg){
         if(msg.length>0){
-            queryFlights = JSON.parse(msg).flights;
+            queryFlights = JSON.parse(msg).trips;
             console.log(msg);
             if(queryFlights.length>0) {
                 $("#flightQueryControls").show();
@@ -213,6 +224,7 @@ function attemptFlightQuery(){
         }
     });
 
+    return false;
 }
 
 
@@ -232,7 +244,7 @@ function showFlightQuery(page){
         if(count<min){
             count++;
         }else if(count>=min && count<max){
-            buildFlightInfo(queryFlights[fly]);
+            buildFlightInfo(queryFlights[fly].flights);
             displayed++;
             count++;
         }
@@ -261,21 +273,49 @@ function resetBuildFlightSection(){
 }
 
 
-function buildFlightInfo(flight){
+function buildFlightInfo(trip){
     //String[] list = {"fID","pID","mID","dLoc","aLoc","aEcon","aBus","aFirst","Dem","DP","dDate","dTime","aDate","aTime"};
+
+    if(trip[0].dLoc == $("#flightQueryArrivalCity").val()){
+        return;
+    }
     var parent = document.getElementById("flightQueryView");
-    var container = document.createElement("div");
-    var leftSide = document.createElement("div");
-    leftSide.appendChild(buildFlightLeftSide(flight));
-    var rightSide = document.createElement("div");
-    rightSide.appendChild(buildFlightRightSide(flight));
-    container.appendChild(leftSide);
-    container.appendChild(rightSide);
-    parent.appendChild(container);
-    //container.show("slide",{direction:"left"},1000);
+    var rTrip = 3;
+
+    console.log(trip);
+
+    if(trip.length<4 && trip.length>1){
+        for(var setColors=1; setColors<trip.length; setColors++){
+            if(trip[setColors].dLoc == $("#flightQueryArrivalCity").val()){
+                rTrip=setColors;
+            }
+        }
+    }
+
+
+    for(var flights = 0; flights<trip.length; flights++){
+        var container = document.createElement("div");
+        var leftSide = document.createElement("div");
+        leftSide.appendChild(buildFlightLeftSide(trip,flights));
+        container.appendChild(leftSide);
+        if(flights==0) {
+            var rightSide = document.createElement("div");
+            rightSide.appendChild(buildFlightRightSide(trip, flights));
+            container.appendChild(rightSide);
+        }
+
+        if(flights!=0 && flights<rTrip){
+            container.setAttribute("class","one-way");
+        }
+        if(flights!=0 && flights>rTrip-1){
+            container.setAttribute("class","return-trip");
+        }
+        parent.appendChild(container);
+    }
+
 }
 
-function buildFlightLeftSide(flight){
+function buildFlightLeftSide(flight, number){
     var unorderedList = document.createElement("ul");
     var dates = document.createElement("li");
     var times = document.createElement("li");
@@ -283,11 +323,11 @@ function buildFlightLeftSide(flight){
     var planeInfo = document.createElement("li");
     var timeText = document.createElement("p");
 
-    timeText.innerHTML = timeFormatter(flight.dTime) + "&nbsp;&nbsp;&rightarrow;&nbsp;&nbsp;" +timeFormatter(flight.aTime);
+    timeText.innerHTML = timeFormatter(flight[number].dTime) + "&nbsp;&nbsp;&rightarrow;&nbsp;&nbsp;" +timeFormatter(flight[number].aTime);
     timeText.setAttribute("class","flightQueryTime");
-    dates.innerHTML = dateFormatter(flight.dDate, flight.aDate);
-    locations.innerHTML = locationFormatter(flight.dLoc,flight.aLoc);
-    planeInfo.innerText = modelList[modelFinder(flight.mID)].NM + " : IA" +flight.pID;
+    dates.innerHTML = dateFormatter(flight[number].dDate, flight[number].aDate);
+    locations.innerHTML = locationFormatter(flight[number].dLoc,flight[number].aLoc);
+    planeInfo.innerText = modelList[modelFinder(flight[number].mID)].NM + " : IA" +flight[number].pID;
 
     console.log("finished model finder");
     times.appendChild(timeText);
@@ -299,7 +339,7 @@ function buildFlightLeftSide(flight){
     return unorderedList;
 }
 
-function buildFlightRightSide(flight){
+function buildFlightRightSide(trip, number){
     //String[] list = {"fID","pID","mID","dLoc","aLoc","aEcon","aBus","aFirst","Dem","DP","dDate","dTime","aDate","aTime"};
     //String[] mList = {"ID","NM","BP"};
     var firstWrap = document.createElement("div");
@@ -311,42 +351,55 @@ function buildFlightRightSide(flight){
     var economy = document.createElement("button");
 
     console.log("calculating prices...");
-    var basePrice = parseInt(modelList[modelFinder(flight.mID)].BP);
-    var adjustPrice = parseInt(flight.DP)*parseInt(flight.Dem);
-    console.log("basePrice = " +basePrice);
-    console.log("adjustedPrice = "+adjustPrice);
-    first.innerText="$ "+ Math.floor(basePrice + adjustPrice*(2)); // 2 for first class
-    business.innerText="$ "+ Math.floor(basePrice + adjustPrice*(1.5)); // 1.5 for first class
-    economy.innerText="$ "+ Math.floor(basePrice + adjustPrice*(1)); // 1 for first class
 
-    first.setAttribute("class","buyFirstClass");
-    business.setAttribute("class","buyBusinessClass");
-    economy.setAttribute("class","buyEconomyClass");
+    if(number==0){
 
-    first.setAttribute("onclick","sendToBooking("+flight.fID+",2)");
-    business.setAttribute("onclick","sendToBooking("+flight.fID+",1)");
-    economy.setAttribute("onclick","sendToBooking("+flight.fID+",0)");
+        var totalFirst = 0;
+        var totalBus = 0;
+        var totalEcon = 0;
+        var allFlightID = ["null","null","null","null","null","null"];
+        for(var flights=0; flights<trip.length; flights++) {
+            var basePrice = parseInt(modelList[modelFinder(trip[flights].mID)].BP);
+            var adjustPrice = parseInt(trip[flights].DP) * parseInt(trip[flights].Dem);
+            totalFirst += totalFirst += Math.floor(basePrice + adjustPrice * (2));
+            totalBus += Math.floor(basePrice + adjustPrice * (1.5));
+            totalEcon += Math.floor(basePrice + adjustPrice * (1));
+            allFlightID[flights] = trip[flights].fID;
+        }
 
-    if(flight.aEcon=="0"){
-        economy.disabled=true;
-        economy.innerText="";
+        first.innerText="$ "+ totalFirst; // 2 for first class
+        business.innerText="$ "+ totalBus; // 1.5 for first class
+        economy.innerText="$ "+ totalEcon ; // 1 for first class
+
+        first.setAttribute("class","buyFirstClass");
+        business.setAttribute("class","buyBusinessClass");
+        economy.setAttribute("class","buyEconomyClass");
+
+        first.setAttribute("onclick","sendToBooking("+allFlightID[0]+","+allFlightID[1]+","+allFlightID[2]+","+allFlightID[3]+","+allFlightID[4]+","+allFlightID[5]+",2)");
+        business.setAttribute("onclick","sendToBooking("+allFlightID[0]+","+allFlightID[1]+","+allFlightID[2]+","+allFlightID[3]+","+allFlightID[4]+","+allFlightID[5]+",1)");
+        economy.setAttribute("onclick","sendToBooking("+allFlightID[0]+","+allFlightID[1]+","+allFlightID[2]+","+allFlightID[3]+","+allFlightID[4]+","+allFlightID[5]+",0)");
+
+        if(trip[number].aEcon=="0"){
+            economy.disabled=true;
+            economy.innerText="";
+        }
+        if(trip[number].aBus=="0"){
+            business.disabled=true;
+            business.innerText="";
+        }
+        if(trip[number].aFirst=="0"){
+            first.disabled=true;
+            first.innerText="";
+        }
+
+        firstWrap.appendChild(first);
+        busWrap.appendChild(business);
+        ecoWrap.appendChild(economy);
+
+        sideBySide.appendChild(ecoWrap);
+        sideBySide.appendChild(busWrap);
+        sideBySide.appendChild(firstWrap);
     }
-    if(flight.aBus=="0"){
-        business.disabled=true;
-        business.innerText="";
-    }
-    if(flight.aFirst=="0"){
-        first.disabled=true;
-        first.innerText="";
-    }
-
-    firstWrap.appendChild(first);
-    busWrap.appendChild(business);
-    ecoWrap.appendChild(economy);
-
-    sideBySide.appendChild(ecoWrap);
-    sideBySide.appendChild(busWrap);
-    sideBySide.appendChild(firstWrap);
 
     return sideBySide;
 }
@@ -413,29 +466,38 @@ function modelFinder(modelID){
 }
 
 function locationFormatter(place1, place2){
-
-    var dState = document.getElementById("flightQueryDepartState").selectedIndex - 1;
-    var dCityIndex = placeList[dState].cities[document.getElementById("flightQueryDepartCity").selectedIndex -1];
-    var aState = document.getElementById("flightQueryArrivalState").selectedIndex-1;
-    var aCityIndex = placeList[aState].cities[document.getElementById("flightQueryArrivalCity").selectedIndex-1];
-    var location ="";
-
-    if(place1==dCityIndex.ID) {
-        location += dCityIndex.NM + ", " + placeList[dState].NM;
+    var place1Bool=false;
+    var place2Bool=false;
+    var place1Text="";
+    var place2Text="";
+    for(var states=0; states<placeList.length; states++){
+        for(var cities=0; cities<placeList[states].cities.length; cities++){
+            if(parseInt(place1) == placeList[states].cities[cities].ID){
+                place1Text += placeList[states].cities[cities].NM + ", " + placeList[states].NM;
+                place1Bool = true;
+            }
+            if(parseInt(place2) ==placeList[states].cities[cities].ID){
+                place2Text += placeList[states].cities[cities].NM + ", "+placeList[states].NM;
+                place2Bool = true;
+            }
+            if(place1Bool && place2Bool){
+                cities = placeList[states].cities.length+1;
+            }
+        }
+        if(place1Bool && place2Bool){
+            states = placeList[states].length+1;
+        }
     }
-    location+="&nbsp;&nbsp;&nbsp;&rightarrow;&nbsp;&nbsp;&nbsp;";
-    if(place2==aCityIndex.ID){
-        location += aCityIndex.NM + ", "+placeList[aState].NM;
-    }
-    return location;
+
+    return place1Text+"&nbsp;&nbsp;&nbsp;&rightarrow;&nbsp;&nbsp;&nbsp;"+place2Text;
 
 }
 
-function sendToBooking(flightID,classID,oneStop,twoStop){
+function sendToBooking(flight1,flight2,flight3,flight4,flight5,flight6,classID){
     var tickets = $("#flightQueryNumberOfPassengers").val();
     if(tickets==null){
         tickets = 1;
     }
-    var info = "fID="+flightID+"&classID="+classID+"&tickets="+tickets+"&oneStop="+oneStop+"&twoStop="+twoStop;
+    var info = "flight1="+flight1+"&flight2="+flight2+"&flight3="+flight3+"&flight4="+flight4+"&flight5="+flight5+"&flight6="+flight6+"&classID="+classID+"&tickets="+tickets;
     window.location = "BookingFlight.jsp?"+info;
 }

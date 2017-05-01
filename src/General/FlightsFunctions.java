@@ -286,12 +286,151 @@ public class FlightsFunctions {
 
 
 
-    public static boolean getSuperFlightQuery(Connection con, String dCity, String aCity, String model, String tickets, String pref, String travelType, String multiStop){
+    public static ArrayList<ArrayList<ArrayList<String>>> getSuperFlightQuery(Connection con, String dCity, String aCity, String dDate, String model, String tickets, String pref, String travelType, String multiStop, String returnDate){
+        String criteria="";
+        criteria += (model!=null && !model.equals("0"))?"MODEL_ID="+model+" AND ":"";
+        criteria += (tickets!=null)? "(availableEconomy+availableBusiness+availableFirst) >="+tickets+" AND ":"";
+        criteria += (pref!=null && pref.equals("0"))? "availableEconomy>0 AND ":"";
+        criteria += (pref!=null && pref.equals("1"))? "availableBusiness>0 AND ":"";
+        criteria += (pref!=null && pref.equals("2"))? "availableFirst>0 AND ":"";
 
+        System.out.println("Criteria="+criteria);
 
-        return true;
+        Statement stmt = null;
+        Statement oneStmt = null;
+        Statement twoStmt = null;
+
+        ArrayList<ArrayList<ArrayList<String>>> flightInfo = new ArrayList<>();
+
+        try{
+            stmt = con.createStatement();
+            ResultSet allFlights = stmt.executeQuery("Select * FROM FLIGHTS JOIN PLANES ON flights.plane_ID=planes.ID WHERE Departure_Location="+dCity+" AND Departure_date='"+dDate+"' AND "+criteria+" IS_ACTIVE=1 ORDER BY departure_date, departure_time;");
+            while(allFlights.next()) {
+                System.out.println("I have a flight!!!");
+
+                if(allFlights.getString("Arrival_Location").equals(aCity)){
+                    if(travelType.equals("1")){
+
+                        ArrayList<ArrayList<ArrayList<String>>> returnDirectFlights = getSuperFlightQuery(con,aCity,dCity,returnDate,model,tickets,pref,"0",multiStop,"9999-09-09");
+
+                        for(int returns=0; returns<returnDirectFlights.size(); returns++){
+                            ArrayList<ArrayList<String>> tempDF = new ArrayList<>();
+                            tempDF.add(addFlightToList(allFlights));
+                            for(int flight=0; flight<returnDirectFlights.get(returns).size();flight++){
+                                tempDF.add(returnDirectFlights.get(returns).get(flight));
+                            }
+                            flightInfo.add(tempDF);
+                            System.out.println("Direct flight added with return flight");
+                        }
+
+                    }else {
+                        ArrayList<ArrayList<String>> tempDF = new ArrayList<>();
+                        tempDF.add(addFlightToList(allFlights));
+                        flightInfo.add(tempDF);
+                        System.out.println("Direct flight added");
+                    }
+                }else if(multiStop==null || multiStop.equals("1") || multiStop.equals("2")){
+                    String oneStopDepart = allFlights.getString("Arrival_Location");
+                    String oneStopDate = allFlights.getString("Arrival_Date");
+                    String oneStopTime = allFlights.getString("Arrival_Time");
+                    oneStmt = con.createStatement();
+                    ResultSet oneStop = oneStmt.executeQuery("Select * From Flights Join Planes on Flights.plane_ID=planes.ID where  Departure_Location="+oneStopDepart+" AND "+criteria+" Departure_Date>='"+oneStopDate+"' AND Departure_Date<Date_ADD('"+oneStopDate+"', INTERVAL 2 DAY) AND Departure_Time>'"+oneStopTime+"' AND IS_ACTIVE=1 ORDER BY departure_date, departure_time;");
+
+                    while(oneStop.next()) {
+                        if (oneStop.getString("Arrival_Location").equals(aCity)) {
+
+                            if(travelType.equals("1")){
+
+                                ArrayList<ArrayList<ArrayList<String>>> returnOneFlights = getSuperFlightQuery(con,aCity,dCity,returnDate,model,tickets,pref,"0",multiStop,"9999-09-09");
+
+                                for(int oneReturn=0; oneReturn<returnOneFlights.size(); oneReturn++){
+                                    ArrayList<ArrayList<String>> tempOne = new ArrayList<>();
+                                    tempOne.add(addFlightToList(allFlights));
+                                    tempOne.add(addFlightToList(oneStop));
+                                    for(int flight=0; flight<returnOneFlights.get(oneReturn).size();flight++){
+                                        tempOne.add(returnOneFlights.get(oneReturn).get(flight));
+                                    }
+                                    flightInfo.add(tempOne);
+                                    System.out.println("One Stop Flight Added with return flights");
+                                }
+
+                            }else {
+                                ArrayList<ArrayList<String>> tempOne = new ArrayList<>();
+                                tempOne.add(addFlightToList(allFlights));
+                                tempOne.add(addFlightToList(oneStop));
+                                flightInfo.add(tempOne);
+                                System.out.println("One Stop Flight Added");
+                            }
+                        } else if(multiStop==null || multiStop.equals("2")){
+
+                            String twoStopDepart = oneStop.getString("Arrival_Location");
+                            String twoStopDate = oneStop.getString("Arrival_Date");
+                            String twoStopTime = oneStop.getString("Arrival_Time");
+                            twoStmt = con.createStatement();
+
+                            ResultSet twoStop = twoStmt.executeQuery("Select * From Flights Join Planes on Flights.plane_ID=planes.ID where Departure_Location="+twoStopDepart+" AND "+criteria+" Departure_Date>='"+twoStopDate+"' AND Departure_Date<Date_ADD('"+twoStopDate+"', INTERVAL 2 DAY) AND Departure_Time>'"+twoStopTime+"' AND IS_ACTIVE=1 ORDER BY departure_date, departure_time;");
+
+                            while(twoStop.next()){
+                                if(twoStop.getString("Arrival_Location").equals(aCity)){
+
+                                    if(travelType.equals("1")){
+
+                                        ArrayList<ArrayList<ArrayList<String>>> returnTwoFlights = getSuperFlightQuery(con,aCity,dCity,returnDate,model,tickets,pref,"0",multiStop,"9999-09-09");
+
+                                        for(int twoReturn=0; twoReturn<returnTwoFlights.size(); twoReturn++){
+                                            ArrayList<ArrayList<String>> tempTwo = new ArrayList<>();
+                                            tempTwo.add(addFlightToList(allFlights));
+                                            tempTwo.add(addFlightToList(oneStop));
+                                            tempTwo.add(addFlightToList(twoStop));
+                                            for(int flight=0; flight<returnTwoFlights.get(twoReturn).size();flight++){
+                                                tempTwo.add(returnTwoFlights.get(twoReturn).get(flight));
+                                            }
+                                            flightInfo.add(tempTwo);
+                                            flightInfo.add(returnTwoFlights.get(twoReturn));
+                                            System.out.println("Two Stop Flight Added");
+                                        }
+
+                                    }else {
+                                        ArrayList<ArrayList<String>> tempTwo = new ArrayList<>();
+                                        tempTwo.add(addFlightToList(allFlights));
+                                        tempTwo.add(addFlightToList(oneStop));
+                                        tempTwo.add(addFlightToList(twoStop));
+                                        flightInfo.add(tempTwo);
+                                        System.out.println("Two Stop Flight Added");
+                                    }
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+        return flightInfo;
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -307,32 +446,32 @@ public class FlightsFunctions {
                 System.out.println("getting flight ifno for:"+ allFlights.get(i));
                 ResultSet rs = stmt.executeQuery("Select * FROM FLIGHTS JOIN PLANES ON flights.plane_ID=planes.ID WHERE flight_id=" + allFlights.get(i) + ";");
                 while (rs.next()) {
-                    flightInfo.add(new ArrayList<String>());
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("Flight_ID"));
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("Plane_ID"));
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("Model_ID"));
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("Departure_Location"));
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("Arrival_Location"));
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("availableEconomy"));
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("availableBusiness"));
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("availableFirst"));
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("Demand"));
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("Distance_Price"));
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("Departure_date")); // these and below are
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("Departure_Time")); // only on bottom
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("Arrival_Date")); // because of how JSON
-                    flightInfo.get(flightInfo.size() - 1).add(rs.getString("Arrival_Time")); // parse is set up
+                    flightInfo.add(addFlightToList(rs));
                 }
             }
         }catch(Exception ex){
             ex.printStackTrace();
         }
         return flightInfo;
-
-
     }
 
 
+    private static ArrayList<String> addFlightToList(ResultSet rs){
+
+        ArrayList<String> currentFlight = new ArrayList<>();
+
+        String[] itemList = {"Flight_ID","Plane_ID","Model_ID","Departure_Location","Arrival_Location","availableEconomy","availableBusiness","availableFirst",
+        "Demand","Distance_Price","Departure_Date","Departure_Time","Arrival_Date","Arrival_Time"};
+        try {
+            for (int i = 0; i < itemList.length; i++) {
+                currentFlight.add(rs.getString(itemList[i]));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return currentFlight;
+    }
 
 
 }

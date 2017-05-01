@@ -111,9 +111,13 @@
         </p>
         <br><br><br>
         <form id="bookingForm" method="post" onsubmit="return checkCVC()">
-            <input id="directFlightID" type="hidden" name="directFlightID">
-            <input id="oneStopFlightID" type="hidden" name="oneStopFlightID">
-            <input id="twoStopFlightID" type="hidden" name="twoStopFlightID">
+            <input id="flight1" type="hidden" name="flight1">
+            <input id="flight2" type="hidden" name="flight2">
+            <input id="flight3" type="hidden" name="flight3">
+            <input id="flight4" type="hidden" name="flight4">
+            <input id="flight5" type="hidden" name="flight5">
+            <input id="flight6" type="hidden" name="flight6">
+
             <input id="ticketsPurchased" type="hidden" name="ticketsPurchased">
             <input id="classPurchased" type="hidden" name="classPurchased">
             <input id="totalCost" type="hidden" name="totalCost">

@@ -7,6 +7,7 @@
 
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="General.FlightQuery" %>
 <%
     String logPage, logSet, accountText, paymentPage, activePage, historyPage;
 
@@ -40,6 +41,7 @@
     <%--<link rel="stylesheet" href="css/responsive.css">--%>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.min.js"></script>
+    <%=FlightQuery.getDateAndTimeSrc()%>
 
     <script src="js/General/FlightQuery.js"></script>
 
@@ -92,18 +94,31 @@
 <div id="vwrapper">
 
     <section id="sidebar">
-        <form id="flightQueryForm">
+        <form id="flightQueryForm" method="post" onsubmit="return attemptFlightQuery()">
             <p><b>Departure Location:</b></p>
             <select id="flightQueryDepartState" name="departState" required>
             </select>
             <select id="flightQueryDepartCity" name="departCity" required>
             </select>
             <br>
+            <p><b>Departure Date:</b></p>
+            <input type="text" name="departDate" placeholder="Select Date" id="flightQueryDepartDate" required>
+            <br>
             <p><b>Arrival Location:</b></p>
             <select id="flightQueryArrivalState" name="arriveState" required>
             </select>
             <select id="flightQueryArrivalCity" name="arriveCity" required>
             </select>
+            <br>
+            <p><b>Travel Type:</b></p>
+            <select id="flightQueryTravelType" name="travelType">
+                <option disabled selected>--Select Ticket Type--</option>
+                <option value="0" onclick="disableReturnDatePicker()">One-Way</option>
+                <option value="1" onclick="enableReturnDatePicker()">Round</option>
+            </select>
+            <br>
+            <p><b>Return Date:</b></p>
+            <input type="text" name="returnDate" placeholder="Select Date" id="flightQueryReturnDate" disabled>
             <br>
             <p><b>Plane Model:</b></p>
             <select id="flightQueryPlaneModel" name="planeModel">
@@ -131,17 +146,20 @@
                 <option value="2">First</option>
             </select>
             <br>
-            <p><b>Travel Type:</b></p>
-            <select id="flightQueryTravelType" name="travelType">
-                <option disabled selected>--Select Ticket Type--</option>
-                <option value="0">One-Way</option>
-                <option value="1">Round</option>
+            <p><b>Layover Preference:</b></p>
+            <select id="flightQueryLayover" name="travelLayover">
+                <option disabled selected>--Select Layover Pref--</option>
+                <option value="0">Direct Flight</option>
+                <option value="1">One Stop</option>
+                <option value="1">Two Stop</option>
             </select>
             <br>
+            <br>
+            <div>
+                <button type="submit" id="flightQueryButton">Search</button>
+            </div>
         </form>
-        <br>
         <div>
-            <button id="flightQueryButton">Search</button>
             <button id="showGoogleMap" >Toggle Map View</button>
         </div>
     </section>

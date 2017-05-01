@@ -34,11 +34,14 @@ function getUrlParameter(sParam) {
 
 function getFlightInformation(){
 
-    var flightID =getUrlParameter("fID");
-    var oneStop  =getUrlParameter("oneStop");
-    var twoStop  =getUrlParameter("twoStop");
+    var flight1 = getUrlParameter("flight1");
+    var flight2 = getUrlParameter("flight2");
+    var flight3 = getUrlParameter("flight3");
+    var flight4 = getUrlParameter("flight4");
+    var flight5 = getUrlParameter("flight5");
+    var flight6 = getUrlParameter("flight6");
 
-    var data = "flightID="+flightID+"&oneStopID="+oneStop+"&twoStopID="+twoStop;
+    var data = "flight1="+flight1+"&flight2="+flight2+"&flight3="+flight3+"&flight4="+flight4+"&flight5="+flight5+"&flight6="+flight6;
 
     $.get("General.FlightQuery",data, function(msg){
         console.log(msg);
@@ -232,9 +235,12 @@ function checkCVC(){
 }
 
 function setBookingFormInputs(){
-    document.getElementById("directFlightID").value = getUrlParameter("fID");
-    document.getElementById("oneStopFlightID").value = getUrlParameter("oneStop");
-    document.getElementById("twoStopFlightID").value = getUrlParameter("twoStop");
+    document.getElementById("flight1").value = getUrlParameter("flight1");
+    document.getElementById("flight2").value = getUrlParameter("flight2");
+    document.getElementById("flight3").value = getUrlParameter("flight3");
+    document.getElementById("flight4").value = getUrlParameter("flight4");
+    document.getElementById("flight5").value = getUrlParameter("flight5");
+    document.getElementById("flight6").value = getUrlParameter("flight6");
     document.getElementById("classPurchased").value = getUrlParameter("classID");
     document.getElementById("ticketsPurchased").value = getUrlParameter("tickets");
 }
