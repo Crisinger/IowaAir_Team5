@@ -139,7 +139,7 @@
                         <option value="12">December</option>
                     </select>
                     <p><b>Security Code</b></p>
-                    <input type="number" name="securityCode" maxlength="16" align="middle" placeholder="Security Code" required>
+                    <input type="text" name="securityCode" maxlength="16" align="middle" placeholder="Security Code" required>
                     <p><b>Street Address</b></p>
                     <input type="text" name="address" maxlength="24" align="middle" placeholder="Address" required>
                     <p><b>City</b></p>
@@ -147,7 +147,7 @@
                     <p><b>State</b></p>
                     <input type="text" name="state" maxlength="16" align="middle" placeholder="State" required>
                     <p><b>ZipCode</b></p>
-                    <input type="number" name="zipCode" maxlength="16" align="middle" placeholder="ZipCode" required>
+                    <input type="text" name="zipCode" maxlength="16" align="middle" placeholder="ZipCode" required>
                     <p><b>Phone Number</b></p>
                     <input type="text" name="phoneNumber" maxlength="16" align="middle" placeholder="Phone Number" required>
                     <br>

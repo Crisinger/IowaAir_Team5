@@ -31,8 +31,8 @@ public class PaymentFunctions {
         }
     }
 
-    public static void addPayment(Connection con,int userID, String name, String cardNumber, Date expDate, int securityCode, String billingAddress,
-                                  String city, String state, int zipcode, String phoneNumber) {
+    public static void addPayment(Connection con,int userID, String name, String cardNumber, Date expDate, String securityCode, String billingAddress,
+                                  String city, String state, String zipcode, String phoneNumber) {
         Connection c = con;
         Statement stmt = null;
         try {
@@ -131,7 +131,7 @@ public class PaymentFunctions {
                 display[4] = rs.getString("Address");
                 display[5] = rs.getString("State");
                 display[6] = rs.getString("City");
-                display[7] = rs.getString("Zipcode");
+                display[7] = rs.getString("ZipCode");
                 display[8] = rs.getString("Phonenumber");
                 paymentList.add(display);
             }
