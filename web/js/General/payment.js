@@ -55,12 +55,12 @@ function generateOntoTable(name,number,exp,sec,add,sta,cit,zip,phone){
     btn.innerText = "Remove";
     action.appendChild(btn);
     cardName.innerText = name;
-    cardNumber.innerText = number;
+    cardNumber.innerText = number.substring(number.length-4,number.length);
     expDate.innerText = exp;
     SecurityCode.innerText = sec;
     Address.innerText = add;
-    State.innerText = sta;
     City.innerText = cit;
+    State.innerText = sta;
     ZipCode.innerText = zip;
     phoneNumber.innerText = phone;
 
@@ -71,8 +71,8 @@ function generateOntoTable(name,number,exp,sec,add,sta,cit,zip,phone){
     row.appendChild(expDate);
     //row.appendChild(SecurityCode);
     row.appendChild(Address);
-    row.appendChild(State);
     row.appendChild(City);
+    row.appendChild(State);
     row.appendChild(ZipCode);
     row.appendChild(phoneNumber);
     row.appendChild(action);

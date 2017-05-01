@@ -31,7 +31,7 @@ public class PaymentFunctions {
         }
     }
 
-    public static void addPayment(Connection con,int userID, String name, String cardNumber, Date expDate, String securityCode, String billingAddress,
+    public static void addPayment(Connection con,int userID, String name, String cardNumber, String expDate, String securityCode, String billingAddress,
                                   String city, String state, String zipcode, String phoneNumber) {
         Connection c = con;
         Statement stmt = null;

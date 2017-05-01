@@ -41,7 +41,6 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
@@ -109,7 +108,7 @@
                     <p><b>Card Number</b></p>
                     <input type="text" name="cardNumber" maxlength="16" align="middle" placeholder="CardNumber" required>
                     <p><b>Expiration Date</b></p>
-                    <select id="paymentFormExpDay" name="expDay">
+                    <select id="paymentFormExpDay" name="expYear">
                         <option disabled selected>--Select Year--</option>
                         <option value="2017">2017</option>
                         <option value="2018">2018</option>
@@ -157,32 +156,23 @@
             </div>
     </section>
 
-    <section >
+    <section id="paymentContent">
         <table class = "bookingTables">
             <tr>
-                <th><b>Full</b></th>
-                <th><b>Card</b></th>
+                <th><b>Name</b></th>
+                <th><b>Card #</b></th>
                 <th><b>Exp</b></th>
-                <th><b>Billing</b></th>
+                <th><b>Address</b></th>
                 <th><b>City</b></th>
                 <th><b>State</b></th>
                 <th><b>ZipCode</b></th>
-                <th><b>Phone</b></th>
+                <th><b>Phone #</b></th>
+                <th><b>Action</b></th>
 
-            </tr>
-            <tr>
-                <th><b>Name</b></th>
-                <th><b>Number</b></th>
-                <th><b>Date</b></th>
-                <th><b>Address</b></th>
-                <th><b> </b></th>
-                <th><b> </b></th>
-                <th><b> </b></th>
-                <th><b>Number</b></th>
             </tr>
         </table>
 
-        <table id="billingList" class="bookingTables">
+        <table id="billingList" class="bookingTables bottomTable">
 
         </table>
 

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -28,12 +29,13 @@ public class PaymentServlet extends HttpServlet{
         String state = request.getParameter("state");
         String city = request.getParameter("city");
         String zipCode = request.getParameter("zipCode");
-        int month = request.getIntHeader("expMonth");
-        int year = request.getIntHeader("expYear");
+        String month = request.getParameter("expMonth");
+        String year = request.getParameter("expYear");
         String phoneNumber = request.getParameter("phoneNumber");
         String userEmail = request.getSession().getAttribute("userEmail").toString();
-        Date aDate = new Date(year + 1900, month, 1);
-        java.sql.Date expDate = new java.sql.Date(aDate.getTime());
+
+        String expDate = year + "-" + month + "-01";
+
         Connection con = AccountFunctions.OpenDatabase();
         PaymentFunctions.addPayment(con, AccountFunctions.getID(con, userEmail), cardName, cardNumber, expDate, securityCode, address, city, state, zipCode, phoneNumber);
         AccountFunctions.closeConnection(con);

@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.0.min.js"></script>
     <script src="js/planeModals.js" ></script>
@@ -172,9 +171,8 @@
 
                         </li>
                         <li>
-                            <input type="checkbox" name="hasFirstClass" value="true" title="First" onclick="alterSlider(2)" ><b>First</b>
-
                             <div class="planeFormInputTitle"></div>
+                            <input type="checkbox" name="hasFirstClass" value="true" title="First" onclick="alterSlider(2)" ><b>First</b>
                             <input type="range" id="seatsFirstRange" name="seatsFirst" value="0" min="0" max="400" step="1"  onchange="alterText()" disabled required>
                             <input type="text" id="seatsFirst" name="seatsFirst" value="0" disabled required>
 

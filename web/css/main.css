@@ -160,9 +160,13 @@ header {
     width: 150px;
 }
 
+#logo h1{
+    margin: 15px 0;
+}
+
 h1 {
     font-family: 'Changa One', sans-serif;
-    margin: 15px 0;
+    margin: 0 0 15px 0;
     font-size: 2em;
     font-weight: normal;
     line-height: 0.8em;
@@ -924,4 +928,19 @@ nav a.selected, nav a:hover {
     font-size: 1.2em;
     padding: 0;
     background-color: transparent;
+}
+
+#paymentContent{
+    border: solid black 2px;
+    background: yellow;
+    display: block;
+    max-width: 70%;
+    height: 500px;
+    text-align: left;
+    float: left;
+    width:60%;
+    padding: 0 20px;
+    margin-right:5%;
+    align-items: center;
+    margin-bottom: 20px;
 }
