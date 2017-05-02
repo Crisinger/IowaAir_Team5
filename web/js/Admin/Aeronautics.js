@@ -4,8 +4,14 @@
 var modelList ="";
 var planeList ="";
 
+var modelPage = "";
+var planePage = "";
+
+var planesPerPage = 20;
+var modelsPerPage = 10;
+
 // FINISH THESE THREE
-//  remove plane model
+// remove plane model
 // remove plane
 // update plane
 
@@ -43,14 +49,6 @@ $(function(){
     alterText();
     updatePlanesTable();
 
-    $("#addPlaneModelButton").click(function(){
-        if(document.getElementById("planeModel").value!=""){
-            addPlaneModel();
-        }else{
-            alert("Please enter a model name!");
-        }
-    });
-
     $("#updatePlaneModelModalButton").click(function(){
         if(document.getElementById("modelModal").value!=""){
             updatePlaneModel();
@@ -67,10 +65,6 @@ $(function(){
         closeEditPlaneModel();
     });
 
-    $("#addPlaneButton").click(function(){
-        attemptAddAirplane();
-    });
-
     $("#updatePlaneModalButton").click(function(){
         updatePlane();
     });
@@ -83,7 +77,108 @@ $(function(){
         closeEditPlane();
     });
 
+    $("#adminPlaneModelPreviousPage").click(function(){
+        resetPlaneModelTable();
+        modelPage = modelPage-1;
+        showModelPage(modelPage);
+    });
+
+    $("#adminPlaneModelNextPage").click(function(){
+        resetPlaneModelTable();
+        modelPage = modelPage +1;
+        showModelPage(modelPage);
+    });
+
+    $("#adminPlanePreviousPage").click(function(){
+        resetPlaneTable();
+        planePage = planePage-1;
+        showPlanePage(planePage);
+    });
+
+    $("#adminPlaneNextPage").click(function(){
+        resetPlaneTable();
+        planePage = planePage +1;
+        showPlanePage(planePage);
+    });
+
 });
+
+function showPlanePage(page){
+    if(page!=0){
+        document.getElementById("adminPlanePreviousPage").disabled = false;
+    } else {
+        document.getElementById("adminPlanePreviousPage").disabled = true;
+    }
+    var min = page*planesPerPage;
+    var max = (page+1)*planesPerPage;
+    var count = 0;
+    var displayed = 0;
+
+    for(var plane=0; plane<planeList.length; plane++){
+        console.log("flight#"+plane);
+        if(count<min){
+            count++;
+        }else if(count>=min && count<max){
+            displayPlane(plane);
+            displayed++;
+            count++;
+        }
+
+        if(count==max){
+            plane = planeList.length + 1;
+        }
+    }
+
+    if(displayed<planesPerPage){
+        document.getElementById("adminPlaneNextPage").disabled=true;
+    }else{
+        document.getElementById("adminPlaneNextPage").disabled=false;
+    }
+}
+
+function showModelPage(page){
+    if(page!=0){
+        document.getElementById("adminPlaneModelPreviousPage").disabled = false;
+    } else {
+        document.getElementById("adminPlaneModelPreviousPage").disabled = true;
+    }
+    var min = page*modelsPerPage;
+    var max = (page+1)*modelsPerPage;
+    var count = 0;
+    var displayed = 0;
+
+    for(var model=0; model<modelList.length; model++){
+        console.log("model#"+model);
+        if(count<min){
+            count++;
+        }else if(count>=min && count<max){
+            displayPlaneModel(model);
+            displayed++;
+            count++;
+        }
+
+        if(count==max){
+            model = modelList.length + 1;
+        }
+    }
+
+    if(displayed<modelsPerPage){
+        document.getElementById("adminPlaneModelNextPage").disabled=true;
+    }else{
+        document.getElementById("adminPlaneModelNextPage").disabled=false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 function attemptAddAirplane(){
     var modelSelection = document.getElementById("planeModelSelect");
@@ -99,6 +194,8 @@ function attemptAddAirplane(){
             updatePlanesTable();
         }
     });
+
+    return false;
 }
 
 function updatePlanesTable(){
@@ -111,10 +208,8 @@ function updatePlanesTable(){
             planeList = JSON.parse(msg).planes;
             console.log("finished parsing planes msg");
             resetPlaneTable();
-            for (var i = 0; i < planeList.length; i++) {
-                console.log("at plane #"+i);
-                displayPlane(i);
-            }
+            planePage=0;
+            showPlanePage(planePage);
         }
     });
 }
@@ -193,19 +288,11 @@ function addPlaneModel(){
             updatePlaneModelTable();
         }
     });
+
+    return false;
 }
 
 function resetForms(){
-    /*document.getElementById("planeModel").value = "";
-    document.getElementById("modelCapacity").value = 450;
-    document.getElementById("modelFuel").value = 160;
-    document.getElementById("modelBurn").value=5.6;
-    document.getElementById("modelVelocity").value=1250;
-
-    document.getElementById("seatsEconomyRange").value=0;
-    document.getElementById("seatsBusinessRange").value=0;
-    document.getElementById("seatsFirstRange").value=0;
-    alterText();*/
     document.getElementById("planeModelForm").reset();
     document.getElementById("planeModelModalForm").reset();
 
@@ -308,14 +395,16 @@ function updatePlaneModelTable(){
             modelList = JSON.parse(msg).models;
             console.log("finished parsing msg")
             resetPlaneModelTable();
-            for (var i = 0; i < modelList.length; i++) {
-                console.log("at model #"+i);
-                displayPlaneModel(i);
-            }
+            modelPage = 0;
+            showModelPage(modelPage);
             updatePlaneModelSelection();
         }
     });
 
+}
+
+function enableAddModelButton(){
+    document.getElementById("addPlaneButton").disabled = false;
 }
 
 function resetPlaneModelTable(){

@@ -7,19 +7,6 @@ $(function(){
     console.log("document is ready");
     updateManagerTable();
 
-    $("#addManagerButton").click(function(){
-        console.log("pressed add manager button");
-        if(document.getElementById("managerName").value != "") {
-            if (emailCheck()) {
-                console.log("attempting add manager");
-                attemptAddManager();
-            }
-            console.log("finished with add manager button");
-        }else{
-            alert("Please enter an email");
-        }
-    });
-
     $("#updateManagerButton").click(function(){
         console.log("pressed update manager button");
         sendUpdateInformation();
@@ -83,22 +70,6 @@ function closeManagerModal(){
     document.getElementById("managerModal").style.display = "none";
 }
 
-/**
- * Checks to see if email and confirm email match
- */
-function emailCheck(){
-    var email = document.getElementById("managerEmail").value;
-    var confirmEmail = document.getElementById("managerEmailConfirm").value;
-    console.log("checking emails");
-    if(email == confirmEmail){
-        $("#managerErrorMessage").css("visibility","hidden");
-    } else {
-        $("#managerErrorMessage").css("visibility","visible");
-    }
-    console.log(email==confirmEmail);
-    return (email==confirmEmail);
-}
-
 function attemptAddManager(){
 
     var sendInfo = "managerName="+ document.getElementById("managerName").value+"&";
@@ -106,7 +77,7 @@ function attemptAddManager(){
 
     console.log("sendInfo: "+sendInfo);
 
-    $.get( "Admin.Managerial.AddManager", sendInfo,
+    $.post( "Admin.Managerial.AddManager", sendInfo,
         function(msg){
             console.log(msg);
             if(msg == "Added"){
@@ -119,17 +90,16 @@ function attemptAddManager(){
         }
     );
 
-
+    return false;
 }
 
 function updateManagerTable(){
     console.log("Getting manager table...");
     $.post("Admin.Managerial.ManagerList","value=1",
         function(msg){
-            if(msg != "") {
+            if(msg.length>0) {
                 console.log("about to parse");
-                var table = JSON.parse(msg);
-                table = table.manager;
+                var table = JSON.parse(msg).manager;
                 console.log("Finished Parsing");
 
                 for (var i = 0; i < table.length; i++) {

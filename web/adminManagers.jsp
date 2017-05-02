@@ -6,10 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="Admin.Managerial.AddManager" %>
-<%@ page import="Admin.Managerial.RemoveManager" %>
-<%@ page import="Admin.Managerial.ManagerList" %>
-<%@ page import="Admin.Managerial.UpdateManager" %>
 
 
 
@@ -135,29 +131,39 @@
 <div id="adminManagers">
     <h1>Managers</h1>
     <br>
-    <form id="adminManagerAddForm">
-        Full Name: <input type="text" id="managerName" name="managerName" placeholder="Full Name" required>
-        Email: <input type="email" id="managerEmail" name="managerEmail" placeholder="Email" required>
-        Confirm Email: <input type="email" id="managerEmailConfirm" name="managerEmail" placeholder="Email" required>
-        <br>
-        <div id="managerErrorMessage" style="visibility:hidden;">
-            <p><span style="color: red;" >Emails do not match</span></p>
-        </div>
-    </form>
-    <button  id="addManagerButton">Add Manager</button>
-    <table class="admin_man_table">
-        <tr>
-            <th><b>ID</b></th>
-            <th><b>Name</b></th>
-            <th><b>Email</b></th>
-            <th><b>Password</b></th>
-            <th><b>Action</b></th>
-        </tr>
-    </table>
-    <table id="adminAllManagers" class="admin_man_table">
-        <%-- Information being retrieved from server. Check Managerial.js for function updateManagerTable
-        --%>
-    </table>
+    <section id="sidebar">
+        <form id="adminManagerAddForm" method="post" onsubmit="return attemptAddManager()">
+            <p><b>Name: </b></p>
+            <input type="text" id="managerName" name="managerName" placeholder="Full Name" required>
+            <p><b>Email: </b></p>
+            <input type="email" id="managerEmail" name="managerEmail" placeholder="Email" required>
+            <br>
+            <button type="submit"  id="addManagerButton">Add Manager</button>
+        </form>
+    </section>
+    <section id="adminManagerView">
+        <section id="adminManagerControl" >
+            <div>
+                <button id="adminManagerPreviousPage" style="margin-left:20px;">Previous</button>
+                <button id="adminManagerNextPage" >Next</button>
+            </div>
+        </section>
+        <section id="adminManagerContent">
+            <table class="admin_man_table">
+                <tr>
+                    <th><b>ID</b></th>
+                    <th><b>Name</b></th>
+                    <th><b>Email</b></th>
+                    <th><b>Password</b></th>
+                    <th><b>Action</b></th>
+                </tr>
+            </table>
+            <table id="adminAllManagers" class="admin_man_table">
+                <%-- Information being retrieved from server. Check Managerial.js for function updateManagerTable
+                --%>
+            </table>
+        </section>
+    </section>
 </div>
 
 <div id="managerModal">

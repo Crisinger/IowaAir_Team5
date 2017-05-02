@@ -116,7 +116,8 @@ p {
     padding-bottom: 20px;
 }
 
-#sidebar button, #adminLocationTableNavigation button, #flightQueryControls button{
+#sidebar button, #adminLocationTableNavigation button, #flightQueryControls button, #adminPlaneModelTableNavigation button,
+#adminPlaneTableNavigation button, #planeModelForm button, #planeForm button, #adminManagerControl button{
     padding: 5px 10px;
     background-color: black;
     color: white;
@@ -127,11 +128,19 @@ p {
     font-weight: bold;
 }
 
-#sidebar button:hover, #adminLocationTableNavigation button:hover, #flightQueryControls button:hover{
+#sidebar button:hover, #adminLocationTableNavigation button:hover, #flightQueryControls button:hover, #adminPlaneModelTableNavigation button:hover,
+#adminPlaneTableNavigation button:hover, #planeModelForm button:hover, #planeForm button:hover, #adminManagerControl button:hover{
 
     background-color: yellow;
     color: black;
     border: black solid 2px;
+}
+
+
+#planeModelForm button:disabled, #planeForm button:disabled{
+    background-color: gray;
+    color:black;
+    border:dimgray solid 2px;
 }
 
 #sidebar.locationsidebar{
@@ -477,7 +486,7 @@ nav a.selected, nav a:hover {
 
 
 
-
+/*
 #adminManagers div, #adminLocations form{
     width: 90%;
     margin: 0 5%;
@@ -490,6 +499,7 @@ nav a.selected, nav a:hover {
 #adminManagers div div {
     display: inline-block;
 }
+*/
 
 .admin_man_table{
     border-top: solid medium black;
@@ -501,7 +511,7 @@ nav a.selected, nav a:hover {
     font-size: 1.3em;
     text-align: left;
     padding: 20px 0 0 0;
-    width: 25%;
+    width: 20%;
 }
 .admin_man_table td, .admin_man_table tr{
     padding: 10px 0 0 0;
@@ -509,7 +519,7 @@ nav a.selected, nav a:hover {
 }
 
 .admin_man_table td {
-    width: 25%;
+    width: 20%;
 }
 
 .admin_man_table td button {
@@ -582,12 +592,24 @@ nav a.selected, nav a:hover {
 }
 
 #adminPlanes form{
+    background-color: yellow;
+    border: solid black 2px;
     width: 90%;
     margin: 0 5%;
 }
 
 #adminPlanes form input{
-    margin: 0 5% 0 0;
+    margin: 0 50px 0 0;
+}
+
+#adminPlanes form ul{
+
+    margin: 20px 5% 0 5%;
+}
+
+#adminPlanesCheckBoxLabels div ul{
+    margin:25px 0;
+    width:100%;
 }
 
 .admin_planeModel_table {
@@ -646,12 +668,8 @@ nav a.selected, nav a:hover {
 }
 
 #adminPlanes form button, #adminLocations form ul li button{
-    margin: 5px 0 0 0;
+    margin: 20px 5%;
 }
-
-
-
-
 
 /* The Modal (background) */
 .planeModelModal , .planeModal{
@@ -696,11 +714,11 @@ nav a.selected, nav a:hover {
     background-color: green;
 }
 
-#flightQueryView, #flightQueryControls{
+#flightQueryView, #flightQueryControls, #adminManagerControl{
     margin-left: 25%;
 }
 
-#flightQueryView div , #flightQueryControls div{
+#flightQueryView div , #flightQueryControls div, #adminManagerControl div{
     width: 70%;
     height: 120px;
     display: flex;
@@ -712,7 +730,7 @@ nav a.selected, nav a:hover {
     margin-top: 10px;
 }
 
-#flightQueryView div div, #flightQueryControls div div{
+#flightQueryView div div, #flightQueryControls div div, #adminManagerControl{
     width: 45%;
     height: 100%;
     display: inline-block;
@@ -790,7 +808,7 @@ nav a.selected, nav a:hover {
 }
 
 
-#adminLocationTablesContainer{
+#adminLocationTablesContainer, #adminPlaneModelsTablesContainer, #adminPlaneTablesContainer{
     display: block;
     background-color: whitesmoke;
     border: solid black 2px;
@@ -798,14 +816,14 @@ nav a.selected, nav a:hover {
     margin: 20px 5% 0 5%;
 }
 
-#adminLocationTableNavigation{
+#adminLocationTableNavigation, #adminPlaneModelTableNavigation, #adminPlaneTableNavigation{
     display: flex;
     width: 90%;
     align-items: stretch;
     margin-left:5%;
 }
 
-#adminLocationTableNavigation button{
+#adminLocationTableNavigation button, #adminPlaneModelTableNavigation button, #adminPlaneTableNavigation button{
     border: black solid 2px;
     width:10ch;
 }
@@ -817,12 +835,26 @@ nav a.selected, nav a:hover {
     margin: auto 20px auto auto;
 }
 
-#flightQueryControls div{
+#flightQueryControls div, #adminManagerControl div{
     height: 50px;
     background-color: yellow;
     line-height: 50px;
     vertical-align: middle;
 
+}
+
+#adminManagerView{
+    margin-left: 28%;
+}
+
+#adminManagerControl{
+    width: 90%;
+    margin: 0 auto 20px 0;
+}
+
+#adminManagerControl div{
+    text-align: center;
+    width:100%;
 }
 
 #flightQueryControls div div div div{
@@ -930,7 +962,7 @@ nav a.selected, nav a:hover {
     background-color: transparent;
 }
 
-#paymentContent{
+#paymentContent, #adminManagerContent{
     border: solid black 2px;
     background: yellow;
     display: block;
@@ -943,4 +975,21 @@ nav a.selected, nav a:hover {
     margin-right:5%;
     align-items: center;
     margin-bottom: 20px;
+}
+
+#adminManagerContent{
+    max-width:90%;
+    width:90%;
+    margin-right:0;
+    padding:0;
+    background-color: whitesmoke;
+}
+
+
+input[type=range]::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 3px;
+    background: black;
+    cursor: pointer;
 }

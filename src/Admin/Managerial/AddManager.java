@@ -18,22 +18,18 @@ import java.util.Random;
 @WebServlet("/Admin.Managerial.AddManager")
 public class AddManager extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String manName = request.getParameter("managerName");
         String manEmail = request.getParameter("managerEmail");
-
         System.out.println(manName+manEmail);
-        String addedStatus = "NotAdded";
+        String addedStatus = (addManager(manName,manEmail))?"Added":"NotAdded";
 
-        if(manName!=null && manEmail!=null){
-            addedStatus = (addManager(manName,manEmail))? "Added":"NotAdded";
-        }
         response.setContentType("text/plain");
         System.out.println(addedStatus);
         response.getWriter().print(addedStatus);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 
     private static boolean addManager(String managerName, String managerEmail){
@@ -46,7 +42,7 @@ public class AddManager extends HttpServlet {
 
         // Added email functionality
         SendEmail mailer = new SendEmail();
-
+        /*
         try {
             mailer.sendEmail(managerEmail, managerPass);
             System.out.println("Email sent.");
@@ -55,7 +51,7 @@ public class AddManager extends HttpServlet {
             ex.printStackTrace();
         }
         // End of added email functionality
-
+*/
         return managerAdded;
     }
 

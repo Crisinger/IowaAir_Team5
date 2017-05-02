@@ -133,7 +133,7 @@
 
 <div id="adminPlanes">
     <h1>New Plane Model</h1>
-    <form id="planeModelForm">
+    <form id="planeModelForm" onsubmit="return addPlaneModel()" method="post">
         <ul class="modelForm">
             <li><div class="planeFormInputTitle"><b>Plane Model: </b></div>
                 <input type="text" id="planeModel" name="planeModel" placeholder="Type" maxlength="40" required>
@@ -154,67 +154,85 @@
                 <input type="range" id="modelVelocity" name="modelVelocity" min="250" max="2000" maxlength = "4" step="25" onchange="alterText()" required>
                 <input type="text" id="modelVelocityText" name="modelVelocity" value="0" disabled required>
             </li>
-
             <li>
-                <div class="classesCheckboxLabel">
-                    <div class="planeFormInputTitle"><b>Available Classes: </b></div>
-                    <ul class="classesCheckbox" >
-                        <li><div class="planeFormInputTitle"></div>
-                            <input type="checkbox" name="hasEconomyClass" value="true" title="Economy" onclick="alterSlider(0)" ><b>Economy</b>
-                            <input type="range" id="seatsEconomyRange" name="seatsEconomy" value="0" min="0" max="400" step="1" onchange="alterText()" disabled required>
-                            <input type="text" id="seatsEconomy" name="seatsEconomy" value="0" disabled required>
-                        </li>
-                        <li><div class="planeFormInputTitle"></div>
-                            <input type="checkbox" name="hasBusinessClass" value="true" title="Business" onclick="alterSlider(1)"><b>Business</b>
-                            <input type="range" id="seatsBusinessRange" name="seatsBusiness" value="0" min="0" max="400" step="1" onchange="alterText()" disabled required>
-                            <input type="text" id="seatsBusiness" name="seatsBusiness" value="0" disabled required>
+                <br>
+                <div id="adminPlanesCheckBoxLabels" class="classesCheckboxLabel">
+                    <div class="planeFormInputTitle"><b>Classes: </b>
+                        <ul>
+                            <li style="height:32px;">
+                                <input type="checkbox" name="hasEconomyClass" value="true" title="Economy" onclick="alterSlider(0)" ><b>Economy</b>
+                            </li>
+                            <li style="height:32px;">
+                                <input type="checkbox" name="hasBusinessClass" value="true" title="Business" onclick="alterSlider(1)"><b>Business</b>
+                            </li>
+                            <li style="height:32px;">
+                                <input type="checkbox" name="hasFirstClass" value="true" title="First" onclick="alterSlider(2)" ><b>First</b>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="display:inline-flex;width:500px;">
+                        <b>&nbsp;</b>
+                        <ul class="classesCheckbox" >
+                            <li>
+                                <input type="range" id="seatsEconomyRange" name="seatsEconomy" value="0" min="0" max="400" step="1" onchange="alterText()" disabled required>
+                                <input type="text" id="seatsEconomy" name="seatsEconomy" value="0" disabled required>
+                            </li>
+                            <li>
+                                <input type="range" id="seatsBusinessRange" name="seatsBusiness" value="0" min="0" max="400" step="1" onchange="alterText()" disabled required>
+                                <input type="text" id="seatsBusiness" name="seatsBusiness" value="0" disabled required>
+                            </li>
+                            <li>
+                                <input type="range" id="seatsFirstRange" name="seatsFirst" value="0" min="0" max="400" step="1"  onchange="alterText()" disabled required>
+                                <input type="text" id="seatsFirst" name="seatsFirst" value="0" disabled required>
+                            </li>
+                        </ul>
+                    </div>
 
-                        </li>
-                        <li>
-                            <div class="planeFormInputTitle"></div>
-                            <input type="checkbox" name="hasFirstClass" value="true" title="First" onclick="alterSlider(2)" ><b>First</b>
-                            <input type="range" id="seatsFirstRange" name="seatsFirst" value="0" min="0" max="400" step="1"  onchange="alterText()" disabled required>
-                            <input type="text" id="seatsFirst" name="seatsFirst" value="0" disabled required>
-
-                        </li>
-                    </ul>
                 </div>
             </li>
         </ul>
+        <button type="submit" id="addPlaneModelButton" name="addPlaneModelButton">Add Model</button>
     </form>
-    <button id="addPlaneModelButton" name="addPlaneModelButton">Add Model</button>
     <br>
-    <table class="admin_man_table admin_planeModel_table" >
-        <tr>
-            <th><b>Model</b></th>
-            <th><b>Capacity</b></th>
-            <th><b>Economy</b></th>
-            <th><b>Business</b></th>
-            <th><b>First</b></th>
-            <th><b>Fuel</b></th>
-            <th><b>Economy</b></th>
-            <th><b>Business</b></th>
-            <th><b>First</b></th>
-        </tr>
-        <tr>
-            <th></th>
-            <th>(persons)</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th>(persons)</th>
-            <th>(persons)</th>
-            <th>(persons)</th>
-        </tr>
-    </table>
-    <table id="planeModelListTable" class="admin_man_table admin_planeModel_table" >
-    </table>
+    <div id="adminPlaneModelTableNavigation">
+        <button id="adminPlaneModelPreviousPage">Previous</button>
+        <button id="adminPlaneModelNextPage">Next</button>
+    </div>
+    <section id="adminPlaneModelsTablesContainer" style="height:600px">
+        <table class="admin_man_table admin_planeModel_table" >
+            <tr>
+                <th><b>Model</b></th>
+                <th><b>Capacity</b></th>
+                <th><b>Economy</b></th>
+                <th><b>Business</b></th>
+                <th><b>First</b></th>
+                <th><b>Economy</b></th>
+                <th><b>Business</b></th>
+                <th><b>First</b></th>
+                <th><b>Action</b></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>(persons)</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>(persons)</th>
+                <th>(persons)</th>
+                <th>(persons)</th>
+            </tr>
+        </table>
+        <table id="planeModelListTable" class="admin_man_table admin_planeModel_table" >
+            <%-- Table generated in javascript --%>
+        </table>
+    </section>
+    <br>
     <br>
     <h1>New Plane</h1>
-    <form>
+    <form id="planeForm" method="post" onsubmit="return attemptAddAirplane()">
         <ul class="planeForm">
             <li><div class="planeFormInputTitle"><b>Plane Type: </b></div>
-                <select id="planeModelSelect" name="planeSelect">
+                <select id="planeModelSelect" name="planeSelect" onchange="enableAddModelButton()">
                     <option disabled selected>Select Plane Model</option>
                 </select>
             </li>
@@ -231,26 +249,34 @@
                 <input type="text" id="planeFirstSeats" name="planeFirstSeats" disabled >
             </li>
             <li>
-
+                <br>
             </li>
         </ul>
+        <button type="submit" id="addPlaneButton" name="addPlaneButton" disabled>Add Plane</button>
     </form>
-    <button type="submit" id="addPlaneButton" name="addPlaneButton" >Add Plane</button>
     <br>
-    <table class="admin_man_table admin_planeModel_table" >
-        <tr>
-            <th><b>ID</b></th>
-            <th><b>Model</b></th>
-            <th><b>Action</b></th>
-        </tr>
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-    </table>
-    <table id="planeTable" class="admin_man_table admin_planeModel_table" >
-    </table>
+    <div id="adminPlaneTableNavigation">
+        <button id="adminPlanePreviousPage">Previous</button>
+        <button id="adminPlaneNextPage">Next</button>
+    </div>
+
+    <section id="adminPlaneTablesContainer" style="height:820px">
+        <table class="admin_man_table admin_planeModel_table" >
+            <tr>
+                <th><b>ID</b></th>
+                <th><b>Model</b></th>
+                <th><b>Action</b></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </table>
+        <table id="planeTable" class="admin_man_table admin_planeModel_table" >
+            <%-- Table generated in javascript --%>
+        </table>
+    </section>
     <br>
 </div>
 
@@ -312,7 +338,6 @@
                     </div>
                 </li>
             </ul>
-
         </form>
         <button id="updatePlaneModelModalButton" name="updatePlaneModelModalButton">Update Model</button>
         <button id="removePlaneModelModalButton" name="removePlaneModelModalButton">Remove Model</button>
