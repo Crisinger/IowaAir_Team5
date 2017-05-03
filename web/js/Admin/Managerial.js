@@ -2,6 +2,10 @@
  * Created by johnn on 4/15/2017.
  */
 
+var managerList="";
+var managerPage="";
+var managersPerPage = 10;
+
 $(function(){
 
     console.log("document is ready");
@@ -21,6 +25,18 @@ $(function(){
 
     $("#managerModalClose").click(function(){
         closeManagerModal();
+    });
+
+    $("#adminManagerPreviousPage").click(function(){
+        removeTableContents();
+        managerPage = managerPage-1;
+        showManagerTable(managerPage);
+    });
+
+    $("#adminManagerNextPage").click(function(){
+        removeTableContents();
+        managerPage = managerPage +1;
+        showManagerTable(managerPage);
     });
 
 });
@@ -99,17 +115,51 @@ function updateManagerTable(){
         function(msg){
             if(msg.length>0) {
                 console.log("about to parse");
-                var table = JSON.parse(msg).manager;
+                managerList = JSON.parse(msg).manager;
                 console.log("Finished Parsing");
-
-                for (var i = 0; i < table.length; i++) {
-                    console.log("value=" + i);
-                    displayRow(table[i].manID, table[i].manName, table[i].manEmail, table[i].manPass);
-                }
+                managerPage=0;
+                showManagerTable(managerPage);
             }
         }
     );
 }
+
+function showManagerTable(page){
+    if(page!=0){
+        document.getElementById("adminManagerPreviousPage").disabled = false;
+    } else {
+        document.getElementById("adminManagerPreviousPage").disabled = true;
+    }
+    var min = page*managersPerPage;
+    var max = (page+1)*managersPerPage;
+    var count = 0;
+    var displayed = 0;
+
+    for(var manager=0; manager<managerList.length; manager++){
+        console.log("flight#"+manager);
+        if(count<min){
+            count++;
+        }else if(count>=min && count<max){
+            displayRow(managerList[manager].manID, managerList[manager].manName, managerList[manager].manEmail, managerList[manager].manPass);
+            displayed++;
+            count++;
+        }
+
+        if(count==max){
+            manager = managerList.length + 1;
+        }
+    }
+
+    if(displayed<managersPerPage){
+        document.getElementById("adminManagerNextPage").disabled=true;
+    }else{
+        document.getElementById("adminManagerNextPage").disabled=false;
+    }
+}
+
+
+
+
 
 function displayRow(manID,manName,manEmail,manPassword){
     console.log("inserting "+manName+" into table");

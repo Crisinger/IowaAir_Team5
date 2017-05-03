@@ -261,13 +261,7 @@
             Type:
             <select id="flightPlaneModelSelect" name="flightPlaneModel" onchange="canModelMakeTheDistance()" onclick="enableNextEntry(7)" disabled >
             </select>
-            Price Adjustment:<input type="text" id="flightDistancePrice" placeholder="$" value="" style="width:5ch;" disabled >
-            Demand: <input type="range" id="flightDemandSlider" name="points" min="1" max="20" step="1" onchange="updateSliderText()">
-            <input type="text" id="flightDemandValue" style="width:3ch;" disabled>
-        </p>
-        <br>
 
-        <div>
             Occurrence:
             <select id="flightOccurrenceSelect" name="occurrences">
                 <option disabled selected>--Select Occurrence--</option>
@@ -275,7 +269,6 @@
                 <option value="1">Daily</option>
                 <option value="7">Weekly</option>
             </select>
-
             Occurrence Period:
             <select id="flightOccurrencePeriodSelect" name="timePeriod">
                 <option disabled selected>--Select Period--</option>
@@ -287,12 +280,14 @@
                 <option value="365">1 Year</option>
             </select>
 
-        </div>
 
-
-
-
-
+        </p>
+        <br>
+        <p class="admin_flight_info">
+            Price Adjustment:<input type="text" id="flightDistancePrice" placeholder="$" value="" style="width:5ch;" disabled >
+            Demand: <input type="range" id="flightDemandSlider" name="points" min="1" max="20" step="1" onchange="updateSliderText()">
+            <input type="text" id="flightDemandValue" style="width:3ch;" disabled>
+        </p>
         <button id="addFlightButton" name="addFlightButton" class="admin_flight_info_button" onclick="viewAddFlightModal()" disabled>Show Available Planes</button>
     </div>
 </div>
