@@ -136,7 +136,6 @@ function showManagerTable(page){
     var displayed = 0;
 
     for(var manager=0; manager<managerList.length; manager++){
-        console.log("flight#"+manager);
         if(count<min){
             count++;
         }else if(count>=min && count<max){

@@ -7,9 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <%
@@ -49,11 +46,11 @@
         }
         /* Modal Content */
         #managerModalContent {
-            background-color: #fefefe;
+            background-color: whitesmoke;
             margin: auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 50%;
+            width: 340px;
         }
 
         /* The Close Button */
@@ -70,6 +67,25 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        #managerModalForm div{
+            display: flex;
+        }
+
+        #managerModalForm p {
+            background-color:whitesmoke;
+            width: 12ch;
+
+        }
+
+        #removeManagerButton{
+            margin: 0 auto 0 0;
+        }
+
+        #updateManagerButton{
+            margin: 0 0 0 auto;
+        }
+
     </style>
 </head>
 
@@ -172,21 +188,23 @@
         <form id="managerModalForm">
             <div>
                 <p>ID: </p>
-                <input type="hidden" id="managerModalID" name="managerModalID" required>
+                <input type="text" id="managerModalID" name="managerModalID" readonly>
             </div>
             <div>
-                <p>Full Name: </p>
+                <p><b>Full Name:</b></p>
                 <input type="text" id="managerModalName" name="managerModalName" placeholder="Full Name" required>
             </div>
             <div>
-                <p>Email: </p>
+                <p><b>Email:</b> </p>
                 <input type="email" id="managerModalEmail" name="managerModalEmail" placeholder="Email" required>
             </div>
             <div>
-                <p>Password: </p>
+                <p><b>Password:</b></p>
                 <input type="text" id="managerModalPassword" name="managerModalPassword" placeholder="Password" required>
             </div>
         </form>
+        <br>
+        <br>
         <button id="removeManagerButton" name="removeManagerButton" >Remove Manager</button>
         <button id="updateManagerButton" name="updateManagerButton" >Update Manager</button>
     </div>

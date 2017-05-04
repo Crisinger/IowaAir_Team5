@@ -117,7 +117,8 @@ p {
 }
 
 #sidebar button, #adminLocationTableNavigation button, #flightQueryControls button, #adminPlaneModelTableNavigation button,
-#adminPlaneTableNavigation button, #planeModelForm button, #planeForm button, #adminManagerControl button{
+#adminPlaneTableNavigation button, #planeModelForm button, #planeForm button, #adminManagerControl button, #managerModal button,
+#adminFlightsForm button{
     padding: 5px 10px;
     background-color: black;
     color: white;
@@ -128,16 +129,20 @@ p {
     font-weight: bold;
 }
 
+#managerModal button, #adminFlightsForm button{
+    border: solid black 2px;
+}
+
 #sidebar button:hover, #adminLocationTableNavigation button:hover, #flightQueryControls button:hover, #adminPlaneModelTableNavigation button:hover,
-#adminPlaneTableNavigation button:hover, #planeModelForm button:hover, #planeForm button:hover, #adminManagerControl button:hover{
+#adminPlaneTableNavigation button:hover, #planeModelForm button:hover, #planeForm button:hover, #adminManagerControl button:hover,
+#managerModal button:hover, #adminFlightsForm button:hover{
 
     background-color: yellow;
     color: black;
     border: black solid 2px;
 }
 
-
-#planeModelForm button:disabled, #planeForm button:disabled{
+#planeModelForm button:disabled, #planeForm button:disabled, #adminFlightsForm button:disabled{
     background-color: gray;
     color:black;
     border:dimgray solid 2px;
@@ -586,16 +591,20 @@ nav a.selected, nav a:hover {
 
 
 
-#adminPlanes{
+#adminPlanes, #adminFlights{
     width: 90%;
     margin: 0 5%;
 }
 
-#adminPlanes form{
+#adminPlanes form, #adminFlights form{
     background-color: yellow;
     border: solid black 2px;
     width: 90%;
     margin: 0 5%;
+}
+
+#adminFlights form p {
+    background-color: transparent;
 }
 
 #adminPlanes form input{
