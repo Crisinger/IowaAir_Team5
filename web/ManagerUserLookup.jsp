@@ -31,19 +31,15 @@
         <h1>Iowa Air</h1>
         <h2>Travel Like A Hawkeye</h2>
     </a>
+    <a href="index.jsp" id="logo">
+        <h1>Iowa Air</h1>
+        <h2>Travel Like A Hawkeye</h2>
+    </a>
     <nav>
         <ul>
             <li>
                 <div class="account-dropdown">
-                    <a href="manager.jsp">
-                        <button class="account-dropbutton">Checkin</button>
-                    </a>
-                </div>
-            </li>
-
-            <li>
-                <div class="account-dropdown">
-                    <a href="ManagerSearchFlight.jsp">
+                    <a href="index.jsp">
                         <button class="account-dropbutton">Search Flight</button>
                     </a>
                 </div>
@@ -51,16 +47,16 @@
 
             <li>
                 <div class="account-dropdown">
-                    <a href="ManagerSearchFlight.jsp">
-                        <button class="account-dropbutton">Flight Search</button>
+                    <a href="ManagerUserLookup.jsp">
+                        <button class="account-dropbutton">User Lookup</button>
                     </a>
                 </div>
             </li>
 
             <li>
                 <div class="account-dropdown">
-                    <a href="ManagerCancelFlight.jsp">
-                        <button class="account-dropbutton">Cancel Flight</button>
+                    <a href="manager.jsp">
+                        <button class="account-dropbutton">Checkin Customer</button>
                     </a>
                 </div>
             </li>
@@ -81,6 +77,14 @@
 
 </header>
 <body>
+
+<div class = checkin>
+    <form id = "LookupUserHistory">
+        Enter User Email:<br>
+        <input type="text" required placeholder="User Email" name="userLookup">
+        <input type="submit" value="Submit">
+    </form>
+</div>
 
 </body>
 </html>

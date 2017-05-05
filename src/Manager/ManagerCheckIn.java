@@ -45,8 +45,4 @@ public class ManagerCheckIn {
             System.exit(0);
         }
     }
-
-
-
-
 }

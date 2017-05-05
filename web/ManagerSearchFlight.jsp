@@ -35,8 +35,8 @@
         <ul>
             <li>
                 <div class="account-dropdown">
-                    <a href="manager.jsp">
-                        <button class="account-dropbutton">Checkin</button>
+                    <a href="index.jsp">
+                        <button class="account-dropbutton">Search Flight</button>
                     </a>
                 </div>
             </li>
@@ -51,16 +51,8 @@
 
             <li>
                 <div class="account-dropdown">
-                    <a href="ManagerAddFlight.jsp">
-                        <button class="account-dropbutton">Book Flight</button>
-                    </a>
-                </div>
-            </li>
-
-            <li>
-                <div class="account-dropdown">
-                    <a href="ManagerCancelFlight.jsp">
-                        <button class="account-dropbutton">Cancel Flight</button>
+                    <a href="manager.jsp">
+                        <button class="account-dropbutton">Checkin Customer</button>
                     </a>
                 </div>
             </li>

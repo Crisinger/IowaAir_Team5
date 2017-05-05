@@ -34,7 +34,7 @@
         <ul>
             <li>
                 <div class="account-dropdown">
-                    <a href="ManagerSearchFlight.jsp">
+                    <a href="index.jsp">
                         <button class="account-dropbutton">Search Flight</button>
                     </a>
                 </div>
@@ -50,16 +50,8 @@
 
             <li>
                 <div class="account-dropdown">
-                    <a href="ManagerAddFlight.jsp">
-                        <button class="account-dropbutton">Book Flight</button>
-                    </a>
-                </div>
-            </li>
-
-            <li>
-                <div class="account-dropdown">
-                    <a href="ManagerCancelFlight.jsp">
-                        <button class="account-dropbutton">Cancel Flight</button>
+                    <a href="manager.jsp">
+                        <button class="account-dropbutton">Checkin Customer</button>
                     </a>
                 </div>
             </li>
@@ -92,7 +84,7 @@
             <input type="text" name="firstname" placeholder="First Name" required><br>
             <input type="text" name="lastname" placeholder="Last Name" required><br>
             <input type="text" name="customerEmail" placeholder="Customer Email" required><br>
-            <input type="text" name="referenceID" placeholder="Flight ID Number" required><br><br>
+            <input type="text" name="referenceID" placeholder="Reference ID Number" required><br><br>
         </div>
 
         <br>
@@ -111,7 +103,7 @@
 
         <br>
 
-        <input type="submit" value="Submit" class = "submitButton">
+        <input type="submit" value="Submit" class = "submitButton" onsubmit="return validate(this);">
         <input type="reset" value="Reset" class = "submitButton">
     </form>
 </body>
@@ -132,16 +124,17 @@
 
             if(x < max_fields){ //max input box allowed
                 x++; //text box increment
-                $(wrapper).append('<div><input type="text" name="mytext[]" placeholder="bag lbs"/>' +
+                $(wrapper).append('<div><input type="number" name="bagWeight" placeholder="bag lbs" max=100 min=0/>' +
                     '<a href="#" class="remove_field">Remove</a></div>'); //add input box
 
-                document.getElementById("price").placeholder = "$" + 50*x; //Increment price
+                document.getElementById("price").placeholder = "$ " + 50*x; //Increment price
             }
         });
 
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
             e.preventDefault(); $(this).parent('div').remove(); x--;
-            document.getElementById("price").placeholder = "$" + 50*x; //decrement price
+
+            document.getElementById("price").placeholder = "$ " + 50*x; //decrement price
         })
     });
 </script>
