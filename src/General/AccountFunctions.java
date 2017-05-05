@@ -143,6 +143,8 @@ public class AccountFunctions
                 accountAdded = true;
             }
 
+            System.out.println(accountAdded);
+
             c.commit();
         } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );

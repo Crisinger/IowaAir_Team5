@@ -14,7 +14,6 @@
     } else {
         response.sendRedirect("logout.jsp");
     }
-
 %>
 
 <html>

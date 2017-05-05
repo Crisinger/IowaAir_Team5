@@ -135,7 +135,7 @@
         }
 
         #adminAddFlightModalUL li{
-            border-top: solid black 1px;
+            border: solid black 1px;
         }
 
         #adminAddFlightModalUL li div {
@@ -161,10 +161,8 @@
 
         #adminAddFlightModalUL li:hover, #adminAddFlightModalForm div a{
             background-color: yellow;
-            border: solid black 2px;
+            border: solid black 1px;
         }
-
-
 
     </style>
 
@@ -225,77 +223,72 @@
     </nav>
 </header>
 
-<div id="adminFlights">
+<section id="adminFlights">
     <h1>Flights</h1>
-    <div>
-        <p class="admin_flight_type"><b>Departure</b></p>
-        <p class="admin_flight_info">
-            Date: <input type="text" name="flightDepartureDate" placeholder="Select Date" id="flightDeparturedatepicker" onclick="enableNextEntry(1)" required>
-            Time: <input type="text" name="flightDepartureTime" placeholder="Select Time" id="flightDeparturetimepicker" disabled onclick="enableNextEntry(2)" required>
-            Location:
-            <select id="flightDepartureLocationState" name="flightDepartureLocationState" disabled onclick="enableNextEntry(3)" required>
-                <option disabled selected>---Select a state---</option>
-                <%=CityFunctions.getActiveStatesList("alterDepartureCitySelect")%>
-            </select>
-            <select id="flightDepartureLocationCity" name="flightDepartureLocationCity" disabled onclick="enableNextEntry(4)" required>
-                <option disabled selected>---Select a city---</option>
-                <%=CityFunctions.getActiveCitiesList()%>
-            </select>
-        </p>
-        <p class="admin_flight_type"><b>Arrival</b></p>
-        <p class="admin_flight_info">
-            Date: <input type="text" name="flightArrivalDate" placeholder="Select Date" id="flightArrivaldatepicker"  disabled>
-            Time: <input type="text" name="flightArrivalTime" placeholder="Select Time" id="flightArrivaltimepicker"  disabled>
-            Location:
-            <select id="flightArrivalLocationState" name="flightArrivalLocationState" onclick="enableNextEntry(5)" disabled>
-                <option id="flightArrivalLocationStateDefault" disabled selected>---Select a state---</option>
-                <%=CityFunctions.getActiveStatesList("alterArrivalCitySelect")%>
-            </select>
-            <select id="flightArrivalLocationCity" name="flightArrivalLocationCity" onclick="enableNextEntry(6)" disabled>
-                <option disabled selected>---Select a city---</option>
-                <%=CityFunctions.getActiveCitiesList()%>
-            </select>
-        </p>
-        <p class="admin_flight_type"><b>Plane</b></p>
-        <p class = "admin_flight_info">
-            Type:
-            <select id="flightPlaneModelSelect" name="flightPlaneModel" onchange="canModelMakeTheDistance()" onclick="enableNextEntry(7)" disabled >
-            </select>
-            Price Adjustment:<input type="text" id="flightDistancePrice" placeholder="$" value="" style="width:5ch;" disabled >
-            Demand: <input type="range" id="flightDemandSlider" name="points" min="1" max="20" step="1" onchange="updateSliderText()">
-            <input type="text" id="flightDemandValue" style="width:3ch;" disabled>
-        </p>
-        <br>
-
+    <form id="adminFlightsForm" method="post" onsubmit="return viewAddFlightModal()">
         <div>
-            Occurrence:
-            <select id="flightOccurrenceSelect" name="occurrences">
-                <option disabled selected>--Select Occurrence--</option>
-                <option value="1">1 Time Only</option>
-                <option value="1">Daily</option>
-                <option value="7">Weekly</option>
-            </select>
-
-            Occurrence Period:
-            <select id="flightOccurrencePeriodSelect" name="timePeriod">
-                <option disabled selected>--Select Period--</option>
-                <option value="1">1 Time Only</option>
-                <option value="7">1 Week</option>
-                <option value="30">1 Month</option>
-                <option value="90">3 Month</option>
-                <option value="180">6 Months</option>
-                <option value="365">1 Year</option>
-            </select>
-
+            <p class="admin_flight_type"><b>Departure</b></p>
+            <p class="admin_flight_info">
+                Date: <input type="text" name="flightDepartureDate" placeholder="Select Date" id="flightDeparturedatepicker" onclick="enableNextEntry(1)" required>
+                Time: <input type="text" name="flightDepartureTime" placeholder="Select Time" id="flightDeparturetimepicker" disabled onclick="enableNextEntry(2)" required>
+                Location:
+                <select id="flightDepartureLocationState" name="flightDepartureLocationState" disabled onclick="enableNextEntry(3)" required>
+                    <option disabled selected>---Select a state---</option>
+                    <%=CityFunctions.getActiveStatesList("alterDepartureCitySelect")%>
+                </select>
+                <select id="flightDepartureLocationCity" name="flightDepartureLocationCity" disabled onclick="enableNextEntry(4)" required>
+                    <option disabled selected>---Select a city---</option>
+                    <%=CityFunctions.getActiveCitiesList()%>
+                </select>
+            </p>
+            <p class="admin_flight_type"><b>Arrival</b></p>
+            <p class="admin_flight_info">
+                Date: <input type="text" name="flightArrivalDate" placeholder="Select Date" id="flightArrivaldatepicker"  disabled>
+                Time: <input type="text" name="flightArrivalTime" placeholder="Select Time" id="flightArrivaltimepicker"  disabled>
+                Location:
+                <select id="flightArrivalLocationState" name="flightArrivalLocationState" onclick="enableNextEntry(5)" disabled>
+                    <option id="flightArrivalLocationStateDefault" disabled selected>---Select a state---</option>
+                    <%=CityFunctions.getActiveStatesList("alterArrivalCitySelect")%>
+                </select>
+                <select id="flightArrivalLocationCity" name="flightArrivalLocationCity" onclick="enableNextEntry(6)" disabled>
+                    <option disabled selected>---Select a city---</option>
+                    <%=CityFunctions.getActiveCitiesList()%>
+                </select>
+            </p>
+            <p class="admin_flight_type"><b>Plane</b></p>
+            <p class = "admin_flight_info">
+                Type:
+                <select id="flightPlaneModelSelect" name="flightPlaneModel" onchange="canModelMakeTheDistance()" onclick="enableNextEntry(7)" disabled >
+                </select>
+                Occurrence:
+                <select id="flightOccurrenceSelect" name="occurrences">
+                    <option disabled selected>--Select Occurrence--</option>
+                    <option value="1">1 Time Only</option>
+                    <option value="1">Daily</option>
+                    <option value="7">Weekly</option>
+                </select>
+                Occurrence Period:
+                <select id="flightOccurrencePeriodSelect" name="timePeriod">
+                    <option disabled selected>--Select Period--</option>
+                    <option value="1">1 Time Only</option>
+                    <option value="7">1 Week</option>
+                    <option value="30">1 Month</option>
+                    <option value="90">3 Month</option>
+                    <option value="180">6 Months</option>
+                    <option value="365">1 Year</option>
+                </select>
+            </p>
+            <br>
+            <p class="admin_flight_info">
+                Price Adjustment:<input type="text" id="flightDistancePrice" placeholder="$" value="" style="width:5ch;" disabled >
+                Demand: <input type="range" id="flightDemandSlider" name="points" min="1" max="20" step="1" onchange="updateSliderText()">
+                <input type="text" id="flightDemandValue" style="width:3ch;" disabled>
+            </p>
         </div>
+        <button type="submit" id="addFlightButton" name="addFlightButton" class="admin_flight_info_button"  disabled>Show Available Planes</button>
+    </form>
+</section>
 
-
-
-
-
-        <button id="addFlightButton" name="addFlightButton" class="admin_flight_info_button" onclick="viewAddFlightModal()" disabled>Show Available Planes</button>
-    </div>
-</div>
 <div id="adminAddFlightModal" class="adminAddFlightModal">
     <div class="adminAddFlightModalContents">
         <span class="adminAddFlightModalClose" onclick="closeAddFlightModal()">&times;</span>

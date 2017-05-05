@@ -417,23 +417,6 @@ public class FlightsFunctions {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static ArrayList<ArrayList<String>> getBookingQuery(Connection con, ArrayList<String> allFlights){
         ArrayList<ArrayList<String>> flightInfo = new ArrayList<>();
 

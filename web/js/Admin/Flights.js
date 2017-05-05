@@ -6,6 +6,7 @@
  */
 var planeModelList ="";
 var availablePlaneList = "";
+var flightModalPage = 0;
 
 /**
  * Date picker for Flight Departure
@@ -24,7 +25,6 @@ $( function() {
             $(this).datepicker('option','minDate',today);
         }
     });
-
 
 
     $( "#flightArrivaldatepicker" ).datepicker({
@@ -54,6 +54,10 @@ $( function() {
             getAvailableAirplanes(next);
         }
     };
+
+
+
+
 } );
 
 
@@ -251,7 +255,8 @@ function getAvailableAirplanes(page){
                 setModalHeader();
                 document.getElementById("adminAddFlightModalFormNumber").value = availablePlaneList.length;
                 console.log(availablePlaneList.length);
-                whatAirplanesToDisplay(0);
+                flightModalPage = 0;
+                whatAirplanesToDisplay(flightModalPage);
             }else{
                 // Code for when the number of planes that match the criteria is 0.
             }
@@ -343,6 +348,7 @@ function displayAvailablePlane(pID){
  */
 function viewAddFlightModal() {
     document.getElementById("adminAddFlightModal").style.display = "block";
+    return false;
 }
 
 /**
@@ -373,13 +379,11 @@ function hideShowButtons(page){
     }else{
         prev.show = true;
     }
-
     if(page === 0){
         current.hidden = true;
     } else {
         current.show = true;
     }
-
     if((page+1)*10<availablePlaneList.length){
         next.show = true;
     } else {
@@ -451,5 +455,5 @@ function resetAddFlightButtonValue(){
 }
 
 function resetAllFlightInformationInputs(){
-    // reset info
+    document.getElementById("adminFlightsForm").reset();
 }

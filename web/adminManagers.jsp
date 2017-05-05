@@ -6,13 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="Admin.Managerial.AddManager" %>
-<%@ page import="Admin.Managerial.RemoveManager" %>
-<%@ page import="Admin.Managerial.ManagerList" %>
-<%@ page import="Admin.Managerial.UpdateManager" %>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,11 +46,11 @@
         }
         /* Modal Content */
         #managerModalContent {
-            background-color: #fefefe;
+            background-color: whitesmoke;
             margin: auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 50%;
+            width: 340px;
         }
 
         /* The Close Button */
@@ -74,6 +67,25 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        #managerModalForm div{
+            display: flex;
+        }
+
+        #managerModalForm p {
+            background-color:whitesmoke;
+            width: 12ch;
+
+        }
+
+        #removeManagerButton{
+            margin: 0 auto 0 0;
+        }
+
+        #updateManagerButton{
+            margin: 0 0 0 auto;
+        }
+
     </style>
 </head>
 
@@ -135,29 +147,39 @@
 <div id="adminManagers">
     <h1>Managers</h1>
     <br>
-    <form id="adminManagerAddForm">
-        Full Name: <input type="text" id="managerName" name="managerName" placeholder="Full Name" required>
-        Email: <input type="email" id="managerEmail" name="managerEmail" placeholder="Email" required>
-        Confirm Email: <input type="email" id="managerEmailConfirm" name="managerEmail" placeholder="Email" required>
-        <br>
-        <div id="managerErrorMessage" style="visibility:hidden;">
-            <p><span style="color: red;" >Emails do not match</span></p>
-        </div>
-    </form>
-    <button  id="addManagerButton">Add Manager</button>
-    <table class="admin_man_table">
-        <tr>
-            <th><b>ID</b></th>
-            <th><b>Name</b></th>
-            <th><b>Email</b></th>
-            <th><b>Password</b></th>
-            <th><b>Action</b></th>
-        </tr>
-    </table>
-    <table id="adminAllManagers" class="admin_man_table">
-        <%-- Information being retrieved from server. Check Managerial.js for function updateManagerTable
-        --%>
-    </table>
+    <section id="sidebar">
+        <form id="adminManagerAddForm" method="post" onsubmit="return attemptAddManager()">
+            <p><b>Name: </b></p>
+            <input type="text" id="managerName" name="managerName" placeholder="Full Name" required>
+            <p><b>Email: </b></p>
+            <input type="email" id="managerEmail" name="managerEmail" placeholder="Email" required>
+            <br>
+            <button type="submit"  id="addManagerButton">Add Manager</button>
+        </form>
+    </section>
+    <section id="adminManagerView">
+        <section id="adminManagerControl" >
+            <div>
+                <button id="adminManagerPreviousPage" style="margin-left:20px;">Previous</button>
+                <button id="adminManagerNextPage" >Next</button>
+            </div>
+        </section>
+        <section id="adminManagerContent">
+            <table class="admin_man_table">
+                <tr>
+                    <th><b>ID</b></th>
+                    <th><b>Name</b></th>
+                    <th><b>Email</b></th>
+                    <th><b>Password</b></th>
+                    <th><b>Action</b></th>
+                </tr>
+            </table>
+            <table id="adminAllManagers" class="admin_man_table">
+                <%-- Information being retrieved from server. Check Managerial.js for function updateManagerTable
+                --%>
+            </table>
+        </section>
+    </section>
 </div>
 
 <div id="managerModal">
@@ -166,21 +188,23 @@
         <form id="managerModalForm">
             <div>
                 <p>ID: </p>
-                <input type="hidden" id="managerModalID" name="managerModalID" required>
+                <input type="text" id="managerModalID" name="managerModalID" readonly>
             </div>
             <div>
-                <p>Full Name: </p>
+                <p><b>Full Name:</b></p>
                 <input type="text" id="managerModalName" name="managerModalName" placeholder="Full Name" required>
             </div>
             <div>
-                <p>Email: </p>
+                <p><b>Email:</b> </p>
                 <input type="email" id="managerModalEmail" name="managerModalEmail" placeholder="Email" required>
             </div>
             <div>
-                <p>Password: </p>
+                <p><b>Password:</b></p>
                 <input type="text" id="managerModalPassword" name="managerModalPassword" placeholder="Password" required>
             </div>
         </form>
+        <br>
+        <br>
         <button id="removeManagerButton" name="removeManagerButton" >Remove Manager</button>
         <button id="updateManagerButton" name="updateManagerButton" >Update Manager</button>
     </div>

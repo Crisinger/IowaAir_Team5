@@ -158,9 +158,6 @@
                 <button type="submit" id="flightQueryButton">Search</button>
             </div>
         </form>
-        <div>
-            <button id="showGoogleMap" >Toggle Map View</button>
-        </div>
     </section>
 
     <section id="googlemapContainer">
@@ -173,6 +170,7 @@
             <div>
                 <button id="flightQueryPrevious" >Previous</button>
                 <button id="flightQueryNext" >Next</button>
+                <button id="showGoogleMap" >Toggle Map View</button>
             </div>
             <div>
                 <div>
