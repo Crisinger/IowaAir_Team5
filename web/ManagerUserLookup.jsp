@@ -79,10 +79,19 @@
 <body>
 
 <div class = checkin>
-    <form id = "LookupUserHistory">
+    <form id = "UserHistoryServlet">
         Enter User Email:<br>
         <input type="text" required placeholder="User Email" name="userLookup">
-        <input type="submit" value="Submit">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
+<div class = checkin>
+    <form id = "LookupUserHistory">
+        Enter User Email:<br>
+        <input type="text" required placeholder="User Email" name="addFlight">
+        <input type="text" required placeholder="User Email" name="addFlight">
+        <input type="button" onclick="" value="Add Flight">
     </form>
 </div>
 

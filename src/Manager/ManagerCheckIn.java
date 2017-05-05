@@ -10,15 +10,19 @@ import java.sql.Statement;
  */
 public class ManagerCheckIn {
 
-    public static void managerCheckIn(Connection con, int referenceID){
+    public static boolean managerCheckIn(Connection con, int referenceID){
         Statement stmt = null;
         try {
             stmt = con.createStatement();
             stmt.executeUpdate("UPDATE BOOKEDFLIGHTS SET checkedIn = 1 WHERE ID = " + referenceID +";");
             stmt.close();
+            System.out.println("Made it");
+            return true;
         } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
+            System.out.println("Didn't make it");
+            return false;
         }
     }
 
@@ -34,11 +38,11 @@ public class ManagerCheckIn {
         }
     }
 
-   public static void addBag(Connection con, int referenceID){
+   public static void numberOfBags(Connection con, int referenceID, int bag){
         Statement stmt = null;
         try {
             stmt = con.createStatement();
-            stmt.executeUpdate("UPDATE BOOKEDFLIGHTS SET bags = bags + 1 WHERE ID = " + referenceID +";");
+            stmt.executeUpdate("UPDATE BOOKEDFLIGHTS SET bags = bag WHERE ID = " + referenceID +";");
             stmt.close();
         } catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );

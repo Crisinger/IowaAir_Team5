@@ -78,7 +78,7 @@
     <br>
 
 
-    <form id="CheckinServlet">
+    <form id="CheckinServlet" onsubmit="submittedForm()">
         <div class = checkin>
             Customer Information:<br>
             <input type="text" name="firstname" placeholder="First Name" required><br>
@@ -99,6 +99,7 @@
 
         <div class = checkin>
             <input type = "text" name="price" placeholder="Price" readonly id=price />
+            <input type="text" id="hiddenbags" name="bags" placeholder="Bags#"/>
         </div>
 
         <br>
@@ -127,15 +128,26 @@
                 $(wrapper).append('<div><input type="number" name="bagWeight" placeholder="bag lbs" max=100 min=0/>' +
                     '<a href="#" class="remove_field">Remove</a></div>'); //add input box
 
-                document.getElementById("price").placeholder = "$ " + 50*x; //Increment price
+                document.getElementById("hiddenbags").value=x;
+                document.getElementById("price").placeholder = "$ " + 50*x; //Incr// ement price
             }
         });
 
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
             e.preventDefault(); $(this).parent('div').remove(); x--;
 
+            document.getElementById("hiddenbags").value=x;
             document.getElementById("price").placeholder = "$ " + 50*x; //decrement price
         })
     });
 </script>
 
+<script>
+    function submittedForm() {
+        if (result===true){
+            alert("The form was successfully submitted");
+        }
+        else
+            alert("The form failed to submit");
+    }
+</script>

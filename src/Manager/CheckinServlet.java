@@ -23,23 +23,27 @@ public class CheckinServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // Assign parameters to values
-        // String customerName = request.getParameter("firstname") + request.getParameter("lastname");
-        // String customerEmail = request.getParameter("customerEmail");
         String referenceID = request.getParameter("referenceID");
         String bags = request.getParameter("bags");
 
-        // Add reference ID check
-
+        boolean result;
 
         // Open connection to database
         Connection con = AccountFunctions.OpenDatabase();
 
         // Checkin
-        ManagerCheckIn.managerCheckIn(con, Integer.parseInt(referenceID));
+        result = ManagerCheckIn.managerCheckIn(con, Integer.parseInt(referenceID));
 
         // Add bag
-        ManagerCheckIn.addBag(con, Integer.parseInt(bags));
+        ManagerCheckIn.numberOfBags(con, Integer.parseInt(referenceID), Integer.parseInt(bags));
 
-        // Maybe add emailing
+        // Check if user was properly submitted
+        if(result == true){
+            response.sendRedirect("success.jsp");
+        }
+        else
+        {
+            response.sendRedirect("failure.jsp");
+        }
     }
 }
