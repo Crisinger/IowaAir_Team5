@@ -7,6 +7,9 @@
 var planeModelList ="";
 var availablePlaneList = "";
 var flightModalPage = 0;
+var flightList;
+var flightPage = 0;
+var flightsPerPage = 20;
 
 /**
  * Date picker for Flight Departure
@@ -15,8 +18,8 @@ $( function() {
 
     console.log("Starting Flights Page");
     createPlaneModelSelection();
+    updateFlightTable();
     console.log("Starting Flights Page");
-
 
     $( "#flightDeparturedatepicker" ).datepicker({
         beforeShow: function(input,inst){
@@ -25,7 +28,6 @@ $( function() {
             $(this).datepicker('option','minDate',today);
         }
     });
-
 
     $( "#flightArrivaldatepicker" ).datepicker({
         beforeShow: function(input,inst){
@@ -55,7 +57,17 @@ $( function() {
         }
     };
 
+    $("#adminFlightListTablePreviousPage").click(function(){
+        removeAdminFlightList();
+        flightPage = flightPage-1;
+        showAdminFlightsPage(flightPage);
+    });
 
+    $("#adminFlightListTableNextPage").click(function(){
+        removeAdminFlightList();
+        flightPage = flightPage +1;
+        showAdminFlightsPage(flightPage);
+    });
 
 
 } );
@@ -457,3 +469,102 @@ function resetAddFlightButtonValue(){
 function resetAllFlightInformationInputs(){
     document.getElementById("adminFlightsForm").reset();
 }
+
+
+// Flight Table Functions
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function updateFlightTable(){
+    $.post("Admin.Flights.GetFlightsList","",function(msg){
+
+        if(msg.length>0){
+            flightList = JSON.parse(msg).flightList;
+            flightPage = 0;
+            showAdminFlightsPage(flightPage);
+        }
+
+    });
+
+}
+
+function showAdminFlightsPage(page){
+
+    if(page!=0){
+        document.getElementById("adminFlightListTablePreviousPage").disabled = false;
+    } else {
+        document.getElementById("adminFlightListTablePreviousPage").disabled = true;
+    }
+    var min = page*flightsPerPage;
+    var max = (page+1)*flightsPerPage;
+    var count = 0;
+    var displayed = 0;
+
+    for(var flight=0; flight<flightList.length; flight++){
+        if(count<min){
+            count++;
+        }else if(count>=min && count<max){
+            displayFlightRow(flightList[flight]);
+            displayed++;
+            count++;
+        }
+
+        if(count==max){
+            flight = flightList.length + 1;
+        }
+    }
+
+    if(displayed<flightsPerPage){
+        document.getElementById("adminFlightListTableNextPage").disabled=true;
+    }else{
+        document.getElementById("adminFlightListTableNextPage").disabled=false;
+    }
+
+}
+
+function displayFlightRow(flight){
+
+    var list = ["fID","pID","dDate","dTime","dCity","dState","aDate","aTime","aCity","aState","aEcon","aBus","aFirst"];
+    var parent = document.getElementById("adminFlightListTable");
+    var child = document.createElement("tr");
+
+    for(var i=0; i<list.length; i++){
+        var subChild = document.createElement("td");
+        subChild.innerText = flight[list[i]]; // for all other table entities
+        subChild.name="col"+i;
+        child.appendChild(subChild); // adds table data to table row
+    }
+
+    parent.appendChild(child); // adds table row to table
+
+}
+
+function removeAdminFlightList(){
+    var parent = document.getElementById("adminFlightListTable");
+    while(parent.hasChildNodes()){
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

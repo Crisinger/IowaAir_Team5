@@ -457,4 +457,36 @@ public class FlightsFunctions {
     }
 
 
+    public static ArrayList<ArrayList<String>> getFlightList(Connection con){
+
+        Statement stmt = null;
+        ArrayList<ArrayList<String>> flightList = new ArrayList<>();
+        String[] itemList = {"flight_id","plane_id","departure_date","departure_time","departure_location","arrival_date","arrival_time","arrival_location","availableEconomy","availableBusiness","availableFirst"};
+
+        try{
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("Select * From flights ORDER BY DEPARTURE_DATE, DEPARTURE_TIME;");
+
+            while(rs.next()){
+                flightList.add(new ArrayList<>());
+                for(int i=0; i<itemList.length; i++){
+                    if(!itemList[i].equals("departure_location") && !itemList[i].equals("arrival_location")) {
+                        flightList.get(flightList.size() - 1).add(rs.getString(itemList[i]));
+                    }else{
+                        String[] cityState = CityFunctions.getIndexName(con,rs.getString(itemList[i]));
+                        flightList.get(flightList.size()-1).add(cityState[0]);
+                        flightList.get(flightList.size()-1).add(cityState[1]);
+                    }
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return flightList;
+    }
+
+
+
+
 }

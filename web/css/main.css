@@ -118,7 +118,7 @@ p {
 
 #sidebar button, #adminLocationTableNavigation button, #flightQueryControls button, #adminPlaneModelTableNavigation button,
 #adminPlaneTableNavigation button, #planeModelForm button, #planeForm button, #adminManagerControl button, #managerModal button,
-#adminFlightsForm button{
+#adminFlightsForm button, #adminFlightListTableContainerNavigation button{
     padding: 5px 10px;
     background-color: black;
     color: white;
@@ -135,7 +135,7 @@ p {
 
 #sidebar button:hover, #adminLocationTableNavigation button:hover, #flightQueryControls button:hover, #adminPlaneModelTableNavigation button:hover,
 #adminPlaneTableNavigation button:hover, #planeModelForm button:hover, #planeForm button:hover, #adminManagerControl button:hover,
-#managerModal button:hover, #adminFlightsForm button:hover{
+#managerModal button:hover, #adminFlightsForm button:hover, #adminFlightListTableContainerNavigation button:hover{
 
     background-color: yellow;
     color: black;
@@ -621,25 +621,29 @@ nav a.selected, nav a:hover {
     width:100%;
 }
 
-.admin_planeModel_table {
+.admin_planeModel_table , .adminFlightListTable{
     border-top: solid medium black;
     width: 90%;
     margin: 20px 5%;
 }
 
-.admin_planeModel_table th {
+.admin_planeModel_table th, .adminFlightListTable th {
     font-size: 1.3em;
     text-align: left;
     padding: 20px 0 0 0;
     width: 10%;
 }
-.admin_planeModel_table td, .admin_planeModel_table tr{
+.admin_planeModel_table td, .admin_planeModel_table tr, .adminFlightListTable td, .adminFlightListTable tr{
     padding: 10px 0 0 0;
     text-align: left;
 }
 
 .admin_planeModel_table tr td {
     width: 10%;
+}
+
+.adminFlightListTable tr td, .adminFlightListTable th{
+    width:7.5%;
 }
 
 
@@ -817,7 +821,7 @@ nav a.selected, nav a:hover {
 }
 
 
-#adminLocationTablesContainer, #adminPlaneModelsTablesContainer, #adminPlaneTablesContainer{
+#adminLocationTablesContainer, #adminPlaneModelsTablesContainer, #adminPlaneTablesContainer, #adminFlightListTableContainer{
     display: block;
     background-color: whitesmoke;
     border: solid black 2px;
@@ -825,22 +829,22 @@ nav a.selected, nav a:hover {
     margin: 20px 5% 0 5%;
 }
 
-#adminLocationTableNavigation, #adminPlaneModelTableNavigation, #adminPlaneTableNavigation{
+#adminLocationTableNavigation, #adminPlaneModelTableNavigation, #adminPlaneTableNavigation, #adminFlightListTableContainerNavigation{
     display: flex;
     width: 90%;
     align-items: stretch;
     margin-left:5%;
 }
 
-#adminLocationTableNavigation button, #adminPlaneModelTableNavigation button, #adminPlaneTableNavigation button{
+#adminLocationTableNavigation button, #adminPlaneModelTableNavigation button, #adminPlaneTableNavigation button, #adminFlightListTableContainerNavigation button{
     border: black solid 2px;
     width:10ch;
 }
 
-#adminLocationPreviousPage{
+#adminLocationPreviousPage, #adminFlightListTablePreviousPage{
     margin:auto auto auto 20px;
 }
-#adminLocationNextPage{
+#adminLocationNextPage, #adminFlightListTableNextPage{
     margin: auto 20px auto auto;
 }
 
