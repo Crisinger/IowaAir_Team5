@@ -293,5 +293,26 @@ public class CityFunctions {
     }
 
 
+    public static String[] getIndexName(Connection con, String index){
+
+        Statement stmt = null;
+        String[] cityState = new String[2];
+
+        try{
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("Select state,CityName from cities Where id="+index+";");
+            if(rs.next()) {
+                cityState[0] = rs.getString("cityName");
+                cityState[1] = rs.getString("state");
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return cityState;
+
+    }
+
 
 }

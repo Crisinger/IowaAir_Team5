@@ -289,6 +289,67 @@
     </form>
 </section>
 
+<br>
+<div id="adminFlightListTableContainerNavigation">
+    <button id="adminFlightListTablePreviousPage">Previous</button>
+    <button id="adminFlightListTableNextPage">Next</button>
+</div>
+<br>
+<section id="adminFlightListTableContainer" style="height:800px;">
+    <table class="adminFlightListTable">
+        <tr>
+            <th><b> </b></th>
+            <th><b> </b></th>
+            <th><b>| </b></th>
+            <th><b>Depart</b></th>
+            <th><b>Info</b></th>
+            <th><b> </b></th>
+            <th><b>| </b></th>
+            <th><b>Arrival</b></th>
+            <th><b>Info</b></th>
+            <th><b> </b></th>
+            <th><b>| </b></th>
+            <th><b>Open</b></th>
+            <th><b> </b></th>
+        </tr>
+        <tr>
+            <th><b>Flight</b></th>
+            <th><b>Plane</b></th>
+            <th><b>Date</b></th>
+            <th><b>Time</b></th>
+            <th><b>City</b></th>
+            <th><b>State</b></th>
+            <th><b>Date</b></th>
+            <th><b>Time</b></th>
+            <th><b>City</b></th>
+            <th><b>State</b></th>
+            <th><b>Economy</b></th>
+            <th><b>Business</b></th>
+            <th><b>First</b></th>
+        </tr>
+    </table>
+
+    <table id="adminFlightListTable" class="adminFlightListTable">
+
+    </table>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div id="adminAddFlightModal" class="adminAddFlightModal">
     <div class="adminAddFlightModalContents">
         <span class="adminAddFlightModalClose" onclick="closeAddFlightModal()">&times;</span>
