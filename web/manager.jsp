@@ -78,7 +78,7 @@
     <br>
 
 
-    <form id="CheckinServlet" onsubmit="submittedForm()">
+    <form action="CheckinServlet" method="get">
         <div class = checkin>
             Customer Information:<br>
             <input type="text" name="firstname" placeholder="First Name" required><br>
@@ -99,7 +99,7 @@
 
         <div class = checkin>
             <input type = "text" name="price" placeholder="Price" readonly id=price />
-            <input type="text" id="hiddenbags" name="bags" placeholder="Bags#"/>
+            <input type = "text" id="hiddenbags" name="bags" readonly value="0"/>
         </div>
 
         <br>
@@ -140,14 +140,4 @@
             document.getElementById("price").placeholder = "$ " + 50*x; //decrement price
         })
     });
-</script>
-
-<script>
-    function submittedForm() {
-        if (result===true){
-            alert("The form was successfully submitted");
-        }
-        else
-            alert("The form failed to submit");
-    }
 </script>

@@ -1,14 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: ReedS
-  Date: 4/30/2017
-  Time: 1:49 PM
+  Date: 5/5/2017
+  Time: 6:53 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    String accountText = "" ;
+    String accountText = "";
     if(session.getAttribute("role").toString().equals("MANAGER")){
         accountText = session.getAttribute("userEmail").toString();
     } else {
@@ -22,14 +22,11 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/manager.css">
-    <title>User Lookup</title>
+    <title>Success!</title>
 </head>
+
 <header>
 
-    <a href="index.jsp" id="logo">
-        <h1>Iowa Air</h1>
-        <h2>Travel Like A Hawkeye</h2>
-    </a>
     <a href="index.jsp" id="logo">
         <h1>Iowa Air</h1>
         <h2>Travel Like A Hawkeye</h2>
@@ -75,21 +72,11 @@
     </nav>
 
 </header>
+
 <body>
 
 <div class = checkin>
-    <form id = "UserHistoryServlet">
-        Enter User Email:<br>
-        <input type="text" required placeholder="User Email" name="userLookup">
-        <input type="submit" value="Search">
-    </form>
-</div>
-
-<div class = checkin>
-    <form id = "LookupUserHistory">
-        <input type="text" placeholder="Flight ID" name="flightToAdd">
-        <input type="button" onclick="" value="Add Flight">
-    </form>
+    <h1>Submission failed!!!</h1>
 </div>
 
 </body>

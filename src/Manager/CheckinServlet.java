@@ -13,7 +13,7 @@ import java.sql.Connection;
 /**
  * Created by ReedS on 4/25/2017.
  */
-@WebServlet(name = "CheckinServlet")
+@WebServlet(urlPatterns = { "/CheckinServlet" })
 public class CheckinServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -26,6 +26,7 @@ public class CheckinServlet extends HttpServlet {
         String referenceID = request.getParameter("referenceID");
         String bags = request.getParameter("bags");
 
+
         boolean result;
 
         // Open connection to database
@@ -34,8 +35,10 @@ public class CheckinServlet extends HttpServlet {
         // Checkin
         result = ManagerCheckIn.managerCheckIn(con, Integer.parseInt(referenceID));
 
+        System.out.println("Here 2"+bags);
+
         // Add bag
-        ManagerCheckIn.numberOfBags(con, Integer.parseInt(referenceID), Integer.parseInt(bags));
+        //ManagerCheckIn.numberOfBags(con, Integer.parseInt(referenceID), Integer.parseInt(bags));
 
         // Check if user was properly submitted
         if(result == true){
