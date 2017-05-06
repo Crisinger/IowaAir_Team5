@@ -448,6 +448,7 @@ function attemptAddToDatabase(data){
         function (msg) {
             closeAddFlightModal();
             resetAllFlightInformationInputs();
+            removeAdminFlightList();
             updateFlightTable();
         }
     );
